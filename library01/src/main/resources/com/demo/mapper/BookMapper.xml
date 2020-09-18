@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.BookMapper">
+	<!-- <resultMap type="com.demo.domain.BookVO" id="bookMap">
+		<id property="isbn" column="isbn"/>
+		<result property="bno" column="bno" />
+		<result property="isbn" column="isbn" />
+		<result property="title" column="title" />
+		<result property="publisher" column="publisher" />
+		<result property="thumbnail" column="thumbnail" />
+		<result property="url" column="url" />
+		<result property="registeredDate" column="registeredDate" />
+		<collection property="authors" resultMap="authorMap"></collection>
+	</resultMap>
+	<resultMap type="com.demo.domain.AuthorVO" id="authorMap">
+		<result property="isbn" column="isbn"/>
+		<result property="author" column="author"/>
+	</resultMap> -->
+
+	<insert id="insert">
+		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime)
+		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{registeredDate})
+	</insert>
+</mapper>

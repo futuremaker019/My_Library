@@ -1,0 +1,33 @@
+package com.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.demo.domain.AuthorVO;
+import com.demo.domain.BookVO;
+import com.demo.mapper.AuthorMapper;
+import com.demo.mapper.BookMapper;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@Service
+public class BookServiceImpl implements BookService{
+	
+	@Setter (onMethod_= @Autowired)
+	private BookMapper bookMapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private AuthorMapper authorMapper;
+	
+//	@Override
+//	public int register(BookVO bookVO) {
+//		return bookMapper.insert(bookVO) ;
+//	}
+
+	@Override
+	public void register(BookVO bookVO) {
+		bookMapper.insert(bookVO);
+	}
+}

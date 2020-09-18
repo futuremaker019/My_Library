@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>MyLibrary</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400|Ubuntu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/c0be56fbbf.js" crossorigin="anonymous"></script>
+  
+  <!-- jquery-3.5.1 -->
+  <script src="/jquery/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+	 <section id="title">
+		<div class="container-fluid">
+
+			<!-- Nav Bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark">
+	
+				<a class="navbar-brand" href="#">My Library</a>
+	
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarTogglerDemo02"
+					aria-controls="navbarTogglerDemo02" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+	
+				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+	
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a class="nav-link" href="#footer">Contact</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="#cta">Download</a>
+						</li>
+					</ul>
+				</div>
+				
+			</nav>
+		</div>
+	</section>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <input class="form-control mr-sm-2" id="bookName" type="search" placeholder="책 제목을 입력하세요" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" id="search">Search</button>
+        </div>
+    </div>
+    
+<div class="row">
+    <div class="col-lg-12">
+        <!-- <form class="panel panel-default" name="searchForm" method="POST" action="/book/new"> -->
+            <table class="table table-bordered table-hover">
+                <colgroup>
+                    <col width="90">
+                    <col width="*">
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody class="contents-items">
+                    
+                </tbody>
+            </table>
+             <!-- /. panel-body -->
+        <!-- </form> -->
+    </div>
+</div>
+
+<form id="operationForm">
+	<input type='hidden' name='isbn' value="">
+    <input type='hidden' name='title' value="">
+    <input type='hidden' name='thumbnail' value="">
+    <input type='hidden' name='authors' value="">
+    <input type='hidden' name='publisher' value="">
+    <input type='hidden' name='url' value="">
+    <input type='hidden' name='datetime' value="">
+</form>
+
+<script type="text/javascript" src="js/search.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("===============");
+        console.log("JS TEST");
+
+        var contents = $(".contents-items");
+        var operationForm = $(".operationForm");
+        
+        // book 검색 api에서 책 이름 검색으로 리스트를 불러온다.
+        $("#search").click(function(){
+
+            var searchValue = $("#bookName").val();
+
+            searchService.api_getBooks(searchValue, function(list){
+                console.log(list);
+
+                var content = list.documents;
+
+                let strTag = '';
+
+                if (content == null) {
+                    return;
+                }
+
+                for (var i = 0, len = content.length || 0; i < len; i++) {
+                    strTag += "<tr data-isbn='" + content[i].isbn + "'>"
+                    strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>"
+                    strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>"
+                    strTag += "<div>" + content[i].authors + "</div>"
+                    strTag += "<div>" + content[i].publisher + "</div>"
+                    strTag += "<div><a href='" + content[i].url + "' target='_black'>책 정보</a></div>"
+                    strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
+                    strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
+                    strTag += "<td class='option'><button class='LinkUrl btn btn-warning'>상세보기</button></td></tr>"
+                }
+                contents.html(strTag);
+            });
+        });
+
+        // 리스트에서 아이템 선택하면 isbn을 리턴한다.
+        $(".table").on("click", "button[name='addMyLib']", function(e){
+
+            var ApiIsbn = $(this).data("isbn");
+            console.log(ApiIsbn);
+
+            var dividedIsbn =  ApiIsbn.split(" ");
+            
+            var isbn = '';
+            if (dividedIsbn[0] != '') {
+               isbn = dividedIsbn[0];
+            } else {
+               isbn = dividedIsbn[1];
+            }
+            
+            searchService.api_getBooks(isbn, function (selectedItem) {
+                console.log("isbn : " + isbn);
+                console.log(selectedItem);
+
+                let content = selectedItem.documents;
+                let strTag = '';
+
+                strTag += "<input type='hidden' name='isbn' value='" + content[0].isbn + "'>"
+                strTag += "<input type='hidden' name='title' value='"+ content[0].title +"'>"
+                strTag += "<input type='hidden' name='authors' value='" + content[0].authors + "'>"
+                strTag += "<input type='hidden' name='publisher' value='" + content[0].publisher + "'>"
+                strTag += "<input type='hidden' name='thumbnail' value='" + content[0].thumbnail + "'>"
+                strTag += "<input type='hidden' name='url' value='" + content[0].url + "'>"
+                strTag += "<input type='hidden' name='datetime' value='" + content[0].datetime.slice(0, 10) + "'>"
+
+                operationForm.html(strTag);
+
+                var itemTitle = operationForm.find("input[name='title']");
+                var itemAuthors = operationForm.find("input[name='authors']");
+                var itemIsbn = operationForm.find("input[name='isbn']");
+                var itemPublisher = operationForm.find("input[name='publisher']");
+                var itemThumbnail = operationForm.find("input[name='thumbnail']");
+                var itemUrl = operationForm.find("input[name='url']");
+                var itemDateTime = operationForm.find("input[name='datetime']");
+
+                let item = {
+                    title : itemTitle.val(),
+                    authors : itemAuthors.val(),
+                    isbn : itemIsbn.val(),
+                    publisher : itemPublisher.val(),
+                    thumbnail : itemThumbnail.val(),
+                    url : itemUrl.val(),
+                    registeredDate : itemDateTime.val()
+                }
+
+                console.log(JSON.stringify(item));
+
+                // searchService.add(item, function (result) {
+                //     alert(result);
+                // })
+            });
+        });
+    });
+</script>
+
+    <footer id="footer" style="background-color: grey;">
+	    <i class="social-icon fab fa-facebook-square"></i>
+	    <i class="social-icon fab fa-twitter-square"></i>
+	    <i class="social-icon fab fa-instagram"></i>
+	    <i class="social-icon fas fa-envelope"></i>
+	
+	    <p>© Copyright 2018 TinDog</p>
+
+    </footer>
+    
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
