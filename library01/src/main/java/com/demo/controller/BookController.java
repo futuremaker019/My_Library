@@ -34,4 +34,6 @@ public class BookController {
 	public String search() {
 		return "/book/search";
 	}
+	
+	
 }
