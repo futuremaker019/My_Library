@@ -31,7 +31,7 @@
 	
 			<nav class="navbar navbar-expand-lg navbar-dark">
 	
-				<a class="navbar-brand" href="#">My Library</a>
+				<a class="navbar-brand" href="/book">My Library</a>
 	
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarTogglerDemo02"
@@ -41,9 +41,8 @@
 				</button>
 	
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-	
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="#footer">Contact</a>
+						<li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a>
 						</li>

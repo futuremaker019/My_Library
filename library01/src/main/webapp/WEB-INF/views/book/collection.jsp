@@ -1,65 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../includes/header.jsp"%>
 
 <!-- Pricing -->
 <section id="pricing">
-
-	<h2>A Plan for Every Dog's Needs</h2>
-	<p>Simple and affordable price plans for your and your dog.</p>
-
+	<div class="row" style="text-align: center">
+		<h2>Books in My Library</h2>
+	</div>	
 	<div class="row">
-
-		<div class="pricing-column col-lg-3 col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h3>Chihuahua</h3>
-				</div>
-				<div class="card-body">
-					<h2>Free</h2>
-					<p>5 Matches Per Day</p>
-					<p>10 Messages Per Day</p>
-					<p>Unlimited App Usage</p>
-					<button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="pricing-column col-lg-3 col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h3>Labrador</h3>
-				</div>
-				<div class="card-body">
-					<h2>$49</h2>
-					<p>Unlimited Matches</p>
-					<p>Unlimited Messages</p>
-					<p>Unlimited App Usage</p>
-					<button class="btn btn-lg btn-block btn-dark" type="button">Sign Up</button>
+		<c:forEach items="${bookList}" var="list">
+			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 40px">
+				<div class="card">
+					<div class="card-header" style="margin: auto">
+						<a class="thumbnail" href="#" >
+							<img src="<c:out value='${list.thumbnail }'/>">
+						</a>
+					</div>
+					<div class="card-body">
+						<p class="card-text"><c:out value="${list.title }"/></p>
+					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="pricing-column col-lg-3">
-			<div class="card">
-				<div class="card-header">
-					<h3>Mastiff</h3>
-				</div>
-				<div class="card-body">
-					<h2>$9</h2>
-					<p>Pirority Listing</p>
-					<p>Unlimited Matches</p>
-					<p>Unlimited Messages</p>
-					<button class="btn btn-lg btn-block btn-dark" type="button">Sign Up</button>
-				</div>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
-
 </section>
 
 <%@ include file="../includes/footer.jsp"%>

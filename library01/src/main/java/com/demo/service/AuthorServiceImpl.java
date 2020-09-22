@@ -24,4 +24,9 @@ public class AuthorServiceImpl implements AuthorService{
 			authorMapper.insert(authorVO);
 		}
 	}
+
+	@Override
+	public List<AuthorVO> getAuthorList() {
+		return authorMapper.getAuthorList();
+	}
 }
