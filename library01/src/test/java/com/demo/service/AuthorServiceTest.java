@@ -17,9 +17,9 @@ public class AuthorServiceTest {
 	@Setter(onMethod_ = @Autowired)
 	private AuthorService authorService;
 	
-	@Test
-	public void testGetAuhorsList() {
-		
-		authorService.getAuthorList().forEach(author -> log.info(author));
-	}
+//	@Test
+//	public void testGetAuhorsList() {
+//		
+//		authorService.getAuthorList().forEach(author -> log.info(author));
+//	}
 }

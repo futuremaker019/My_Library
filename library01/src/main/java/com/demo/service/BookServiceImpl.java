@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
+import com.demo.domain.Criteria;
 import com.demo.mapper.AuthorMapper;
 import com.demo.mapper.BookMapper;
 
@@ -34,7 +35,12 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<BookVO> getList() {
-		return bookMapper.getList();
+	public List<BookVO> getListWithPaging(Criteria cri) {
+		return bookMapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria criteria) {
+		return bookMapper.getTotalCount(criteria);
 	}
 }

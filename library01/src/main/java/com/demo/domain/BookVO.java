@@ -19,8 +19,5 @@ public class BookVO {
 	private String publisher;
 	private String url;
 	
-	private Date registeredDate;
-	
-	@JsonInclude(value = Include.NON_NULL)
-	private transient List<AuthorVO> authors;
+	private Date datetime;
 }

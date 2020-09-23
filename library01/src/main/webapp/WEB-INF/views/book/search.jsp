@@ -145,7 +145,7 @@ $(document).ready(function () {
                     publisher : content[0].publisher,
                     thumbnail : content[0].thumbnail,
                     url : content[0].url,
-                    registeredDate : content[0].datetime.slice(0, 10)
+                    datetime : content[0].datetime.slice(0, 10)
                 }
 
             var authors = [];
@@ -154,9 +154,11 @@ $(document).ready(function () {
                 authors.push({isbn : isbn, authors : content[0].authors[i]});
             }
 
-             searchService.addBook(book, function (result) {
+            searchService.addBook(book, function (result) {
                 alert(result);
             });
+            
+            console.log("who starts first?")
 
             searchService.addAuthor(authors, function (result) {
                 alert(result);

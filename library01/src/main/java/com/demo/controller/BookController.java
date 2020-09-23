@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
+import com.demo.domain.Criteria;
+import com.demo.domain.PageDTO;
 import com.demo.service.BookService;
 
 import lombok.Setter;
@@ -29,11 +31,14 @@ public class BookController {
 	private BookService bookService;
 	
 	@GetMapping("")
-	public String collections(Model model) {
-		List<BookVO> bookList = bookService.getList();
+	public String collections(Model model, Criteria criteria) {
+		List<BookVO> bookList = bookService.getListWithPaging(criteria);
 		log.info("book's List : " + bookList);
 		
+		int total = bookService.getTotal(criteria);
+		
 		model.addAttribute("bookList", bookList);
+		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 		
 		return "/book/collection";
 	}

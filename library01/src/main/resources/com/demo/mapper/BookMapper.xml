@@ -23,9 +23,28 @@
 	<select id="getList" resultType="com.demo.domain.BookVO">
 		select * from tbl_book order by bno
 	</select>
+	
+	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">
+		<![CDATA[
+			select
+				bno, isbn, title, publisher, thumbnail, url, datetime
+			from
+				(
+					select
+					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime
+					from tbl_book
+					where rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum} - 1) * #{amount}
+			order by bno desc
+		]]>
+	</select>
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_book where bno > 0
+	</select>
 
 	<insert id="insert">
 		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime)
-		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{registeredDate})
+		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime})
 	</insert>
 </mapper>

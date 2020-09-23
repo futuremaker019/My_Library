@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
+import com.demo.domain.Criteria;
 import com.demo.mapper.BookMapper;
 
 import lombok.Setter;
@@ -47,8 +48,15 @@ public class BookServiceTest {
 //		log.info("bookVO : " + bookVO);
 //	}
 	
-	@Test
-	public void testGetList() {
-		bookService.getList().forEach(book -> log.info(book));
-	}
+//	@Test
+//	public void testGetList() {
+//		bookService.getListWithPaging(new Criteria(2, 20)).forEach(book -> log.info(book.getTitle()));
+//	}
+	
+//	@Test
+//	public void testTotalCount() {
+//		Criteria criteria = new Criteria(); 
+//		
+//		log.info(bookService.getTotal(criteria));
+//	}
 }
