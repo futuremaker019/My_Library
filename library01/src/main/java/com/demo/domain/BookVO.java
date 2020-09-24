@@ -6,9 +6,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookVO {
 	
 	private Long bno;
@@ -20,4 +24,6 @@ public class BookVO {
 	private String url;
 	
 	private Date datetime;
+	
+	private List<AuthorVO> authors;
 }

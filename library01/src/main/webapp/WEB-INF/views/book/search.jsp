@@ -140,32 +140,27 @@ $(document).ready(function () {
             var content = selectedItem.documents;
             
             var book = {
+            		isbn : isbn,
                     title : content[0].title,
-                    isbn : isbn,
-                    publisher : content[0].publisher,
                     thumbnail : content[0].thumbnail,
+                    publisher : content[0].publisher,
                     url : content[0].url,
-                    datetime : content[0].datetime.slice(0, 10)
+                    datetime : content[0].datetime.slice(0, 10),
+                    authors : []
                 }
 
-            var authors = [];
-
             for (var i = 0; i < content[0].authors.length; i++) {
-                authors.push({isbn : isbn, authors : content[0].authors[i]});
+                book.authors.push({isbn : isbn, authors : content[0].authors[i]});
             }
+            
+            console.log(book);
 
             searchService.addBook(book, function (result) {
                 alert(result);
             });
-            
-            console.log("who starts first?")
-
-            searchService.addAuthor(authors, function (result) {
-                alert(result);
-            });
         });
     });
-    // end table operation
+    // end table insert operation
 
     function showListPage(pageableCount) {
         console.log("showListPage activated");

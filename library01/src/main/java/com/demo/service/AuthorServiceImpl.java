@@ -13,20 +13,20 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl{
 	
 	@Setter(onMethod_ = @Autowired)
 	private AuthorMapper authorMapper;
 
-	@Override
-	public void register(List<AuthorVO> authors) {
-		for (AuthorVO authorVO : authors) {
-			authorMapper.insert(authorVO);
-		}
-	}
-
-	@Override
-	public List<AuthorVO> getAuthorList() {
-		return authorMapper.getAuthorList();
-	}
+//	@Override
+//	public void register(List<AuthorVO> authors) {
+//		for (AuthorVO authorVO : authors) {
+//			authorMapper.insert(authorVO);
+//		}
+//	}
+//
+//	@Override
+//	public List<AuthorVO> getAuthorList() {
+//		return authorMapper.getAuthorList();
+//	}
 }
