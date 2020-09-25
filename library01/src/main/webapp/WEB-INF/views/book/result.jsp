@@ -34,7 +34,7 @@
 
 <section style="margin-bottom: 0px;">
 	<div class="row">
-		<c:forEach items="${bookList}" var="list">
+		<c:forEach items="${searchBookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
 				<a class="thumbnail" href="#" >
 					<div class="card text-center bg-secondary" style="with: 100%; height: 100%;">
@@ -73,14 +73,16 @@
 </section>
 <!-- end-pagination -->
 
-<form id='actionForm' action="/book" method="get">
+<form id='pagingForm' action="/book/result" method="get">
 	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
-	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
+	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
+	<input type="hidden" name="type" value="${pageMaker.criteria.type }">
+	<input type="hidden" name="keyword" value="${pageMaker.criteria.keyword }">	
 </form>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var actionForm = $("#actionForm");
+		var pagingForm = $("#pagingForm");
 		var searchForm = $("#searchForm");
 		
 		$(".page-item a").on("click", function(e){
@@ -88,8 +90,8 @@
 			
 			console.log("click");
 			
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));	
-			actionForm.submit();
+			pagingForm.find("input[name='pageNum']").val($(this).attr("href"));	
+			pagingForm.submit();
 		});
 		
 		$("#searchForm button").on("click", function(e){

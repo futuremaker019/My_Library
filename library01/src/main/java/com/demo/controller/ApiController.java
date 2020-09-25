@@ -35,13 +35,7 @@ public class ApiController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> addBook(@RequestBody BookVO bookVO) {
-		
-		log.info("controller에 들어온 파라미터 bookVO : " + bookVO);
-		
 		List<AuthorVO> authors = bookVO.getAuthors();
-		
-		log.info("파라미터 bookVO에서 추출한 authors : " + authors);
-		
 		apiService.register(bookVO, authors);
 		
 		try {

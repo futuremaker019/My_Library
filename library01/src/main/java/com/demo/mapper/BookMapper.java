@@ -9,9 +9,13 @@ public interface BookMapper {
 	
 //	public List<BookVO> getList();
 	
-	public List<BookVO> getListWithPaging(Criteria cri);
+	public List<BookVO> getListWithPaging(Criteria criteria);
+	
+	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 
 	public int insert(BookVO bookVO);
 	
 	public int getTotalCount(Criteria criteria);
+	
+	public int getTotalSearchCount(Criteria criteria);
 }

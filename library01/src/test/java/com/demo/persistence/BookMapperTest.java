@@ -51,4 +51,30 @@ public class BookMapperTest {
 //
 //		list.forEach(book -> log.info(book.getTitle()));
 //	}
+	
+//	@Test
+//	public void testSearch() {
+//		Criteria cri = new Criteria();
+//		
+//		cri.setPageNum(1);
+//		cri.setAmount(20);
+//		cri.setType("A");
+//		cri.setKeyword("최");
+//		
+//		List<BookVO> list = bookMapper.getSearchListWithPaging(cri);
+//		
+//		list.forEach(book -> log.info(book.getTitle()));
+//	}
+	
+	@Test
+	public void testSearchResultCount() {
+		Criteria cri = new Criteria();
+	
+		cri.setPageNum(1);
+		cri.setAmount(20);
+		
+		int count = bookMapper.getTotalSearchCount(cri);
+		
+		log.info("Search count : " +  count);
+	}
 }

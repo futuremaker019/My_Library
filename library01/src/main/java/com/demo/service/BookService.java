@@ -9,7 +9,11 @@ public interface BookService {
 
 	public void register(BookVO bookVO);
 	
-	public List<BookVO> getListWithPaging(Criteria cri);
+	public List<BookVO> getListWithPaging(Criteria criteria);
+	
+	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 	
 	public int getTotal(Criteria criteria);
+	
+	public int getTotalSearchItem(Criteria criteria);
 }

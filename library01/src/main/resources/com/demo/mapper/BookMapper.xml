@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.demo.mapper.BookMapper">
-	<!-- <resultMap type="com.demo.domain.BookVO" id="bookMap">
+	<resultMap type="com.demo.domain.BookVO" id="bookMap">
 		<id property="isbn" column="isbn"/>
 		<result property="bno" column="bno" />
 		<result property="isbn" column="isbn" />
@@ -17,9 +17,31 @@
 	</resultMap>
 	<resultMap type="com.demo.domain.AuthorVO" id="authorMap">
 		<result property="isbn" column="isbn"/>
-		<result property="author" column="author"/>
-	</resultMap> -->
+		<result property="authors" column="authors"/>
+	</resultMap>
 	
+	<!-- search sql -->
+	<sql id="search">			
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'I'.toString()">
+							book.isbn like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							author.authors like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- select -->
 	<select id="getList" resultType="com.demo.domain.BookVO">
 		select * from tbl_book order by bno
 	</select>
@@ -36,13 +58,47 @@
 					where rownum <= #{pageNum} * #{amount}
 				)
 			where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_book
+		where bno > 0
+	</select>
+	
+	<select id="getSearchListWithPaging" resultMap="bookMap">
+		<![CDATA[
+			select distinct
+				bno, isbn, title, publisher, thumbnail, url, datetime
+			from
+				(
+					select
+					rownum rn, bno, book.isbn, title, publisher, thumbnail, url, datetime
+					from tbl_book book left outer join tbl_book_author author
+					on book.isbn = author.isbn
+					where 
+		]]>
+			
+			<include refid="search"></include>
+		
+		<![CDATA[ 
+					rownum <= #{pageNum} * #{amount}
+				)
+			where rn > (#{pageNum} - 1) * #{amount}
 			order by bno desc
 		]]>
 	</select>
-	<select id="getTotalCount" resultType="int">
-		select count(*) from tbl_book where bno > 0
+	
+	<select id="getTotalSearchCount" resultType="int">
+		select count(distinct book.isbn) 
+		from tbl_book book left outer join tbl_book_author author
+		on book.isbn = author.isbn
+		where 
+			<include refid="search"></include>
+		bno > 0
 	</select>
 
+	<!-- insert -->
 	<insert id="insert">
 		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime)
 		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime})

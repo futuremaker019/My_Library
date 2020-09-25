@@ -43,4 +43,14 @@ public class BookServiceImpl implements BookService{
 	public int getTotal(Criteria criteria) {
 		return bookMapper.getTotalCount(criteria);
 	}
+
+	@Override
+	public List<BookVO> getSearchListWithPaging(Criteria criteria) {
+		return bookMapper.getSearchListWithPaging(criteria);
+	}
+
+	@Override
+	public int getTotalSearchItem(Criteria criteria) {
+		return bookMapper.getTotalSearchCount(criteria);
+	}
 }

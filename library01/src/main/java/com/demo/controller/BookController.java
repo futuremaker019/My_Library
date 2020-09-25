@@ -3,17 +3,11 @@ package com.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
 import com.demo.domain.PageDTO;
@@ -41,6 +35,19 @@ public class BookController {
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 		
 		return "/book/collection";
+	}
+	
+	@GetMapping("/result")
+	public String result(Model model, Criteria criteria) {
+		List<BookVO> searchBookList = bookService.getSearchListWithPaging(criteria);
+		log.info("book's List : " + searchBookList);
+		
+		int searchTotal = bookService.getTotalSearchItem(criteria);
+		
+		model.addAttribute("searchBookList", searchBookList);
+		model.addAttribute("pageMaker", new PageDTO(criteria, searchTotal));
+		
+		return "/book/result";
 	}
 	
 	@GetMapping("/search")
