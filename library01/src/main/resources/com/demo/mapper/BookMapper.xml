@@ -52,7 +52,7 @@
 				bno, isbn, title, publisher, thumbnail, url, datetime
 			from
 				(
-					select
+					select /*+INDEX(tbl_book bno_index)*/
 					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime
 					from tbl_book
 					where rownum <= #{pageNum} * #{amount}
