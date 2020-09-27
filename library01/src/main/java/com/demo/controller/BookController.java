@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
 import com.demo.domain.PageDTO;
@@ -53,5 +55,19 @@ public class BookController {
 	@GetMapping("/search")
 	public String search() {
 		return "/book/search";
+	}
+	
+	@GetMapping("/one")
+	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
+		BookVO book = bookService.getBook(bno);
+		log.info("book details: " + book);
+		
+		List<AuthorVO> authors = book.getAuthors();
+		log.info("authors: " + authors);
+		
+		model.addAttribute("book", book);
+		model.addAttribute("authors", authors);
+		
+		return "/book/one";
 	}
 }

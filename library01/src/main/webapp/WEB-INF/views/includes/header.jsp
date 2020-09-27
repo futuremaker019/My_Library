@@ -23,34 +23,25 @@
 </head>
 
 <body>
-     
 	 <section id="title">
-		<div class="container-fluid">
-	
+		<div class="container">
 			<!-- Nav Bar -->
-	
 			<nav class="navbar navbar-expand-lg navbar-dark">
-	
 				<a class="navbar-brand" href="/book">My Library</a>
-	
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarTogglerDemo02"
-					aria-controls="navbarTogglerDemo02" aria-expanded="false"
+					data-target="#navbarToggler"
+					aria-controls="navbarToggler" aria-expanded="false"
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-	
-				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+				<div class="collapse navbar-collapse" id="navbarToggler">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a>
-						</li>
-						<li class="nav-item"><a class="nav-link" href="#cta">Download</a>
+						<li class="nav-item"><a class="nav-link" href="#Editing">Editing</a>
 						</li>
 					</ul>
-				</div>
-				
+				</div>			
 			</nav>
 		</div>
 	</section>

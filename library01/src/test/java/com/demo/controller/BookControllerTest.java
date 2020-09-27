@@ -32,11 +32,22 @@ public class BookControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
+//	@Test
+//	public void testList() throws Exception {
+//		mockMvc.perform(MockMvcRequestBuilders.get("/book"))
+//			.andReturn()
+//			.getModelAndView()
+//			.getModelMap();
+//	}
+	
 	@Test
-	public void testList() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/book"))
-			.andReturn()
-			.getModelAndView()
-			.getModelMap();
+	public void testGetOne() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/book/one")
+				.param("bno", "2"))
+		.andReturn()
+		.getModelAndView()
+		.getModelMap();
 	}
+	
 }

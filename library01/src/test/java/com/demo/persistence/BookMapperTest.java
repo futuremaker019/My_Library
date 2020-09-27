@@ -66,15 +66,20 @@ public class BookMapperTest {
 //		list.forEach(book -> log.info(book.getTitle()));
 //	}
 	
-	@Test
-	public void testSearchResultCount() {
-		Criteria cri = new Criteria();
+//	@Test
+//	public void testSearchResultCount() {
+//		Criteria cri = new Criteria();
+//	
+//		cri.setPageNum(1);
+//		cri.setAmount(20);
+//		
+//		int count = bookMapper.getTotalSearchCount(cri);
+//		
+//		log.info("Search count : " +  count);
+//	}
 	
-		cri.setPageNum(1);
-		cri.setAmount(20);
-		
-		int count = bookMapper.getTotalSearchCount(cri);
-		
-		log.info("Search count : " +  count);
+	@Test
+	public void testGetOne() {
+		log.info(bookMapper.getOne(7L));
 	}
 }

@@ -11,22 +11,30 @@
 				<h2>Books in My Library</h2>
 			</div>
 			<div>
-				<h4>검색하세요.</h4>
+				<label style="margin: 0 0 0 5px;">내 서재의 책을 검색하세요.</label>
 			</div>
 			<form id="searchForm" action="/book/result" method="get">
-				<select name="type">
-					<option value="">검색종류</option>
-					<option value="T">제목</option>
-					<option value="I">ISBN</option>
-					<option value="A">작가</option>
-					<option value="TI">제목 or ISBN</option>
-					<option value="TA">제목 or 작가</option>
-					<option value="TIA">제목 or ISBN or 작가</option>
-				</select>
-				<input type="text" name="keyword" placeholder="검색 키워드 입력"/>
-				<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
-				<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
-				<button class="btn btn-default">Search</button>
+				<div class="form-row">
+					<div class="col-md-4">
+						<select name="type" class="custom-select">
+							<option value="">검색종류</option>
+							<option value="T">제목</option>
+							<option value="I">ISBN</option>
+							<option value="A">작가</option>
+							<option value="TI">제목 or ISBN</option>
+							<option value="TA">제목 or 작가</option>
+							<option value="TIA">제목 or ISBN or 작가</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<input class="form-control" type="text" name="keyword" placeholder="검색 키워드 입력"/>
+					</div>
+					<div class="col-md-4">
+						<button class="btn btn-default">Search</button>
+					</div>
+					<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
+					<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
+				</div>
 			</form>
 		</div>
 	</div>
@@ -36,8 +44,8 @@
 	<div class="row">
 		<c:forEach items="${bookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href="#" >
-					<div class="card text-center bg-secondary" style="with: 100%; height: 100%;">
+				<a class="thumbnail" href='/book/one?bno=<c:out value="${list.bno }"/>' >
+					<div class="card bg-secondary" style="with: 100%; height: 100%;">
 						<img src="<c:out value='${list.thumbnail }'/>" style="width: 150px; margin: 0 auto;" >
 					</div>
 				</a>
@@ -46,6 +54,8 @@
 	</div>
 	<!-- end-card with book list -->
 </section>
+<!-- end book list -->
+
 <section>
 	<div class="row">
 		<div class="col-lg-12">
@@ -90,6 +100,7 @@
 			
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));	
 			actionForm.submit();
+			
 		});
 		
 		$("#searchForm button").on("click", function(e){

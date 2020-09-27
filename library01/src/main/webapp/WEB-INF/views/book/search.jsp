@@ -7,8 +7,15 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<input class="form-control mr-sm-2" id="bookSearch" type="search" placeholder="책 제목을 입력하세요" aria-label="Search">
-		<button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Search</button>
+		<div class="form-row">
+			<div class="col-lg-8">
+				<label class="" style="text-align: left; margin: 0 0 0 5px;">원하는 책을 찾으세요</label>
+				<input class="form-control mr-sm-2" id="bookSearch" type="search" placeholder="키워드 입력" aria-label="Search">
+			</div>
+			<div class="col-lg-4">
+				<button class="btn btn-outline-success" id="search" type="submit" style="margin-top:24px">Search</button>	
+			</div>
+		</div>
 	</div>
 </div>
  
@@ -24,7 +31,7 @@
             <tbody class="contents-items">
             </tbody>
         </table>
-        <div class="page-control ">
+        <div class="page-control">
             <ul class="pagination float-right">
             </ul>
         </div>
@@ -85,39 +92,6 @@ $(document).ready(function () {
         showList(searchValue);
     })
     
-    // 도서 이름 검색으로 리스트를 불러옴
-    function showList(searchValue) {
-        console.log("showList activated.");
-
-        searchService.api_getBooks(searchValue, function(list){
-            console.log(list);
-
-            var content = list.documents;
-            var pageableCount = list.meta.pageable_count;
-
-            let strTag = '';
-
-            if (content == null) {
-                return;
-            }
-
-            for (var i = 0, len = content.length || 0; i < len; i++) {
-                strTag += "<tr data-isbn='" + content[i].isbn + "'>"
-                strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>"
-                strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>"
-                strTag += "<div>" + content[i].authors + "</div>"
-                strTag += "<div>" + content[i].publisher + "</div>"
-                strTag += "<div><a href='" + content[i].url + "' target='_black'>책 정보</a></div>"
-                strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
-                strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
-                strTag += "<td class='option'><button class='LinkUrl btn btn-warning'>상세보기</button></td></tr>"
-            }
-            contents.html(strTag);
-
-            showListPage(pageableCount);
-        });
-    }
-
     // 리스트에서 아이템 선택시 해당 isbn을 추출하여 database에 저장
     $(".table").on("click", "button[name='addMyLib']", function(){
 
@@ -197,6 +171,39 @@ $(document).ready(function () {
         str += "</ul></div>";
         
         pageCounter.html(str);
+    }
+    
+    // 도서 이름 검색으로 리스트를 불러옴
+    function showList(searchValue) {
+        console.log("showList activated.");
+
+        searchService.api_getBooks(searchValue, function(list){
+            console.log(list);
+
+            var content = list.documents;
+            var pageableCount = list.meta.pageable_count;
+
+            let strTag = '';
+
+            if (content == null) {
+                return;
+            }
+
+            for (var i = 0, len = content.length || 0; i < len; i++) {
+                strTag += "<tr data-isbn='" + content[i].isbn + "'>"
+                strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>"
+                strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>"
+                strTag += "<div>" + content[i].authors + "</div>"
+                strTag += "<div>" + content[i].publisher + "</div>"
+                strTag += "<div><a href='" + content[i].url + "' target='_black'>책 정보</a></div>"
+                strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
+                strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
+                strTag += "<td class='option'><button class='LinkUrl btn btn-warning'>상세보기</button></td></tr>"
+            }
+            contents.html(strTag);
+
+            showListPage(pageableCount);
+        });
     }
 });
 </script>

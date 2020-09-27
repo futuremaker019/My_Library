@@ -97,6 +97,12 @@
 			<include refid="search"></include>
 		bno > 0
 	</select>
+	
+	<select id="getOne" resultMap="bookMap">
+		select bno, book.isbn, title,  publisher, thumbnail, url, datetime, authors  
+		from tbl_book book inner join tbl_book_author author on book.isbn = author.isbn
+		where bno = #{bno}
+	</select>
 
 	<!-- insert -->
 	<insert id="insert">

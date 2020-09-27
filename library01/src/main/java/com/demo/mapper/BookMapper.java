@@ -12,6 +12,8 @@ public interface BookMapper {
 	public List<BookVO> getListWithPaging(Criteria criteria);
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);
+	
+	public BookVO getOne(Long bno);
 
 	public int insert(BookVO bookVO);
 	

@@ -13,6 +13,8 @@ public interface BookService {
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 	
+	public BookVO getBook(Long bno);
+	
 	public int getTotal(Criteria criteria);
 	
 	public int getTotalSearchItem(Criteria criteria);
