@@ -3,30 +3,33 @@ package com.demo.domain;
 import java.sql.Date;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 public class ReviewVO {
 
-	private Long bno;
 	private Long rno;
+	private Long bno;
 	
-	private String metion;
-	private Character rating;
+	private String mention;
+	private Integer rating;
 	
-	private Date regdate;
-	private Date updatedate;
+	private Date createdate;
+	private Date modifieddate;
 	
 	@Builder
-	public ReviewVO(Long bno, Long rno, String metion, Character rating, Date regdate, Date updatedate) {
+	public ReviewVO(Long bno, Long rno, String mention, Integer rating, Date createdate, Date modifieddate) {
 		this.bno = bno;
 		this.rno = rno;
-		this.metion = metion;
+		this.mention = mention;
 		this.rating = rating;
-		this.regdate = regdate;
-		this.updatedate = updatedate;
+		this.createdate = createdate;
+		this.modifieddate = modifieddate;
 	}
 }

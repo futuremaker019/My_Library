@@ -12,7 +12,8 @@
 		<result property="publisher" column="publisher" />
 		<result property="thumbnail" column="thumbnail" />
 		<result property="url" column="url" />
-		<result property="registeredDate" column="registeredDate" />
+		<result property="datetime" column="datetime" />
+		<result property="createdate" column="createdate" />
 		<collection property="authors" resultMap="authorMap"></collection>
 	</resultMap>
 	<resultMap type="com.demo.domain.AuthorVO" id="authorMap">
@@ -99,7 +100,7 @@
 	</select>
 	
 	<select id="getOne" resultMap="bookMap">
-		select bno, book.isbn, title,  publisher, thumbnail, url, datetime, authors  
+		select bno, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, authors  
 		from tbl_book book inner join tbl_book_author author on book.isbn = author.isbn
 		where bno = #{bno}
 	</select>

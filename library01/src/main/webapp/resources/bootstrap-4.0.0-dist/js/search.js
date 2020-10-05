@@ -84,7 +84,6 @@ var searchService = (function () {
       });
    }
 
-
    function getList(param, callback, error) {
       console.log("getList activated.");
 

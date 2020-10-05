@@ -197,7 +197,7 @@ $(document).ready(function () {
                 strTag += "<div>" + content[i].publisher + "</div>"
                 strTag += "<div><a href='" + content[i].url + "' target='_black'>책 정보</a></div>"
                 strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
-                strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
+                strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-outline-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
                 strTag += "<td class='option'><button class='LinkUrl btn btn-warning'>상세보기</button></td></tr>"
             }
             contents.html(strTag);

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.demo.mapper.SentenceMapper">
+	<insert id="insert">
+		insert into tbl_sentence(sno, bno, sentence)
+		values(seq_sentence.nextval, #{bno}, #{sentence})
+	</insert>
+	
+	<select id="read" resultType="com.demo.domain.SentenceVO">
+		select sno, bno, sentence, createdate, modifieddate  
+		from tbl_sentence where sno = #{sno}
+	</select>
+	<select id="getListWithPaging" resultType="com.demo.domain.SentenceVO">
+		select sno, bno, sentence, createdate, modifieddate 
+		from tbl_sentence
+		where bno = ${bno}
+		order by sno asc
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_sentence where sno = #{sno}
+	</delete>
+	<update id="update">
+		update tbl_sentence set
+		sentence = #{sentence},
+		modifieddate = sysdate
+		where sno = #{sno}
+	</update>
+</mapper>

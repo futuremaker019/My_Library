@@ -24,6 +24,7 @@ public class BookVO {
 	private String url;
 	
 	private Date datetime;
+	private Date createdate;
 	
 	private List<AuthorVO> authors;
 }
