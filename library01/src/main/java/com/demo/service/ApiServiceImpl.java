@@ -33,4 +33,9 @@ public class ApiServiceImpl implements ApiService{
 			}
 		}
 	}
+
+	@Override
+	public BookVO findBookByIsbn(String isbn) {
+		return bookMapper.getBook(isbn);
+	}
 }

@@ -21,6 +21,9 @@
  
 <div class="row">
     <div class="col-lg-12">
+    	<div class="info">
+    		<h4>책을 검색하면 검색내용이 나옵니다.</h4>
+    	</div>
         <table class="table table-bordered table-hover">
             <colgroup>
                 <col width="90">
@@ -110,6 +113,13 @@ $(document).ready(function () {
             isbn = dividedIsbn[1];
         }
         
+        searchService.getBook(isbn, function(storedBook){
+        	if(isbn == storedBook.isbn){
+            	alert("서재에 존재합니다.");
+            	return;
+            }
+        });
+        
         searchService.api_getBook(isbn, function (selectedItem) {
             console.log("isbn : " + isbn);
             console.log(selectedItem);
@@ -131,11 +141,11 @@ $(document).ready(function () {
             }
             
             console.log(book);
-
+            
             searchService.addBook(book, function (result) {
                 alert(result);
-            });
-        });
+            });	
+		});
     });
     // end table insert operation
 
@@ -188,8 +198,8 @@ $(document).ready(function () {
 
             let strTag = '';
 
-            if (content == null) {
-                return;
+            if (content.length == 0) {
+                return alert("요청하신 컨텐츠를 찾지 못했습니다.");
             }
 
             for (var i = 0, len = content.length || 0; i < len; i++) {
@@ -203,6 +213,7 @@ $(document).ready(function () {
                 strTag += "<button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button>"
                 strTag += "<button class='linkUrl btn btn-warning' onClick='window.open(\""+ content[i].url +"\")'>상세보기</button></div></td></tr>"
             }
+            $(".info").empty();
             contents.html(strTag);
 
             showListPage(pageableCount);

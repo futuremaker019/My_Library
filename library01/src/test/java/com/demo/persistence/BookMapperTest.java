@@ -1,5 +1,7 @@
 package com.demo.persistence;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
@@ -85,10 +87,20 @@ public class BookMapperTest {
 	 * @Test public void testGetOne() { log.info(bookMapper.getOne(7L)); }
 	 */
 	
+	/*
+	 * @Test public void testDeleteBook() { int count = bookMapper.delete(1L);
+	 * 
+	 * log.info("delete count: " + count); }
+	 */
+	
 	@Test
-	public void testDeleteBook() {
-		int count = bookMapper.delete(1L);
+	public void testGetBookByIsbn() {
+		String isbn = "1130613372";
+		String isbn2 = "8901130467";
 		
-		log.info("delete count: " + count);
+		BookVO book = bookMapper.getBook(isbn2);
+		
+		/* assertThat(book.getIsbn(), is("1130613372")); */
+		log.info(book);
 	}
 }

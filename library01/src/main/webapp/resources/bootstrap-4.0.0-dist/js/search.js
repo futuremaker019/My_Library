@@ -63,31 +63,10 @@ var searchService = (function () {
       });
    }
 
-   function addAuthor(item, callback, error) { 
-      console.log("add author activated.");
+   function getBook(isbn, callback, error) {
+      console.log("getBook activated.");
 
-      $.ajax({
-         type: 'post',
-         url: '/api/addauthors/',
-         data : JSON.stringify(item),
-         contentType: "application/json; charset=utf-8",
-      })
-      .done(function(result, status, xhr){
-         if (callback) {
-            callback(result);
-         }
-      })
-      .fail(function(xhr, status, err){
-         if(error) {
-            error(err);
-         }
-      });
-   }
-
-   function getList(param, callback, error) {
-      console.log("getList activated.");
-
-      $.getJSON("/book/",
+      $.getJSON("/api/" + isbn,
          function (data) {
             if (callback) {
                callback(data);
@@ -104,7 +83,6 @@ var searchService = (function () {
       api_getBooks : api_getBooks,
       api_getBook :api_getBook,
       addBook : addBook,
-      addAuthor : addAuthor,
-      getList : getList
+      getBook : getBook
    };
 })();

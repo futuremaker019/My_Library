@@ -7,13 +7,13 @@ import com.demo.domain.Criteria;
 
 public interface BookMapper {
 	
-//	public List<BookVO> getList();
-	
 	public List<BookVO> getListWithPaging(Criteria criteria);
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 	
 	public BookVO getOne(Long bno);
+	
+	public BookVO getBook(String isbn);
 
 	public int insert(BookVO bookVO);
 	

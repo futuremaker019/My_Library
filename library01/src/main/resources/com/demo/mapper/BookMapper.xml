@@ -104,6 +104,12 @@
 		from tbl_book book inner join tbl_book_author author on book.isbn = author.isbn
 		where bno = #{bno}
 	</select>
+	
+	<select id="getBook" resultType="com.demo.domain.BookVO">
+		select bno, isbn, title, publisher, thumbnail, url, datetime, createdate  
+		from tbl_book
+		where isbn = #{isbn}
+	</select>
 
 	<!-- insert -->
 	<insert id="insert">

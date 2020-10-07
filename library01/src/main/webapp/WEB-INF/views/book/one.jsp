@@ -192,7 +192,7 @@
 			textArea.val("");
 			modal.modal('hide');
 			
-			location.reload(true);
+			refresh();
 		});
 		
 		// 서평 수정 버튼 클릭 이벤트
@@ -210,7 +210,7 @@
 			textArea.val("");
 			modal.modal('hide');
 			
-			location.reload(true);
+			refresh();
 		});
 		
 		// 서평 삭제 버튼 클릭 이벤트
@@ -218,7 +218,8 @@
 			reviewService.deleteReview(bnoValue, function(result){
 				alert(result);
 			});
-			location.reload(true);
+			
+			refresh();
 		});
 		
 		// 문장 등록하기 버튼 클릭 이벤트
@@ -245,7 +246,7 @@
 			textArea.val("");
 			modal.modal('hide');
 			
-			window.location.reload();
+			refresh();
 		});
 		
 		// 문장 수정 버튼 클릭 이벤트
@@ -262,7 +263,7 @@
 			textArea.val("");
 			modal.modal('hide');
 			
-			window.location.reload();
+			refresh();
 		});
 		
 		// 수정하기 버튼 클릭 이벤트
@@ -297,14 +298,6 @@
 			alert("Book removed successfully");
 		});
 		
-		/* $("#bookRemoveBtn").on("click", function(e){
-			bookService.removeBook(bnoValue, function(result){
-				alert(result);
-			});
-			window.location.reload();
-			window.location.href='/book';
-		}) */
-		
 		// 문장 수집 불러오기
 		function showList(page) {
 			let str ="";
@@ -322,6 +315,10 @@
 				
 				$(".list-group").html(str);
 			});
+		}
+		
+		function refresh(){
+			window.location.reload();
 		}
 	});
 </script>
