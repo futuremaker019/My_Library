@@ -1,5 +1,8 @@
 package com.demo.persistence;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -78,8 +81,14 @@ public class BookMapperTest {
 //		log.info("Search count : " +  count);
 //	}
 	
+	/*
+	 * @Test public void testGetOne() { log.info(bookMapper.getOne(7L)); }
+	 */
+	
 	@Test
-	public void testGetOne() {
-		log.info(bookMapper.getOne(7L));
+	public void testDeleteBook() {
+		int count = bookMapper.delete(1L);
+		
+		log.info("delete count: " + count);
 	}
 }

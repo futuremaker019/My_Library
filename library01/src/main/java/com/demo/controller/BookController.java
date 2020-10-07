@@ -3,11 +3,16 @@ package com.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer.RedirectionEndpointConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
@@ -62,6 +67,17 @@ public class BookController {
 		return "/book/search";
 	}
 	
+	@GetMapping("/editing")
+	public void editing(Model model, Criteria criteria) {
+		List<BookVO> bookList = bookService.getListWithPaging(criteria);
+		log.info("book's List : " + bookList);
+		
+		int total = bookService.getTotal(criteria);
+		
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("pageMaker", new PageDTO(criteria, total));
+	}
+	
 	@GetMapping("/one")
 	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
@@ -79,5 +95,19 @@ public class BookController {
 		model.addAttribute("review", review);
 		
 		return "/book/one";
+	}
+	
+	@PostMapping("/remove")
+	public String removeBooks(@RequestParam(required = false) List<Long> bnos,
+							@RequestParam(required = false) Long bno, RedirectAttributes rttr) {
+		
+		if(bnos == null) {
+			bookService.remove(bno);
+			rttr.addFlashAttribute("result", "Book remove successfully");
+			return "redirect:/book";
+		}
+		bookService.removeBooks(bnos);
+		
+		return "redirect:/book";
 	}
 }

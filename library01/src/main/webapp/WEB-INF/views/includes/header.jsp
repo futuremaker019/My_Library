@@ -38,7 +38,7 @@
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="#Editing">Editing</a>
+						<li class="nav-item"><a class="nav-link" href="/book/editing">Editing</a>
 						</li>
 					</ul>
 				</div>			

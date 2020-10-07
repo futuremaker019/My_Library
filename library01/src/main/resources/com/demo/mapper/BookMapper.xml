@@ -110,4 +110,9 @@
 		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime)
 		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime})
 	</insert>
+	
+	<!-- delete -->
+	<delete id="delete">
+		delete from tbl_book where bno = #{bno}	
+	</delete>
 </mapper>

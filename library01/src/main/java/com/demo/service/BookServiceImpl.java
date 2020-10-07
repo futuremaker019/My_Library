@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
@@ -57,5 +58,16 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public BookVO getBook(Long bno) {
 		return bookMapper.getOne(bno);
+	}
+	
+	@Override
+	public int remove(Long bno) {
+		return bookMapper.delete(bno);
+	}
+
+	@Override
+	@Transactional
+	public void removeBooks(List<Long> bnos) {
+		bnos.forEach(bno -> bookMapper.delete(bno));
 	}
 }

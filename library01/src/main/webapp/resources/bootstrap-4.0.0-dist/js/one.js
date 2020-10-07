@@ -1,6 +1,6 @@
 console.log("----one js active-----");
 
-var oneService = (function() {
+const reviewService = (function() {
 
 	function addReview(review, callback, error) {
 	  console.log("review post activated");
@@ -87,3 +87,29 @@ var oneService = (function() {
 		deleteReview : deleteReview
 	};
 })();
+
+const bookService = (function() {
+	function removeBook(bno, callback, error) {
+		console.log("book remove activated");
+
+		$.ajax({
+			type: "delete",
+			url: "/book/remove/" + bno
+		})
+		.done(function (data, status, xhr) {
+			if (callback) {
+			   callback(data);
+			}
+		})
+		.fail(function(xhr, status, err) {
+			if (error) {
+			error(err);
+			}   
+		});
+	}
+	
+	return {
+		removeBook : removeBook
+	};
+})();
+

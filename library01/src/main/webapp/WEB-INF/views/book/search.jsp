@@ -49,6 +49,7 @@
 </form>
 
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/search.js"></script>
+<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script>
 $(document).ready(function () {
     console.log("===============");
@@ -90,6 +91,8 @@ $(document).ready(function () {
         var searchValue = {query : bookSearch.val(), page : pageNum};
 
         showList(searchValue);
+        
+        util.scrollToTop();
     })
     
     // 리스트에서 아이템 선택시 해당 isbn을 추출하여 database에 저장
@@ -190,15 +193,15 @@ $(document).ready(function () {
             }
 
             for (var i = 0, len = content.length || 0; i < len; i++) {
-                strTag += "<tr data-isbn='" + content[i].isbn + "'>"
+                strTag += "<tr>"
                 strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>"
                 strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>"
                 strTag += "<div>" + content[i].authors + "</div>"
                 strTag += "<div>" + content[i].publisher + "</div>"
-                strTag += "<div><a href='" + content[i].url + "' target='_black'>책 정보</a></div>"
                 strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
-                strTag += "<td class='info'><button name='addMyLib' class='addMyLib btn btn-outline-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button></td>"
-                strTag += "<td class='option'><button class='LinkUrl btn btn-warning'>상세보기</button></td></tr>"
+                strTag += "<td class='info'><div class='btnBundle'>"
+                strTag += "<button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button>"
+                strTag += "<button class='linkUrl btn btn-warning' onClick='window.open(\""+ content[i].url +"\")'>상세보기</button></div></td></tr>"
             }
             contents.html(strTag);
 

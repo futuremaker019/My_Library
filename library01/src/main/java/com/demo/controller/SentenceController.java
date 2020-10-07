@@ -37,7 +37,7 @@ public class SentenceController {
 							@PathVariable("page")int page) {
 		
 		log.info("------------------------------get List ------------------------------");
-		Criteria criteria = new Criteria(page, 10);
+		Criteria criteria = new Criteria(page, 5);
 		log.info("Criteria : " + criteria);
 		List<SentenceVO> sentences = sentenceService.getListWithPaging(criteria, bno);
 		
@@ -72,7 +72,7 @@ public class SentenceController {
 		
 		log.info("remove sentence sno : " + sno );
 		return sentenceService.remove(sno) == 1 
-				? new ResponseEntity<>("success", HttpStatus.OK)
+				? new ResponseEntity<>("Sentence deleted successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -87,13 +87,8 @@ public class SentenceController {
 		log.info("sentenceVO's sno : " + sentenceVO.getSno());
 		log.info("sentenceVO's sentence : " + sentenceVO.getSentence());
 		
-		sentenceVO.setSno(sno);
-		
-		log.info("modify sno : " + sno);
-		log.info("modify sentenceVO : " + sentenceVO);
-		
 		return sentenceService.modify(sentenceVO) == 1 
-				? new ResponseEntity<>("modifying done.", HttpStatus.OK)
+				? new ResponseEntity<>("Sentence modified successfully.", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

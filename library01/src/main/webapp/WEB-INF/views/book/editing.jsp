@@ -4,39 +4,6 @@
 
 <%@ include file="../includes/header.jsp"%>
 
-<section>
-	<div class="row">
-		<div class="col-lg-12">
-			<div>
-				<label style="margin: 0 0 0 5px;">내 서재의 책을 검색하세요.</label>
-			</div>
-			<form id="searchForm" action="/book/result" method="get">
-				<div class="form-row">
-					<div class="col-md-4">
-						<select name="type" class="custom-select">
-							<option value="">검색종류</option>
-							<option value="T">제목</option>
-							<option value="I">ISBN</option>
-							<option value="A">작가</option>
-							<option value="TI">제목 or ISBN</option>
-							<option value="TA">제목 or 작가</option>
-							<option value="TIA">제목 or ISBN or 작가</option>
-						</select>
-					</div>
-					<div class="col-md-4">
-						<input class="form-control" type="text" name="keyword" placeholder="검색 키워드 입력"/>
-					</div>
-					<div class="col-md-4">
-						<button class="btn btn-default">Search</button>
-					</div>
-					<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
-					<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
-				</div>
-			</form>
-		</div>
-	</div>
-</section>
-
 <section style="margin-bottom: 0px;">
 	<div class="row">
 		<c:forEach items="${bookList}" var="list">
@@ -95,22 +62,7 @@
 			actionForm.submit();
 		});
 		
-		$("#searchForm button").on("click", function(e){
-			if (!searchForm.find("option:selected").val()) {
-				alert("검색 종류를 선택하세요.");
-				return false;
-			}
-			
-			if (!searchForm.find("input[name='keyword']").val()) {
-				alert("키워드를 선택하세요.");
-				return false;
-			}
-			
-			searchForm.find("input[name='pageNum']").val("1");
-			e.preventDefault();
-			
-			searchForm.submit();
-		});
+		
 	});
 </script>
 

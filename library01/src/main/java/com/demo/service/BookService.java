@@ -18,4 +18,8 @@ public interface BookService {
 	public int getTotal(Criteria criteria);
 	
 	public int getTotalSearchItem(Criteria criteria);
+	
+	public int remove(Long bno);
+
+	public void removeBooks(List<Long> bnos);
 }

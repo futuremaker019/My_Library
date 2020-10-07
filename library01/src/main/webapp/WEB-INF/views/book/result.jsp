@@ -36,10 +36,8 @@
 	<div class="row">
 		<c:forEach items="${searchBookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href="#" >
-					<div class="card text-center bg-secondary" style="with: 100%; height: 100%;">
-						<img src="<c:out value='${list.thumbnail }'/>" style="width: 150px; margin: 0 auto;" >
-					</div>
+				<a class="thumbnail" href='/book/one?bno=<c:out value="${list.bno }"/>' >
+					<img src="<c:out value='${list.thumbnail }'/>" id="collections" class="card img-thumbnail" style="" >
 				</a>
 			</div>
 		</c:forEach>

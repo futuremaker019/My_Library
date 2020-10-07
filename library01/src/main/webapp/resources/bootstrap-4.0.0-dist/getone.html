@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>MyLibrary</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400|Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/c0be56fbbf.js" crossorigin="anonymous"></script>
+
+    <!-- jquery-3.5.1 -->
+    <script src="jquery/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+    <section id="title">
+        <div class="container">
+            <!-- Nav Bar -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="/book">My Library</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggler">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#Editing">Editing</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <section class="container border-bottom">
+        <div class="col-lg-12">
+            <div class="form-row" style="padding-top: 30px;">
+                <div class="form-group col-md-6 text-center">
+                    <img src="image/book-image.png" style="width: 180px;">
+                </div>
+                <div class="form-group col-md-6 text-center">
+                    <p class="">
+                        <h5 style="margin:auto 0;">미움받을 용기</h5>
+                    </p>
+                    <p> 작가 : 가고시지</p>
+                    <p>isbn(10자리) : 112233441112</p>
+                    <P><a href="하가고자거" target="_black">책 상세 정보 보기</a></P>
+                    <p>책 출판일 : 2020-10-10/></p>
+                    <p>내 서재 등록일 : 2010-22-11</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container border-bottom" style="padding-bottom : 30px;">
+        <div class="col-lg-12">
+            <div class="form-row" style="padding-top: 30px;">
+                <div class="form-group col-lg-12" id="mention-group" style="padding-top: 30px;">
+                    <label class="metion-label">서평</label>
+                    <h4>서평이 없어요. 서평을 작성해주세요.</h4>
+                </div>
+                <div class="gorm-group col-lg-12">
+                    <div class="form-inline float-right" id="buttonController">
+                        <button class="btn btn-outline-success" id="modalAddActive" type="button">작성하기</button>
+                    </div>
+                </div>
+            </div>
+            <!-- form end -->
+        </div>
+    </section>
+
+    <section class="container pt-3">
+        <div class="col-lg-12">
+            <!-- /.card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="d-inline-block">문장 수집</h5>
+                    <button id="modalSentenceActive" class="btn btn-primary float-right">문장 등록하기</button>
+                </div>
+                <!-- /.card-heading -->
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" data-sno=1>
+                            <div>
+                                <div class="header">
+                                    <strong>p123</strong>
+                                    <small class="ml-4 text-muted">2020-10-05 13:13</small>
+                                    <div class='btn-group btn-group-sm float-right'>
+                                        <button class="btn btn-default" name='sentence-modify' data-sno=1>수정하기</button> 
+                                        <button class="btn btn-default" name='sentence-delete'>삭제하기</button>
+                                    </div>
+                                </div>
+                                <p class='mt-2'>나는 너에게 너는 나에게</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item" data-sno=2>
+                            <div>
+                                <div class="header">
+                                    <strong>p123</strong>
+                                    <small class="ml-4 text-muted">2020-10-05 13:13</small>
+                                    <div class='btn-group btn-group-sm float-right'>
+                                        <button class="btn btn-default" name='sentence-modify' data-sno=2>수정하기</button> 
+                                        <button class="btn btn-default" id='sentence-delete'>삭제하기</button>
+                                    </div>
+                                </div>
+                                <p class='mt-2'>나는 너에게 너는 나에게</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalContents" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">서평</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="modalBootTitle" class="col-form-label">책 제목</label>
+                            <input type="text" class="form-control" id="modalBootTitle"
+                                value='미움받을 용기' readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="mention-text" class="col-form-label">작성</label>
+                            <textarea class="form-control" id="mention-text" rows="8"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="modalRegisterBtn">서평 작성 완료</button>
+                    <button type="button" class="btn btn-danger" id="modalRemoveBtn">서평 삭제</button>
+                    <button type="button" class="btn btn-primary" id="modalModifyBtn">서평 수정</button>
+                    <button type="button" class="btn btn-primary" id="modalSentenceAddBtn">문장 작성 완료</button>
+                    <button type="button" class="btn btn-danger" id="modalSentenceRemoveBtn">문장 삭제</button>
+                    <button type="button" class="btn btn-primary" id="modalSentenceModifyBtn">문장 수정</button>
+                    <button type="button" class="btn btn-default" id="modalCloseBtn" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/one.js"></script>
+    <script type="text/javascript" src="js/sentence.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var bnoValue = '<c:out value="${book.bno}"/>';
+            var reviewMention = '<c:out value="${review.mention}"/>';
+            
+            var modal = $(".modal");
+            var modalTitle = $(".modal-title");
+            var textArea = modal.find("textarea");
+            var sentenceCollectionUL = $(".sentence-collection");
+            
+            var modalModifyBtn = $("#modalModifyBtn");
+            var modalRegisterBtn = $("#modalRegisterBtn");
+            var modalRemoveBtn = $("#modalRemoveBtn");
+            var modalSentenceAddBtn = $("#modalSentenceAddBtn");
+            var modalSentenceRemoveBtn = $("#modalSentenceRemoveBtn");
+            var modalSentenceModifyBtn = $("#modalSentenceModifyBtn");
+		
+		
+            // 서평 작성 모달 활성화 클릭 이벤트
+            $("#modalAddActive").on("click", function(e){
+                textArea.val("");
+                modal.find("button[id != 'modalCloseBtn']").hide();
+                modalRegisterBtn.show();
+                
+                modal.modal('show');
+            });
+            
+            // 서평 수정 모달 활성화 클릭 이벤트
+            $("#modalModifyActive").on("click", function(e){
+                console.log("modify clicked");
+                
+            /* 	oneService.getReview(bnoValue, function(review) {
+                    mention.val(review.mention);
+                }); */
+                textArea.val(reviewMention);
+                
+                modal.find("button[id != 'modalCloseBtn']").hide();
+                modalModifyBtn.show();
+                modalRemoveBtn.show();
+                
+                modal.modal('show');
+            });
+            
+            //서평 등록 버튼 클릭 이벤트
+            modalRegisterBtn.on("click", function(e) {
+                
+                let review = {
+                    bno : bnoValue,
+                    mention : textArea.val(),
+                    rating : 1
+                };
+                
+                oneService.addReview(review, function(result){
+                    alert(result);
+                });
+                
+                textArea.val("");
+                modal.modal('hide');
+                
+                location.reload(true);
+            });
+            
+            // 서평 수정 버튼 클릭 이벤트
+            modalModifyBtn.on("click", function(e){
+                
+                let review = {
+                        bno : bnoValue,
+                        mention : textArea.val(),
+                        rating : 1
+                    };
+                
+                oneService.updateReview(review, function(result){
+                    alert(result);
+                });
+                
+                textArea.val("");
+                modal.modal('hide');
+                
+                location.reload(true);
+            });
+		
+            // 서평 삭제 버튼 클릭 이벤트
+            modalRemoveBtn.on("click", function(e){
+                oneService.deleteReview(bnoValue, function(result){
+                    alert(result);
+                });
+                location.reload(true);
+            });
+            
+            // 문장 등록하기 버튼 클릭 이벤트
+            $("#modalSentenceActive").on("click", function(e) {
+                $(".modal-title").text("문장수집");
+                modal.find("button[id != modalCloseBtn]").hide();
+                modalSentenceAddBtn.show();
+                
+                modal.modal('show');
+            });
+		
+            // 문장 작성 완료 버튼 클릭 이벤트
+            modalSentenceAddBtn.on("click", function(e){
+                let sentence = {
+                    bno : bnoValue,
+                    sentence : textArea.val()
+                };
+                
+                sentenceService.addSentence(sentence, function(result) {
+                    alert(result);
+                });
+                
+                textArea.val("");
+                modal.modal('hide');
+                
+                location.reload(true);
+            });
+		
+            // 문장 수정 버튼 클릭 이벤트
+            modalSentenceModifyBtn.on("click", function(e){
+                let sentence = {
+                    bno : bnoValue,
+                    sentence : textArea.val()
+                };
+                
+                sentenceService.updateSentence(sentence, function(result) {
+                    alert(result);
+                });
+                
+                textArea.val("");
+                modal.modal('hide');
+                
+                location.reload(true);
+            });
+		
+            // $("#sentence-modify").on("click", function(e){
+            //     e.preventDefault();
+            //     console.log("clicked");
+
+            //     modal.modal('show');
+            // });
+
+            $("li").on("click", "button[name=sentence-modify]", function(){
+                var sno = $(this).data("sno");
+
+                console.log("clicked");
+                console.log(sno);
+
+                textArea.val();
+
+                modalTitle.text("문장수집");
+                modal.find("button[id != modalCloseBtn]").hide();
+                modalSentenceRemoveBtn.show();
+                modalSentenceModifyBtn.show();
+
+                modal.modal('show');
+            });
+        });
+    </script>
+
+
+    <footer id="footer">
+        <i class="social-icon fab fa-facebook-square"></i>
+        <i class="social-icon fab fa-twitter-square"></i>
+        <i class="social-icon fab fa-instagram"></i>
+        <i class="social-icon fas fa-envelope"></i>
+
+        <p>© Copyright 2018 TinDog</p>
+
+    </footer>
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,10 @@
 package com.demo.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,4 +63,16 @@ public class BookServiceTest {
 //		
 //		log.info(bookService.getTotal(criteria));
 //	}
+	
+	@Test
+	public void testBookDelete() {
+		//when
+		List<Long> bnos = Arrays.asList(80L, 81L, 82L); 
+		bookService.removeBooks(bnos);
+		
+		BookVO book = bookService.getBook(80L);
+		
+		//then
+		assertNull(book);
+	}
 }

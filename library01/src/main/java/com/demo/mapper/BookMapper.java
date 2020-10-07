@@ -20,4 +20,6 @@ public interface BookMapper {
 	public int getTotalCount(Criteria criteria);
 	
 	public int getTotalSearchCount(Criteria criteria);
+
+	public int delete(Long bno);
 }
