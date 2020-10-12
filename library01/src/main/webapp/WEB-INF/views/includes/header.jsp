@@ -26,22 +26,50 @@
 	 <section id="title">
 		<div class="container">
 			<!-- Nav Bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark">
-				<a class="navbar-brand" href="/book">My Library</a>
+			<nav class="navbar navbar-expand-lg navbar-dark pb-1 pt-0">
+				<a class="navbar-brand pt-4" href="/book">My Library</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarToggler"
 					aria-controls="navbarToggler" aria-expanded="false"
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarToggler">
+				<div class="collapse navbar-collapse pt-4" id="navbarToggler">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/book/editing">Editing</a>
 						</li>
 					</ul>
-				</div>			
+				</div>
 			</nav>
+			<div class="bg-dark">
+               <ul class="list-inline text-right">
+               	<sec:authorize access="isAuthenticated()">
+                    <li class="list-inline-item">
+                    	<span class="text-right">안녕하세요. 
+                    		<sec:authentication property="principal.username"/> 님. 
+                   		</span>
+                   	</li>
+                    <li class="list-inline-item">
+                    	<form action="/customLogout" method="post">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+							<button class="btn btn-link" id="logoutBtn">로그아웃</button>
+						</form>
+                   	</li>
+                   </sec:authorize>
+                   <sec:authorize access="isAnonymous()">
+                  		<li class="list-inline-item">
+                  			<button class="btn btn-link" onclick="location.href='/customLogin'">로그인</button>
+              			</li>
+               	   </sec:authorize>
+               </ul>
+           </div>
 		</div>
 	</section>
+
+<script type="text/javascript">
+	$(document).ready(function (){
+		
+	});
+</script>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ReviewController {
 		return new ResponseEntity<>(reviewService.getReview(bno), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/new",
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -48,8 +50,9 @@ public class ReviewController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value="/{bno}", 
+			value="/admin/{bno}", 
 			consumes = "application/json; charset=utf-8",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ReviewVO review, 
@@ -63,7 +66,8 @@ public class ReviewController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@DeleteMapping(value="/{bno}")
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping(value="/admin/{bno}")
 	public ResponseEntity<String> remove(@PathVariable("bno")Long bno) {
 		
 		log.info("modify bno : " + bno);

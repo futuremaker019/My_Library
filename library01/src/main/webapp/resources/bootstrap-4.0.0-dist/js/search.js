@@ -42,12 +42,15 @@ var searchService = (function () {
       });
    }
 
-   function addBook(item, callback, error) { 
+   function addBook(item, csrfHeaderName, csrfTokenValue, callback, error) { 
       console.log("add book activated.");
-
+		
       $.ajax({
          type: 'post',
          url: '/api/addbook',
+         beforeSend : function(xhr) {
+         	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
          data : JSON.stringify(item),
          contentType: "application/json; charset=utf-8",
       })

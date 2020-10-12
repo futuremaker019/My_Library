@@ -85,8 +85,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		var bookDeletedResult = '<c:out value="${result}"/>';
 		var actionForm = $("#actionForm");
 		var searchForm = $("#searchForm");
+		
+		if (bookDeletedResult != '') {
+			alert(bookDeletedResult);
+		}
 		
 		$(".page-item a").on("click", function(e){
 			e.preventDefault();
@@ -111,6 +116,31 @@
 			
 			searchForm.submit();
 		});
+		
+		var content = ''; 
+			
+		content += "<div><a class='btn btn-primary' href='/book/one?bno=<c:out value="${book.bno }"/>'>상세</a>";
+		content += "<button class='btn btn-danger ml-2' id='bookDeleteBtn'>삭제</button></div>";
+		
+		/* $('[data-toggle="popover"]').popover({
+            placement : 'right',
+            trigger : 'manual',
+            html : true,
+            content : content
+        }).on("mouseenter", function(){
+            var _this = this;
+            $(_this).popover("show");
+            $(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            })
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 300);
+        }); */
 	});
 </script>
 

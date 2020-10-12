@@ -41,16 +41,6 @@
     </div>
 </div>
 
-<form id="operationForm">
-	<input type='hidden' name='isbn' value="">
-    <input type='hidden' name='title' value="">
-    <input type='hidden' name='thumbnail' value="">
-    <input type='hidden' name='authors' value="">
-    <input type='hidden' name='publisher' value="">
-    <input type='hidden' name='url' value="">
-    <input type='hidden' name='datetime' value="">
-</form>
-
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/search.js"></script>
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script>
@@ -63,8 +53,11 @@ $(document).ready(function () {
     var bookSearch = $("#bookSearch");
     var pageCounter = $(".page-control");
     var searchButton = $("#search");
-
+    
     var pageNum = 1;
+    
+    var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
     
     searchButton.on("click", function() {
 
@@ -142,19 +135,18 @@ $(document).ready(function () {
             
             console.log(book);
             
-            searchService.addBook(book, function (result) {
+            searchService.addBook(book, csrfHeaderName, csrfTokenValue, function (result) {
                 alert(result);
             });	
 		});
     });
-    // end table insert operation
 
     function showListPage(pageableCount) {
         console.log("showListPage activated");
 
         var endNum = Math.ceil(pageNum / 10.0) * 10;
         var startNum = endNum - 9;
-        var prev = startNum != 1; // startNum이 1이 아니면 true / 1이면 false
+        var prev = startNum != 1;
         var next = false;
 
         if (endNum * 10 >= pageableCount) {

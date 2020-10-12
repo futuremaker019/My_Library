@@ -50,7 +50,7 @@
             <c:if test="${review.mention != null }">
                <div class="form-group col-lg-12" id="mention-group" style="padding-top: 30px;">
                  <label class="metion-label">서평</label>
-                 <p><c:out value="${review.mention }" /></p>
+                 <textarea class="form-control" rows="8" readonly><c:out value="${review.mention }" /></textarea>
                </div>
                <div class="gorm-group col-lg-12">
                  <div class="form-inline float-right" id="buttonController">
@@ -133,15 +133,16 @@
 
 <form role="form" action="/book/remove" method="post">
 	<input type="hidden" name="bno" value='<c:out value="${book.bno}"/>'>
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 </form>
 
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/one.js"></script>
+<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/review.js"></script>
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/sentence.js"></script>
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		var bnoValue = '<c:out value="${book.bno}"/>';
-		var reviewMention = '<c:out value="${review.mention}"/>';
 		
 		var modal = $(".modal");
 		var modalTitle = $(".modal-title");
@@ -157,6 +158,14 @@
 		
 		showList(1);
 		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		// Ajax spring security header
+		$(document).ajaxSend(function(e, xhr, options){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		});
+		
 		// 서평 작성 모달 활성화 클릭 이벤트
 		$("#modalAddActive").on("click", function(e){
 			textArea.val("");
@@ -168,7 +177,17 @@
 		
 		// 서평 수정 모달 활성화 클릭 이벤트
 		$("#modalModifyActive").on("click", function(e){
-			textArea.val(reviewMention);
+			var reviewMention = "";
+			reviewService.getReview(bnoValue, function(review){
+				console.log(review.mention);
+				
+				reviewMention = review.mention;
+				reviewMention = reviewMention.replace("/(?:\r\n|\r|\n)/g", "<br />");
+				
+				console.log("replace applied review mention : " + reviewMention);
+				
+				textArea.val(reviewMention);
+			});
 			
 			modal.find("button[id != 'modalCloseBtn']").hide();
 			modalModifyBtn.show();
@@ -203,7 +222,7 @@
 					rating : 1
 				};
 			
-			reviewService.updateReview(review, function(result){
+			reviewService.updateReview(review, csrfHeaderName, csrfTokenValue, function(result){
 				alert(result);
 			});
 			
@@ -215,9 +234,14 @@
 		
 		// 서평 삭제 버튼 클릭 이벤트
 		modalRemoveBtn.on("click", function(e){
-			reviewService.deleteReview(bnoValue, function(result){
-				alert(result);
-			});
+			var askDelete = confirm("서평을 삭제하시겠습니까?");
+			if(askDelete) {
+				reviewService.deleteReview(bnoValue, function(result){
+					alert(result);	
+				});
+			} else {
+				return;
+			}
 			
 			refresh();
 		});
@@ -266,9 +290,9 @@
 			refresh();
 		});
 		
-		// 수정하기 버튼 클릭 이벤트
+		// 문장 수정하기 버튼 클릭 이벤트
 		$("ul").on("click", "button[id='sentenceModifyBtn']", function(e){
-            var sno = $(this).data("sno");
+            let sno = $(this).data("sno");
 
             sentenceService.getSentence(sno, function(sentence){
                 textArea.val(sentence.sentence);
@@ -282,20 +306,30 @@
             modal.modal('show');
         });
 		
-		// 삭제하기 버튼 클릭 이벤트
+		// 문장수집 삭제하기 버튼 클릭 이벤트
 		$("ul").on("click", "button[id='sentenceDeleteBtn']", function(e){
-            var sno = $(this).data("sno");
-           
-            sentenceService.removeSentence(sno, function(result){
-                alert(result);
-            });
+            let sno = $(this).data("sno");
             
-            window.location.reload();
+            var askDelete = confirm("문장수집을 삭제하시겠습니까?");
+			if(askDelete) {
+				sentenceService.removeSentence(sno, function(result){
+	                alert(result);
+	            });
+			} else {
+				return;
+			}
+            
+			refresh();
         });
 		
+		// 책 삭제하기 버튼 클릭 이벤트
 		 $("#bookRemoveBtn").on("click", function(e){
-			$("form").submit();
-			alert("Book removed successfully");
+			var askDelete = confirm("책을 삭제하시겠습니까?");
+			if(askDelete) {
+				$("form").submit();
+			} else {
+				return;
+			}
 		});
 		
 		// 문장 수집 불러오기

@@ -7,8 +7,6 @@ import com.demo.domain.Criteria;
 
 public interface BookService {
 
-	public void register(BookVO bookVO);
-	
 	public List<BookVO> getListWithPaging(Criteria criteria);
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);

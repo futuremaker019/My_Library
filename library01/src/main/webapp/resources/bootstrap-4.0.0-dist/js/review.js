@@ -1,6 +1,6 @@
-console.log("----one js active-----");
+console.log("----review js active-----");
 
-const reviewService = (function() {
+var reviewService = (function() {
 
 	function addReview(review, callback, error) {
 	  console.log("review post activated");
@@ -38,14 +38,14 @@ const reviewService = (function() {
 		});
 	}
 	
-	function updateReview(review, callback, error) {
+	function updateReview(review, csrfHeaderName, csrfTokenValue, callback, error) {
 		console.log("review update activated.");
 
 		let bno = review.bno;
 
 		$.ajax({
 			type: "put",
-			url: "/review/" + bno,
+			url: "/review/admin/" + bno,
 			data: JSON.stringify(review),
 			contentType : "application/json; charset=utf-8"
 		})
@@ -66,7 +66,7 @@ const reviewService = (function() {
 
 		$.ajax({
 			type: "delete",
-			url: "/review/" + bno,
+			url: "/review/admin/" + bno,
 		})
 		.done(function (data, status, xhr) {
 			if (callback) {

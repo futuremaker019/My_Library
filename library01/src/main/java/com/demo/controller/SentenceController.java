@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,7 @@ public class SentenceController {
 		return new ResponseEntity<>(sentenceService.getOne(sno), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER, ROLE_ADMIN')")
 	@PostMapping(value="/new",
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -66,6 +68,7 @@ public class SentenceController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@DeleteMapping(value="/{sno}",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("sno")Long sno){
@@ -76,6 +79,7 @@ public class SentenceController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH},
 			value="/{sno}",
 			consumes = "application/json",

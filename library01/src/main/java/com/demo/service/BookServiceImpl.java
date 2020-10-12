@@ -25,16 +25,6 @@ public class BookServiceImpl implements BookService{
 	@Setter(onMethod_ = @Autowired)
 	private AuthorMapper authorMapper;
 	
-//	@Override
-//	public int register(BookVO bookVO) {
-//		return bookMapper.insert(bookVO) ;
-//	}
-
-	@Override
-	public void register(BookVO bookVO) {
-		bookMapper.insert(bookVO);
-	}
-
 	@Override
 	public List<BookVO> getListWithPaging(Criteria cri) {
 		return bookMapper.getListWithPaging(cri);

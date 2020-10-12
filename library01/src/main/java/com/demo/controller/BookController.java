@@ -3,7 +3,7 @@ package com.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer.RedirectionEndpointConfig;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,6 +36,7 @@ public class BookController {
 	@Setter(onMethod_ = @Autowired)
 	private ReviewService reviewService;
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("")
 	public String collections(Model model, Criteria criteria) {
 		List<BookVO> bookList = bookService.getListWithPaging(criteria);
@@ -67,6 +68,7 @@ public class BookController {
 		return "/book/search";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/editing")
 	public void editing(Model model, Criteria criteria) {
 		List<BookVO> bookList = bookService.getListWithPaging(criteria);
@@ -78,6 +80,7 @@ public class BookController {
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/one")
 	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
@@ -97,17 +100,18 @@ public class BookController {
 		return "/book/one";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
 	public String removeBooks(@RequestParam(required = false) List<Long> bnos,
 							@RequestParam(required = false) Long bno, RedirectAttributes rttr) {
 		
-		if(bnos == null) {
-			bookService.remove(bno);
-			rttr.addFlashAttribute("result", "Book remove successfully");
+		if(bnos != null) {
+			bookService.removeBooks(bnos);
 			return "redirect:/book";
 		}
-		bookService.removeBooks(bnos);
 		
+		bookService.remove(bno);
+		rttr.addFlashAttribute("result", "Book remove successfully");
 		return "redirect:/book";
 	}
 }
