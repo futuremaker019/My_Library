@@ -37,4 +37,17 @@ public class JDBCTest {
 //			fail(e.getMessage());
 //		}
 //	}
+	
+	@Test
+	public void testRdsConnection() {
+		try (Connection con = 
+				DriverManager.getConnection(
+						"jdbc:log4jdbc:oracle:thin:@database-1.c956m8xmn2ee.ap-northeast-2.rds.amazonaws.com:1521:ORCL",
+						"noah00o",
+						"ozrngus88")){
+			log.info("con : " + con);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
 }
