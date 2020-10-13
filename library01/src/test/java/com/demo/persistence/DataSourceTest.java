@@ -23,13 +23,13 @@ public class DataSourceTest {
 	@Setter(onMethod_ = @Autowired)
 	private DataSource dataSource;
 	
-//	@Test
-//	public void testDataSource () {
-//		try {
-//			Connection con = dataSource.getConnection();
-//			log.info(con);
-//		} catch (Exception e) {
-//			fail(e.getMessage());
-//		}
-//	}
+	@Test
+	public void testDataSource () {
+		try {
+			Connection con = dataSource.getConnection();
+			log.info(con);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
 }
