@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.domain.ReviewVO;
 import com.demo.service.ReviewService;
@@ -21,7 +22,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@Controller
+@RestController
 @RequestMapping("/review")
 public class ReviewController {
 
