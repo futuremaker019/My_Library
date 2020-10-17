@@ -1,8 +1,11 @@
 # My_Library
-개인 서적 관리 프로그램
+개인 서적 관리 사이트
 
-여기에 배지 넣으면 좋을듯   
-만든 이유도 넣어야 하지 않을까 
+<br>
+
+## About
+---
+만든 이유도 넣어야 하지 않을까
 
 <br>
 
@@ -13,7 +16,8 @@
 3. [URI Table](#URI-Table)
 4. [ERD](#ERD)
 5. [UI](#UI)
-6. [My Library](#My-Library)
+6. [사이트 링크](#사이트-링크)
+7. [추가해야 할 기능](#추가해야-할-기능)
 
 <br>
 
@@ -81,7 +85,7 @@ lombok : 1.18.0
 |-----|------|------|-------|-----|------|
 |내 서재 전체 목록|/book/|GET|-|-|-|
 |검색화면 이동|/book/search|GET|-|-|-|
-|내 서제 검색|/book/result|GET|-|-|-|
+|서제 내 책검색|/book/result|GET|-|-|-|
 |책 상세조회|/book/one|GET|bno|-|-|
 |책 삭제|/book/remove|POST|bno|-|이동|
 
@@ -133,11 +137,21 @@ lombok : 1.18.0
 ## ERD
 ---
 
+<img src="image/book_erd.png" width="650" height="100%">
+
+
+<br>
+<br>
+
+
+
+## UI
+---
 
 
 <br>
 
-## My Library
+## 사이트 링크
 ---
 
 [사이트 바로가기](http://13.125.186.107:8080/book/)
