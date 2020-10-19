@@ -1,5 +1,5 @@
 # My Library
-개인 서적 관리 사이트
+카카오 오픈 Api를 이용한 개인 서적 관리 사이트
 
 <br>
 
@@ -125,7 +125,7 @@ Oracle 12.1.0.2.v2
 ---
 <br>
 
-`BookController`
+BookController
 
 |Task|URL|Method|Parameter|Form|URL 이동|
 |-----|------|------|-------|-----|------|
@@ -137,7 +137,7 @@ Oracle 12.1.0.2.v2
 
 <br>    
 
-`ApiController`
+ApiController
 
 |Task|URL|Http 전송방식|비고|
 |-----|------|------|-------|
@@ -146,7 +146,7 @@ Oracle 12.1.0.2.v2
 
 <br>
 
-`ReviewController`
+ReviewController
 
 |Task|URL|Http 전송방식|비고|
 |-----|------|------|-------|
@@ -157,7 +157,7 @@ Oracle 12.1.0.2.v2
 
 <br>
 
-`SentenceController`
+SentenceController
 
 |Task|URL|Http 전송방식|비고|
 |-----|------|------|-------|
@@ -169,7 +169,7 @@ Oracle 12.1.0.2.v2
 
 <br>
 
-`CommonController`
+CommonController
 
 |Task|URL|Http 전송방식|비고|
 |-----|------|------|-------|
