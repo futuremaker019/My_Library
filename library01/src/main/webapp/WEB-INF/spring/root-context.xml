@@ -13,7 +13,7 @@
 	<!-- 데이터베이스 연동 with hikaripool -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@database-1.c956m8xmn2ee.ap-northeast-2.rds.amazonaws.com:1521:ORCL"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@mylibrary-oracle-database.c956m8xmn2ee.ap-northeast-2.rds.amazonaws.com:1521:ORCL"></property>
 		<property name="username" value="noah00o"></property>
 		<property name="password" value="ozrngus88"></property>
 	</bean>
