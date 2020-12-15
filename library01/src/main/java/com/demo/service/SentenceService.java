@@ -2,22 +2,39 @@ package com.demo.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.demo.domain.Criteria;
 import com.demo.domain.SentenceVO;
+import com.demo.mapper.SentenceMapper;
 
-public interface SentenceService {
+import lombok.Setter;
 
-	public int register(SentenceVO sentence);
+
+@Service
+public class SentenceService{
 	
-	public SentenceVO getOne(Long sno);
-	
-	public int remove(Long sno);
-	
-	public int modify(SentenceVO sentence);
-	
-	public List<SentenceVO> getListWithPaging(
-					@Param("criteria")Criteria criteria,
-					@Param("bno")Long bno);
+	@Autowired
+	private SentenceMapper sentenceMapper;
+
+	public int register(SentenceVO sentence) {
+		return sentenceMapper.insert(sentence);
+	}
+
+	public SentenceVO getOne(Long sno) {
+		return sentenceMapper.read(sno);
+	}
+
+	public int remove(Long sno) {
+		return sentenceMapper.delete(sno);
+	}
+
+	public int modify(SentenceVO sentence) {
+		return sentenceMapper.update(sentence);
+	}
+
+	public List<SentenceVO> getListWithPaging(Criteria criteria, Long bno) {
+		return sentenceMapper.getListWithPaging(criteria, bno);
+	}
 }

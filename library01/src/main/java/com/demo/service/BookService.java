@@ -2,22 +2,55 @@ package com.demo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
+import com.demo.mapper.AuthorMapper;
+import com.demo.mapper.BookMapper;
 
-public interface BookService {
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
-	public List<BookVO> getListWithPaging(Criteria criteria);
+@Log4j
+@Service
+public class BookService{
 	
-	public List<BookVO> getSearchListWithPaging(Criteria criteria);
+	@Setter (onMethod_= @Autowired)
+	private BookMapper bookMapper;
 	
-	public BookVO getBook(Long bno);
+	@Setter(onMethod_ = @Autowired)
+	private AuthorMapper authorMapper;
 	
-	public int getTotal(Criteria criteria);
-	
-	public int getTotalSearchItem(Criteria criteria);
-	
-	public int remove(Long bno);
+	public List<BookVO> getListWithPaging(Criteria cri) {
+		return bookMapper.getListWithPaging(cri);
+	}
 
-	public void removeBooks(List<Long> bnos);
+	public int getTotal(Criteria criteria) {
+		return bookMapper.getTotalCount(criteria);
+	}
+
+	public List<BookVO> getSearchListWithPaging(Criteria criteria) {
+		return bookMapper.getSearchListWithPaging(criteria);
+	}
+
+	public int getTotalSearchItem(Criteria criteria) {
+		return bookMapper.getTotalSearchCount(criteria);
+	}
+
+	public BookVO getBook(Long bno) {
+		return bookMapper.getOne(bno);
+	}
+	
+	public int remove(Long bno) {
+		return bookMapper.delete(bno);
+	}
+
+	@Transactional
+	public void removeBooks(List<Long> bnos) {
+		bnos.forEach(bno -> bookMapper.delete(bno));
+	}
 }

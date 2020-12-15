@@ -24,4 +24,9 @@
 		on member.userid = auth.userid
 		where member.userid = #{userId}
 	</select>
+	
+	<insert id="insert">
+		insert into tbl_member (userid, userpw, username) 
+		values (#{userId}, #{userPw}, #{userName})
+	</insert>
 </mapper>

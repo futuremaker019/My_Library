@@ -60,7 +60,7 @@
                    </sec:authorize>
                    <sec:authorize access="isAnonymous()">
                   		<li class="list-inline-item">
-                  			<button class="btn btn-link" onclick="location.href='/customLogin'">로그인</button>
+                  			<button class="btn btn-link" onclick="location.href='/customLogin'" style="color:white;">로그인</button>
               			</li>
                	   </sec:authorize>
                </ul>

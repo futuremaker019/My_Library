@@ -68,7 +68,7 @@ public class BookController {
 		return "/book/search";
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/editing")
 	public void editing(Model model, Criteria criteria) {
 		List<BookVO> bookList = bookService.getListWithPaging(criteria);
@@ -80,7 +80,7 @@ public class BookController {
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/one")
 	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
@@ -100,7 +100,7 @@ public class BookController {
 		return "/book/one";
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/remove")
 	public String removeBooks(@RequestParam(required = false) List<Long> bnos,
 							@RequestParam(required = false) Long bno, RedirectAttributes rttr) {

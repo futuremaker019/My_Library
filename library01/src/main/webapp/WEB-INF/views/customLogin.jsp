@@ -18,7 +18,8 @@
                     <label for="passwordInput">Password</label>
                     <input type="password" class="form-control" id="passwordInput" name="password" placeholder="패스워드">
                 </div>
-                <button class="btn btn-success">Login</button>
+                <button type="button" class="btn btn-success col-lg-12" id="loginBtn">로그인</button>
+                <button type="button" class="btn btn-info col-lg-12 mt-3" id="signupBtn">회원가입</button>
             </div>
             <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
          </form>
@@ -27,9 +28,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(".btn-success").on("click", function(e){
-			e.preventDefault();
+		$("#loginBtn").on("click", function(e){
 			$("form").submit();
+		});
+		
+		$("#signupBtn").on("click", function(){
+			window.location.href = "/signup";			
 		});
 	});
 </script>

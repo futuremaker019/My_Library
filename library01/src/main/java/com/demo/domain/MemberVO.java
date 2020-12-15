@@ -3,12 +3,20 @@ package com.demo.domain;
 import java.sql.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class MemberVO {
 
 	private String userId;
@@ -20,16 +28,4 @@ public class MemberVO {
 	private Date updatedDate;
 	
 	private List<AuthVO> authList;
-
-	@Builder
-	public MemberVO(String userId, String userPw, String userName, boolean enabled, Date createdDate, Date updatedDate,
-			List<AuthVO> authList) {
-		this.userId = userId;
-		this.userPw = userPw;
-		this.userName = userName;
-		this.enabled = enabled;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
-		this.authList = authList;
-	}
 }
