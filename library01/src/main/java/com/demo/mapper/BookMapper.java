@@ -2,12 +2,16 @@ package com.demo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
 
 public interface BookMapper {
 	
-	public List<BookVO> getListWithPaging(Criteria criteria);
+	public List<BookVO> getListWithPaging(
+			@Param("criteria") Criteria criteria, 
+			@Param("userId") String userId);
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 	

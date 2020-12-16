@@ -50,15 +50,15 @@
 	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">
 		<![CDATA[
 			select
-				bno, isbn, title, publisher, thumbnail, url, datetime
+				bno, isbn, title, publisher, thumbnail, url, datetime, userid
 			from
 				(
 					select /*+INDEX(tbl_book bno_index)*/
-					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime
+					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime, userid
 					from tbl_book
-					where rownum <= #{pageNum} * #{amount}
+					where rownum <= #{criteria.pageNum} * #{criteria.amount} and userid = #{userId}
 				)
-			where rn > (#{pageNum} - 1) * #{amount}
+			where rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
 		]]>
 	</select>
 	
@@ -113,8 +113,8 @@
 
 	<!-- insert -->
 	<insert id="insert">
-		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime)
-		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime})
+		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime, userid)
+		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime}, #{userId})
 	</insert>
 	
 	<!-- delete -->

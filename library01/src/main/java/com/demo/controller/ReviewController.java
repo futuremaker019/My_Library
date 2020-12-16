@@ -31,9 +31,6 @@ public class ReviewController {
 	
 	@GetMapping(value="/{bno}")
 	public ResponseEntity<ReviewVO> get(@PathVariable("bno") Long bno) {
-		
-		log.info("get bno : " + bno);
-		
 		return new ResponseEntity<>(reviewService.getReview(bno), HttpStatus.OK);
 	}
 	
@@ -42,8 +39,6 @@ public class ReviewController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ReviewVO reviewVO) {
-		
-		log.info(reviewVO);
 		int insertCount  = reviewService.register(reviewVO);
 		
 		return insertCount == 1 
@@ -58,10 +53,6 @@ public class ReviewController {
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ReviewVO review, 
 										 @PathVariable("bno")Long bno) {
-		log.info("~~~~~~~~~ putmapping review RequestBody : " + review);
-		
-		log.info("modify bno : " + bno);
-		
 		return reviewService.modify(review) == 1
 				? new ResponseEntity<>("Modified successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,9 +61,6 @@ public class ReviewController {
 	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(value="/admin/{bno}")
 	public ResponseEntity<String> remove(@PathVariable("bno")Long bno) {
-		
-		log.info("modify bno : " + bno);
-		
 		return reviewService.delete(bno) == 1 
 				? new ResponseEntity<>("Deleted successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

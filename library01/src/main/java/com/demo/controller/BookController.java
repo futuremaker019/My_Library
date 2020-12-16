@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,9 +39,8 @@ public class BookController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("")
-	public String collections(Model model, Criteria criteria) {
-		List<BookVO> bookList = bookService.getListWithPaging(criteria);
-		log.info("book's List : " + bookList);
+	public String collections(Model model, Criteria criteria, Authentication authentication) {
+		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
 		
 		int total = bookService.getTotal(criteria);
 		
@@ -53,7 +53,6 @@ public class BookController {
 	@GetMapping("/result")
 	public String result(Model model, Criteria criteria) {
 		List<BookVO> searchBookList = bookService.getSearchListWithPaging(criteria);
-		log.info("book's List : " + searchBookList);
 		
 		int searchTotal = bookService.getTotalSearchItem(criteria);
 		
@@ -70,9 +69,8 @@ public class BookController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/editing")
-	public void editing(Model model, Criteria criteria) {
-		List<BookVO> bookList = bookService.getListWithPaging(criteria);
-		log.info("book's List : " + bookList);
+	public void editing(Model model, Criteria criteria, Authentication authentication) {
+		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
 		
 		int total = bookService.getTotal(criteria);
 		
@@ -84,14 +82,10 @@ public class BookController {
 	@GetMapping("/one")
 	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
-		log.info("book details: " + book);
 		
 		List<AuthorVO> authors = book.getAuthors();
-		log.info("author's object: " + authors);
 		
-		log.info("~~~~~~~~~~~~~~~bno : " + bno);
 		ReviewVO review = reviewService.getReview(bno);
-		log.info("review's object : " + review);
 		
 		model.addAttribute("book", book);
 		model.addAttribute("authors", authors);

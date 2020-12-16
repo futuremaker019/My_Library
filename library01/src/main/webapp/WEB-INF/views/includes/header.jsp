@@ -54,7 +54,7 @@
                     <li class="list-inline-item">
                     	<form action="/customLogout" method="post">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-							<button class="btn btn-link" id="logoutBtn">로그아웃</button>
+							<button class="btn btn-link" id="logoutBtn" style="color:white;">로그아웃</button>
 						</form>
                    	</li>
                    </sec:authorize>

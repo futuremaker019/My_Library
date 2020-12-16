@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
+import com.demo.dto.BookDto;
 import com.demo.service.ApiService;
 
 import lombok.Setter;
@@ -33,9 +35,10 @@ public class ApiController {
 	@PostMapping(value="/addbook", 
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> addBook(@RequestBody BookVO bookVO) {
-		List<AuthorVO> authors = bookVO.getAuthors();
-		apiService.register(bookVO, authors);
+	public ResponseEntity<String> addBook(@RequestBody BookDto bookDto, Authentication authentication) {
+		log.info("authentication : " + authentication);
+		List<AuthorVO> authors = bookDto.getAuthors();
+		apiService.register(bookDto, authors, authentication);
 		
 		try {
 			return new ResponseEntity<>("Book added successfully", HttpStatus.OK);

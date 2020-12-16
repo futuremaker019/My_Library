@@ -27,17 +27,17 @@ public class ApiServiceTest {
 	@Test
 	public void testApiService() {
 		
-		String title = "읽기 좋은 코드가 좋은 코드다";
+		String title = "�씫湲� 醫뗭� 肄붾뱶媛� 醫뗭� 肄붾뱶�떎";
 		String isbn = "897914914X";
-		String publisher = "한빛미디어";
+		String publisher = "�븳鍮쏅�몃뵒�뼱";
 		String thumbnail = "https://search1.kakaocdn.net/thumb/R12";
 		String url = "https://search.daum.net/search?w=bookpage&b";
 		
 		Date datetime = new Date(2020, 5, 11);
 		
 		List<AuthorVO> authors = new ArrayList<>();
-		authors.add(new AuthorVO("897914914X", "톰 크루즈"));
-		authors.add(new AuthorVO("897914914X", "더스틴 호프만"));
+		authors.add(new AuthorVO("897914914X", "�넱 �겕猷⑥쫰"));
+		authors.add(new AuthorVO("897914914X", "�뜑�뒪�떞 �샇�봽留�"));
 		
 		BookVO bookVO = new BookVO();
 		bookVO.setTitle(title);
@@ -51,6 +51,6 @@ public class ApiServiceTest {
 		log.info("bookVO" + bookVO);
 		log.info("authors" + authors);
 		
-		apiService.register(bookVO, authors);
+//		apiService.register(bookVO, authors);
 	}
 }

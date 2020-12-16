@@ -1,38 +1,41 @@
-package com.demo.domain;
+package com.demo.dto;
 
 import java.sql.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.demo.domain.AuthorVO;
+import com.demo.domain.BookVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookVO {
-	
-	private Long bno;
+public class BookDto {
 	
 	private String isbn;
 	private String title;
 	private String thumbnail;
 	private String publisher;
 	private String url;
-	private String userId;
 	
 	private Date datetime;
-	private Date createdate;
 	
 	private List<AuthorVO> authors;
+	
+	public BookVO toEntity() {
+		return BookVO.builder()
+				.isbn(isbn)
+				.title(title)
+				.thumbnail(thumbnail)
+				.publisher(publisher)
+				.datetime(datetime)
+				.url(url)
+				.authors(authors)
+				.build();
+	}
 }

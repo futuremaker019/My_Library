@@ -4,7 +4,6 @@
 <br>
 
 ## About
----
 구입한 책을 관리하는 사이트입니다.  
 기능으로는 
 - 검색 기능
@@ -22,6 +21,7 @@
 - 로그인 기능 (spring security)
     - admin 계정, member 계정으로 로그인
     - AccessDenied 구현
+- 회원가입 기능
 
 - 기타 기능
     - 책 검색 시 pagination 추가
@@ -35,11 +35,9 @@
     - 책 URL을 친구에게 공유
     - 문장 수집 시, 사진으로 파일 업로드
 
-
 <br>
 
 ## 목차
----
 1. [개발 환경](#개발-환경) 
 2. [디렉토리 구조](#디렉토리-구조)
 3. [URI Table](#URI-Table)
@@ -50,7 +48,6 @@
 <br>
 
 ## 개발 환경
----
 1. IDE : Eclipse
 ```
 version : 2020-06 (4.16.0)
@@ -114,7 +111,6 @@ Oracle 12.1.0.2.v2
 <br>
 
 ## 디렉토리 구조
----
 
 <img src="image/tree_structure.png" height="750">
 
@@ -122,7 +118,6 @@ Oracle 12.1.0.2.v2
 <br>
 
 ## URI Table
----
 <br>
 
 BookController
@@ -181,7 +176,6 @@ CommonController
 <br>
 
 ## ERD
----
 
 <img src="image/book_erd.png" width="650" height="100%">
 
@@ -192,14 +186,12 @@ CommonController
 
 
 ## UI
----
 
 
 <br>
 <br>
 
 ## 사이트 링크
----
 
 [사이트 바로가기](http://13.125.186.107:8080/book/)
 

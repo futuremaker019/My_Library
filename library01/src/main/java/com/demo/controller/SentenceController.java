@@ -38,9 +38,7 @@ public class SentenceController {
 							@PathVariable("bno")Long bno,
 							@PathVariable("page")int page) {
 		
-		log.info("------------------------------get List ------------------------------");
 		Criteria criteria = new Criteria(page, 5);
-		log.info("Criteria : " + criteria);
 		List<SentenceVO> sentences = sentenceService.getListWithPaging(criteria, bno);
 		
 		return new ResponseEntity<>(sentences, HttpStatus.OK);
@@ -49,8 +47,6 @@ public class SentenceController {
 	@GetMapping(value="/{sno}",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<SentenceVO> getOne(@PathVariable("sno")Long sno){
-		
-		log.info("getOne sentence sno: " + sno );
 		return new ResponseEntity<>(sentenceService.getOne(sno), HttpStatus.OK);
 	}
 	
@@ -59,10 +55,7 @@ public class SentenceController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody SentenceVO sentence){
-		
-		log.info("This is sentenceVO from client : " + sentence);
 		int insertSentence = sentenceService.register(sentence);
-		log.info("This is insertSentence :" + insertSentence);
 		
 		return insertSentence == 1 
 				? new ResponseEntity<>("sentence added successfully.", HttpStatus.OK)
@@ -73,8 +66,6 @@ public class SentenceController {
 	@DeleteMapping(value="/{sno}",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("sno")Long sno){
-		
-		log.info("remove sentence sno : " + sno );
 		return sentenceService.remove(sno) == 1 
 				? new ResponseEntity<>("Sentence deleted successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -87,11 +78,6 @@ public class SentenceController {
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody SentenceVO sentenceVO, 
 							@PathVariable("sno")Long sno){
-		
-		log.info("This is sentencVO from client : " + sentenceVO);
-		log.info("sentenceVO's sno : " + sentenceVO.getSno());
-		log.info("sentenceVO's sentence : " + sentenceVO.getSentence());
-		
 		return sentenceService.modify(sentenceVO) == 1 
 				? new ResponseEntity<>("Sentence modified successfully.", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

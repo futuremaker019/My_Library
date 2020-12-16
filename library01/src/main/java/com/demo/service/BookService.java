@@ -3,6 +3,8 @@ package com.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,11 @@ public class BookService{
 	@Setter(onMethod_ = @Autowired)
 	private AuthorMapper authorMapper;
 	
-	public List<BookVO> getListWithPaging(Criteria cri) {
-		return bookMapper.getListWithPaging(cri);
+	public List<BookVO> getListWithPaging(Criteria cri, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = (String) userDetails.getUsername();
+		
+		return bookMapper.getListWithPaging(cri, userId);
 	}
 
 	public int getTotal(Criteria criteria) {
