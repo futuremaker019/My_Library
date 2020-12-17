@@ -98,9 +98,9 @@ public class BookMapperTest {
 		String isbn = "1130613372";
 		String isbn2 = "8901130467";
 		
-		BookVO book = bookMapper.getBook(isbn2);
+//		BookVO book = bookMapper.getBook(isbn2);
 		
 		/* assertThat(book.getIsbn(), is("1130613372")); */
-		log.info(book);
+//		log.info(book);
 	}
 }

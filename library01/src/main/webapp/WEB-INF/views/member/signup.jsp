@@ -18,8 +18,8 @@
                     <input type="password" class="form-control" id="password" name="userPw" placeholder="패스워드">
                 </div>
                 <div class="form-group">
-                    <label for="nick-name">nick-name</label>
-                    <input type="text" class="form-control" id="nick-name" name="userName" placeholder="nick-name">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="email">
                 </div>
                 <button class="btn btn-success col-lg-12" id="signupBtn">회원가입</button>
             </div>

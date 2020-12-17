@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthorVO {
 
+	private Long bno;
 	private String isbn;
 	private String authors;
 }

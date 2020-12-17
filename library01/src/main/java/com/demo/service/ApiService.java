@@ -19,34 +19,54 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
+@Transactional
 public class ApiService{
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private BookMapper bookMapper;
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private AuthorMapper authorMapper;
 
-	@Transactional
+	
 	public void register(BookDto bookDto, List<AuthorVO> authors, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = (String) userDetails.getUsername();
 		
-		log.info("userID : " + userId);
-		
 		BookVO bookVO = bookDto.toEntity();
-		bookVO.setUserId(userId);
-		
 		log.info("bookVO : " + bookVO);
 		
+		bookVO.setUserId(userId);
+		
 		if (bookMapper.insert(bookVO) == 1) {
+			BookVO findBook = findBookByIsbn(bookVO.getIsbn());
+			
 			for (AuthorVO author : authors) {
+				author.setIsbn(bookVO.getIsbn());
+				author.setBno(findBook.getBno());
 				authorMapper.insert(author);
 			}
 		}
 	}
 
 	public BookVO findBookByIsbn(String isbn) {
-		return bookMapper.getBook(isbn);
+		return bookMapper.getBookByIsbn(isbn);
+	}
+	
+	public BookDto findBookByIsbnUsingLike(String isbn) {
+		BookVO bookVO = bookMapper.getBookByIsbnUsingLike(isbn).get(0);
+		String findIsbn = bookVO.getIsbn();
+		String isbnWithoutUuid = findIsbn.substring(0, findIsbn.indexOf("-"));
+		
+		log.info("isbnWithoutUuid : " + isbnWithoutUuid);
+		
+		BookDto bookDto = null;
+		
+		if(bookVO != null) {
+			bookDto = BookDto.builder()
+					.isbn(isbnWithoutUuid)
+					.build();
+		}
+		return bookDto;
 	}
 }

@@ -36,8 +36,8 @@ public class ApiServiceTest {
 		Date datetime = new Date(2020, 5, 11);
 		
 		List<AuthorVO> authors = new ArrayList<>();
-		authors.add(new AuthorVO("897914914X", "�넱 �겕猷⑥쫰"));
-		authors.add(new AuthorVO("897914914X", "�뜑�뒪�떞 �샇�봽留�"));
+//		authors.add(new AuthorVO("897914914X", "�넱 �겕猷⑥쫰"));
+//		authors.add(new AuthorVO("897914914X", "�뜑�뒪�떞 �샇�봽留�"));
 		
 		BookVO bookVO = new BookVO();
 		bookVO.setTitle(title);

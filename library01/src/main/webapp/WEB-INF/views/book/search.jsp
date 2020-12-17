@@ -45,9 +45,6 @@
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script>
 $(document).ready(function () {
-    console.log("===============");
-    console.log("JS TEST");
-
     var contents = $(".contents-items");
     var operationForm = $("#operationForm");
     var bookSearch = $("#bookSearch");
@@ -76,11 +73,8 @@ $(document).ready(function () {
 
     pageCounter.on("click", "li a", function(e) {
         e.preventDefault();
-        console.log("page click");
 
         var targetPageNum = $(this).attr("href");
-
-        console.log("target Page Number: " + targetPageNum);
 
         pageNum = targetPageNum;
 
@@ -93,30 +87,30 @@ $(document).ready(function () {
     
     // 리스트에서 아이템 선택시 해당 isbn을 추출하여 database에 저장
     $(".table").on("click", "button[name='addMyLib']", function(){
-
         var ApiIsbn = $(this).data("isbn");
-        console.log(ApiIsbn);
-
         var dividedIsbn =  ApiIsbn.split(" ");
-        
         var isbn = '';
+        
         if (dividedIsbn[0] != '') {
             isbn = dividedIsbn[0];
         } else {
             isbn = dividedIsbn[1];
         }
         
-        searchService.getBook(isbn, function(storedBook){
-        	if(isbn == storedBook.isbn){
-            	alert("서재에 존재합니다.");
-            	return;
-            }
+        $.getJSON("/api/" + isbn,
+           function (data) {
+              if(isbn == data.isbn) {
+            	  alert("서제에 책이 존재합니다.")
+            	  return false;
+              }
+           })
+        .fail(function (xhr, status, err) {
+           if(error) {
+           error(err);
+           }
         });
         
         searchService.api_getBook(isbn, function (selectedItem) {
-            console.log("isbn : " + isbn);
-            console.log(selectedItem);
-            
             var content = selectedItem.documents;
             
             var book = {
@@ -133,17 +127,14 @@ $(document).ready(function () {
                 book.authors.push({isbn : isbn, authors : content[0].authors[i]});
             }
             
-            console.log(book);
-            
             searchService.addBook(book, csrfHeaderName, csrfTokenValue, function (result) {
                 alert(result);
             });	
 		});
+        
     });
 
     function showListPage(pageableCount) {
-        console.log("showListPage activated");
-
         var endNum = Math.ceil(pageNum / 10.0) * 10;
         var startNum = endNum - 9;
         var prev = startNum != 1;
@@ -180,10 +171,7 @@ $(document).ready(function () {
     
     // 도서 이름 검색으로 리스트를 불러옴
     function showList(searchValue) {
-        console.log("showList activated.");
-
         searchService.api_getBooks(searchValue, function(list){
-            console.log(list);
 
             var content = list.documents;
             var pageableCount = list.meta.pageable_count;
@@ -196,12 +184,12 @@ $(document).ready(function () {
 
             for (var i = 0, len = content.length || 0; i < len; i++) {
                 strTag += "<tr>"
-                strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>"
-                strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>"
-                strTag += "<div>" + content[i].authors + "</div>"
-                strTag += "<div>" + content[i].publisher + "</div>"
-                strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>"
-                strTag += "<td class='info'><div class='btnBundle'>"
+                strTag += "<td><div><img class='thumbnail' src=" + content[i].thumbnail + "></div></td>";
+                strTag += "<td class='details'><div><strong>"+ content[i].title +"</strong></div>";
+                strTag += "<div>" + content[i].authors + "</div>";
+                strTag += "<div>" + content[i].publisher + "</div>";
+                strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>";
+                strTag += "<td class='info'><div class='btnBundle'>";
                	<sec:authorize access="isAuthenticated()">
                 	strTag += "<button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button>"
                 </sec:authorize>
@@ -213,6 +201,12 @@ $(document).ready(function () {
             showListPage(pageableCount);
         });
     }
+    
+    function getBook(isbn, callback, error) {
+        console.log("getBook activated.");
+
+        
+     }
 });
 </script>
 

@@ -36,7 +36,6 @@ public class ApiController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> addBook(@RequestBody BookDto bookDto, Authentication authentication) {
-		log.info("authentication : " + authentication);
 		List<AuthorVO> authors = bookDto.getAuthors();
 		apiService.register(bookDto, authors, authentication);
 		
@@ -49,7 +48,7 @@ public class ApiController {
 	}
 	
 	@GetMapping(value="/{isbn}")
-	public ResponseEntity<BookVO> getBook(@PathVariable("isbn") String isbn) {
-		return new ResponseEntity<>(apiService.findBookByIsbn(isbn), HttpStatus.OK);
+	public ResponseEntity<BookDto> getBook(@PathVariable("isbn") String isbn) {
+		return new ResponseEntity<>(apiService.findBookByIsbnUsingLike(isbn), HttpStatus.OK);
 	}
 }

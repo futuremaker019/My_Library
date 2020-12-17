@@ -45,9 +45,16 @@ public class MemberController {
 		return "/member/signup";
 	}
 	
+	@GetMapping("/info")
+	public String getMyInfoPage() {
+		return "/member/myinfo";
+	}
+	
 	@PostMapping("/signup")
 	public String signup(MemberDto memberDto) {
 		memberService.saveMemberInfo(memberDto);
 		return "redirect:/customLogin";
 	}
+	
+	
 }

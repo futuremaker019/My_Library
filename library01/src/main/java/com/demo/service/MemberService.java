@@ -32,7 +32,7 @@ public class MemberService {
 		MemberVO member = MemberVO.builder()
 				.userId(memberDto.getUserId())
 				.userPw(passwordEncoder.encode(memberDto.getUserPw()))
-				.userName(memberDto.getUserName())
+				.email(memberDto.getEmail())
 				.build();
 		
 		List<AuthVO> authList = new ArrayList<>(); 

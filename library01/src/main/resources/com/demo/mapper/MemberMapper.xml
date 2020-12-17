@@ -8,7 +8,7 @@
 		<id property="userId" column="userId"/>
 		<result property="userId" column="userid"/>
 		<result property="userPw" column="userpw"/>
-		<result property="userName" column="username"/>
+		<result property="email" column="email"/>
 		<result property="createdDate" column="createddate"/>
 		<result property="updatedDate" column="updateddate"/>
 		<collection property="authList" resultMap="authMap"></collection>
@@ -19,14 +19,14 @@
 	</resultMap>
 	
 	<select id="read" resultMap="memberMap">
-		select member.userid, userpw, username, createddate, updateddate, auth
+		select member.userid, userpw, email, createddate, updateddate, auth
 		from tbl_member member left outer join tbl_member_auth auth
 		on member.userid = auth.userid
 		where member.userid = #{userId}
 	</select>
 	
 	<insert id="insert">
-		insert into tbl_member (userid, userpw, username) 
-		values (#{userId}, #{userPw}, #{userName})
+		insert into tbl_member (userid, userpw, email) 
+		values (#{userId}, #{userPw}, #{email})
 	</insert>
 </mapper>

@@ -17,7 +17,9 @@ public interface BookMapper {
 	
 	public BookVO getOne(Long bno);
 	
-	public BookVO getBook(String isbn);
+	public BookVO getBookByIsbn(String isbn);
+	
+	public List<BookVO> getBookByIsbnUsingLike(String isbn);
 
 	public int insert(BookVO bookVO);
 	

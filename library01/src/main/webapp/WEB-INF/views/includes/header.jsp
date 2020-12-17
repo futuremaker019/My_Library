@@ -36,9 +36,13 @@
 				</button>
 				<div class="collapse navbar-collapse pt-4" id="navbarToggler">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="/book/search">Search</a>
+						<li class="nav-item"><a class="nav-link" href="/book/search">책 검색</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="/book/editing">Editing</a>
+						<li class="nav-item"><a class="nav-link" href="/book/editing">책 삭제</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/board/list">게시판</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/info">내 정보</a>
 						</li>
 					</ul>
 				</div>

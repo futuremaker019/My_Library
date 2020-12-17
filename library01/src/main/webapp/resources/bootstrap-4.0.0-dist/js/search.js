@@ -1,5 +1,3 @@
-console.log("search module activated.");
-
 var searchService = (function () {
   
    function api_getBooks(searchValue, callback, error) {

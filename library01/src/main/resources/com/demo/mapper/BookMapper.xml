@@ -53,7 +53,7 @@
 				bno, isbn, title, publisher, thumbnail, url, datetime, userid
 			from
 				(
-					select /*+INDEX(tbl_book bno_index)*/
+					select /*+INDEX_DESC(tbl_book pk_book)*/
 					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime, userid
 					from tbl_book
 					where rownum <= #{criteria.pageNum} * #{criteria.amount} and userid = #{userId}
@@ -76,7 +76,7 @@
 					select
 					rownum rn, bno, book.isbn, title, publisher, thumbnail, url, datetime
 					from tbl_book book left outer join tbl_book_author author
-					on book.isbn = author.isbn
+					on book.bno = author.bno
 					where 
 		]]>
 			
@@ -100,15 +100,21 @@
 	</select>
 	
 	<select id="getOne" resultMap="bookMap">
-		select bno, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, authors  
-		from tbl_book book inner join tbl_book_author author on book.isbn = author.isbn
-		where bno = #{bno}
+		select book.bno, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, authors  
+		from tbl_book book inner join tbl_book_author author on book.bno = author.bno
+		where book.bno = #{bno}
 	</select>
 	
-	<select id="getBook" resultType="com.demo.domain.BookVO">
+	<select id="getBookByIsbn" resultType="com.demo.domain.BookVO">
 		select bno, isbn, title, publisher, thumbnail, url, datetime, createdate  
 		from tbl_book
 		where isbn = #{isbn}
+	</select>
+	
+	<select id="getBookByIsbnUsingLike" resultType="com.demo.domain.BookVO">
+		select bno, isbn 
+		from tbl_book 
+		where isbn like #{isbn}||'%'
 	</select>
 
 	<!-- insert -->
