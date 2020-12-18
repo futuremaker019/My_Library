@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@GetMapping("/customLogin")
+	@GetMapping("/member/login")
 	public void login(String error, Model model) {
 		log.info("login page loading done.");
 		
@@ -35,7 +36,7 @@ public class MemberController {
 		model.addAttribute("msg", "Access Denied");
 	}
 	
-	@GetMapping("/customLogout")
+	@GetMapping("/member/logout")
 	public void logout() {
 		log.info("custom logout");
 	}
@@ -45,6 +46,7 @@ public class MemberController {
 		return "/member/signup";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/info")
 	public String getMyInfoPage() {
 		return "/member/myinfo";

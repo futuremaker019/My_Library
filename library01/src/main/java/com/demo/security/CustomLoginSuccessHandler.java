@@ -41,6 +41,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			return;
 		}
 		
-		response.sendRedirect("/customLogin");
+		response.sendRedirect("/member/login");
 	}
 }

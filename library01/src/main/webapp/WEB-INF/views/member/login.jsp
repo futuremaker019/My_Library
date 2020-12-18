@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="../views/includes/header.jsp"%>
+<%@ include file="../includes/header.jsp"%>
 
 
 <section class="container">
@@ -39,4 +39,4 @@
 </script>
 
 
-<%@ include file="../views/includes/footer.jsp"%>
+<%@ include file="../includes/footer.jsp"%>

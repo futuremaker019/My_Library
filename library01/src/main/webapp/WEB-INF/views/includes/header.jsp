@@ -56,7 +56,7 @@
                    		</span>
                    	</li>
                     <li class="list-inline-item">
-                    	<form action="/customLogout" method="post">
+                    	<form action="/member/logout" method="post">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 							<button class="btn btn-link" id="logoutBtn" style="color:white;">로그아웃</button>
 						</form>
@@ -64,7 +64,7 @@
                    </sec:authorize>
                    <sec:authorize access="isAnonymous()">
                   		<li class="list-inline-item">
-                  			<button class="btn btn-link" onclick="location.href='/customLogin'" style="color:white;">로그인</button>
+                  			<button class="btn btn-link" onclick="location.href='/member/login'" style="color:white;">로그인</button>
               			</li>
                	   </sec:authorize>
                </ul>
