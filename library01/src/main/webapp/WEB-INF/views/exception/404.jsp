@@ -5,9 +5,8 @@
 
 <%@ include file="../includes/header.jsp"%>
 
-<div class="container">
-	<div class=row>
-	</div>
+<div class="d-flex justify-content-center">
+	<img src="/resources/image/pageNotFound.png">
 </div>
 
 

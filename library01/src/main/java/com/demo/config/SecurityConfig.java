@@ -64,5 +64,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationSuccessHandler loginSuccessHandler() {
 		return new CustomLoginSuccessHandler();
 	}
-	
 }
