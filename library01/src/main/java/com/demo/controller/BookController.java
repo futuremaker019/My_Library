@@ -18,8 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
-import com.demo.domain.PageDTO;
 import com.demo.domain.ReviewVO;
+import com.demo.dto.PageDTO;
 import com.demo.service.BookService;
 import com.demo.service.ReviewService;
 
