@@ -1,5 +1,3 @@
-console.log("util function activated");
-
 const util = (function() {
     function scrollToTop() {
         window.scrollTo({top : 0, behavior : 'smooth'});

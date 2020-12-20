@@ -97,41 +97,14 @@ $(document).ready(function () {
             isbn = dividedIsbn[1];
         }
         
-        $.getJSON("/api/" + isbn,
-           function (data) {
-              if(isbn == data.isbn) {
-            	  alert("서제에 책이 존재합니다.")
-            	  return false;
-              }
-           })
-        .fail(function (xhr, status, err) {
-           if(error) {
-           error(err);
-           }
-        });
-        
-        searchService.api_getBook(isbn, function (selectedItem) {
-            var content = selectedItem.documents;
-            
-            var book = {
-            		isbn : isbn,
-                    title : content[0].title,
-                    thumbnail : content[0].thumbnail,
-                    publisher : content[0].publisher,
-                    url : content[0].url,
-                    datetime : content[0].datetime.slice(0, 10),
-                    authors : []
-                }
-
-            for (var i = 0; i < content[0].authors.length; i++) {
-                book.authors.push({isbn : isbn, authors : content[0].authors[i]});
+        searchService.getBook(isbn, function(data){
+        	if(isbn == data.isbn) {
+          	  alert("서제에 책이 존재합니다.")
+          	  return false;
             }
             
-            searchService.addBook(book, csrfHeaderName, csrfTokenValue, function (result) {
-                alert(result);
-            });	
-		});
-        
+            bookAdded(isbn);
+        })
     });
 
     function showListPage(pageableCount) {
@@ -202,11 +175,29 @@ $(document).ready(function () {
         });
     }
     
-    function getBook(isbn, callback, error) {
-        console.log("getBook activated.");
+    function bookAdded(isbn) {
+    	searchService.api_getBook(isbn, function (selectedItem) {
+            var content = selectedItem.documents;
+            
+            var book = {
+            		isbn : isbn,
+                  title : content[0].title,
+                  thumbnail : content[0].thumbnail,
+                  publisher : content[0].publisher,
+                  url : content[0].url,
+                  datetime : content[0].datetime.slice(0, 10),
+                  authors : []
+              }
 
-        
-     }
+            for (var i = 0; i < content[0].authors.length; i++) {
+                book.authors.push({isbn : isbn, authors : content[0].authors[i]});
+            }
+            
+            searchService.addBook(book, csrfHeaderName, csrfTokenValue, function (result) {
+                alert(result);
+            });	
+		});
+    }
 });
 </script>
 

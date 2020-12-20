@@ -15,6 +15,8 @@ import com.demo.dto.MemberDto;
 import com.demo.mapper.AuthMapper;
 import com.demo.mapper.MemberMapper;
 
+import lombok.Setter;
+
 @Service
 @Transactional
 public class MemberService {
@@ -35,6 +37,10 @@ public class MemberService {
 				.email(memberDto.getEmail())
 				.build();
 		
+		saveRoles(memberDto, member);
+	}
+
+	private void saveRoles(MemberDto memberDto, MemberVO member) {
 		List<AuthVO> authList = new ArrayList<>(); 
 		authList.add(new AuthVO(memberDto.getUserId(), Role.MEMBER.getValue()));
 		

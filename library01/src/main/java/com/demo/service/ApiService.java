@@ -34,8 +34,6 @@ public class ApiService{
 		String userId = (String) userDetails.getUsername();
 		
 		BookVO bookVO = bookDto.toEntity();
-		log.info("bookVO : " + bookVO);
-		
 		bookVO.setUserId(userId);
 		
 		if (bookMapper.insert(bookVO) == 1) {
@@ -48,25 +46,26 @@ public class ApiService{
 			}
 		}
 	}
-
-	public BookVO findBookByIsbn(String isbn) {
+	
+	public BookDto findBookByIsbnUsingLike(String isbn) {
+		String isbnWithoutUuid = null;
+				
+		List<BookVO> findBookList = bookMapper.getBookByIsbnUsingLike(isbn);
+		if (findBookList.size() != 0) {
+			BookVO bookVO = findBookList.get(0);
+			String findIsbn = bookVO.getIsbn();
+			isbnWithoutUuid = findIsbn.substring(0, findIsbn.indexOf("-"));
+		}
+		
+		BookDto bookDto = BookDto.builder()
+				.isbn(isbnWithoutUuid)
+				.build();
+		
+		return bookDto;
+	}
+	
+	private BookVO findBookByIsbn(String isbn) {
 		return bookMapper.getBookByIsbn(isbn);
 	}
 	
-	public BookDto findBookByIsbnUsingLike(String isbn) {
-		BookVO bookVO = bookMapper.getBookByIsbnUsingLike(isbn).get(0);
-		String findIsbn = bookVO.getIsbn();
-		String isbnWithoutUuid = findIsbn.substring(0, findIsbn.indexOf("-"));
-		
-		log.info("isbnWithoutUuid : " + isbnWithoutUuid);
-		
-		BookDto bookDto = null;
-		
-		if(bookVO != null) {
-			bookDto = BookDto.builder()
-					.isbn(isbnWithoutUuid)
-					.build();
-		}
-		return bookDto;
-	}
 }

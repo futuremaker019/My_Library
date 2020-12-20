@@ -1,10 +1,6 @@
-console.log("----review js active-----");
-
 var reviewService = (function() {
 
 	function addReview(review, callback, error) {
-	  console.log("review post activated");
-	
 	  $.ajax({
 	     method : "POST",
 	     url : "/review/new",            
@@ -24,8 +20,6 @@ var reviewService = (function() {
 	}
 	
 	function getReview(bno, callback, error) {
-		console.log("review get activated.");
-		
 		$.getJSON("/review/" + bno + ".json",
 			function(data) {
 				if(callback) {
@@ -39,8 +33,6 @@ var reviewService = (function() {
 	}
 	
 	function updateReview(review, csrfHeaderName, csrfTokenValue, callback, error) {
-		console.log("review update activated.");
-
 		let bno = review.bno;
 
 		$.ajax({
@@ -62,8 +54,6 @@ var reviewService = (function() {
 	}
 
 	function deleteReview(bno, callback, error) {
-		console.log("review delete activated");
-
 		$.ajax({
 			type: "delete",
 			url: "/review/admin/" + bno,
@@ -90,8 +80,6 @@ var reviewService = (function() {
 
 const bookService = (function() {
 	function removeBook(bno, callback, error) {
-		console.log("book remove activated");
-
 		$.ajax({
 			type: "delete",
 			url: "/book/remove/" + bno

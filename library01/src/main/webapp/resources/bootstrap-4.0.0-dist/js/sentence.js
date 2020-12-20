@@ -1,10 +1,6 @@
-console.log("----sentence js active-----");
-
 var sentenceService = (function() {
 
 	function addSentence(sentence, callback, error) {
-	  console.log("sentence post activated");
-	
 	  $.ajax({
 	     method : "POST",
 	     url : "/sentence/new",            
@@ -41,8 +37,6 @@ var sentenceService = (function() {
     }
 	
 	function getSentence(sno, callback, error) {
-		console.log("sentence get activated.");
-		
 		$.getJSON("/sentence/" + sno + ".json",
 			function(data) {
 				if(callback) {
@@ -56,8 +50,6 @@ var sentenceService = (function() {
 	}
 	
 	function updateSentence(sentence, callback, error) {
-		console.log("sentence update activated.");
-
 		let sno = sentence.sno;
 
 		$.ajax({
@@ -79,8 +71,6 @@ var sentenceService = (function() {
 	}
 
 	function removeSentence(sno, callback, error) {
-		console.log("sentence delete activated");
-
 		$.ajax({
 			type: "delete",
 			url: "/sentence/" + sno,

@@ -23,7 +23,6 @@ public class MemberController {
 	@GetMapping("/member/login")
 	public void login(String error, Model model) {
 		log.info("login page loading done.");
-		
 		if(error != null) {
 			model.addAttribute("error", "Please check your account again");
 		}
@@ -31,7 +30,6 @@ public class MemberController {
 	
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
-		log.info("access Denied : " + auth);
 		
 		model.addAttribute("msg", "Access Denied");
 	}
@@ -57,6 +55,4 @@ public class MemberController {
 		memberService.saveMemberInfo(memberDto);
 		return "redirect:/customLogin";
 	}
-	
-	
 }

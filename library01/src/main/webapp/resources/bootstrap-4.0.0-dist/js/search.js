@@ -1,7 +1,6 @@
 var searchService = (function () {
   
    function api_getBooks(searchValue, callback, error) {
-      console.log("api_getBooks activated");
       $.ajax({
          method : "GET",
          url : "https://dapi.kakao.com/v3/search/book?",            
@@ -21,7 +20,6 @@ var searchService = (function () {
    }
 
    function api_getBook(searchValue, callback, error) {
-      console.log("api_getBooks activated");
       $.ajax({
          method : "GET",
          url : "https://dapi.kakao.com/v3/search/book?",            
@@ -41,8 +39,6 @@ var searchService = (function () {
    }
 
    function addBook(item, csrfHeaderName, csrfTokenValue, callback, error) { 
-      console.log("add book activated.");
-		
       $.ajax({
          type: 'post',
          url: '/api/addbook',
@@ -65,8 +61,6 @@ var searchService = (function () {
    }
 
    function getBook(isbn, callback, error) {
-      console.log("getBook activated.");
-
       $.getJSON("/api/" + isbn,
          function (data) {
             if (callback) {
