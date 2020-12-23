@@ -10,7 +10,7 @@
 			<div>
 				<label style="margin: 0 0 0 5px;">내 서재의 책을 검색하세요.</label>
 			</div>
-			<form id="searchForm" action="/book/result" method="get">
+			<form id="searchForm" action="/books/result" method="get">
 				<div class="form-row">
 					<div class="col-md-4">
 						<select name="type" class="custom-select">
@@ -41,7 +41,7 @@
 	<div class="row">
 		<c:forEach items="${bookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href='/book/one?bno=<c:out value="${list.bno }"/>' >
+				<a class="thumbnail" href='/books/book/<c:out value="${list.bno }"/>' >
 					<img src="<c:out value='${list.thumbnail }'/>" id="collections" class="card img-thumbnail">
 				</a>
 			</div>
@@ -119,7 +119,7 @@
 		
 		var content = ''; 
 			
-		content += "<div><a class='btn btn-primary' href='/book/one?bno=<c:out value="${book.bno }"/>'>상세</a>";
+		content += "<div><a class='btn btn-primary' href='/books/book/<c:out value="${book.bno }"/>'>상세</a>";
 		content += "<button class='btn btn-danger ml-2' id='bookDeleteBtn'>삭제</button></div>";
 		
 		/* $('[data-toggle="popover"]').popover({

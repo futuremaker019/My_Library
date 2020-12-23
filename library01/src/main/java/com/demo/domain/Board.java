@@ -1,6 +1,7 @@
 package com.demo.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,5 @@ public class Board {
 	private LocalDate createdDate;
 	private LocalDate updatedDate;
 	
-	
+	List<Attachment> files;
 }

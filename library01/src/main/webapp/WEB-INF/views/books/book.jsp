@@ -25,7 +25,7 @@
                 <p>책 출판일 : <c:out value="${book.datetime }"/></p>
                 <p>내 서재 등록일 : <c:out value="${book.createdate }"/></p>
                 <div>
-                	<button class="btn btn-primary btn-info" onclick="location.href='/book'">내 서재</button>
+                	<button class="btn btn-primary btn-info" onclick="location.href='/books'">내 서재</button>
                 	<button id="bookRemoveBtn" class="btn btn-danger btn-info ml-4">책 삭제</button>
                 </div>
             </div>

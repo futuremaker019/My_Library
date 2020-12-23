@@ -28,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -42,12 +42,12 @@ public class BookController {
 	public String collections(Model model, Criteria criteria, Authentication authentication) {
 		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
 		
-		int total = bookService.getTotal(criteria);
+		int total = bookService.getTotal(criteria, authentication);
 		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 		
-		return "/book/collection";
+		return "/books/collection";
 	}
 	
 	@GetMapping("/result")
@@ -59,12 +59,12 @@ public class BookController {
 		model.addAttribute("searchBookList", searchBookList);
 		model.addAttribute("pageMaker", new PageDTO(criteria, searchTotal));
 		
-		return "/book/result";
+		return "/books/result";
 	}
 	
 	@GetMapping("/search")
 	public String search() {
-		return "/book/search";
+		return "/books/search";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -72,15 +72,15 @@ public class BookController {
 	public void editing(Model model, Criteria criteria, Authentication authentication) {
 		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
 		
-		int total = bookService.getTotal(criteria);
+		int total = bookService.getTotal(criteria, authentication);
 		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/one")
-	public String bookDetails(Model model, @RequestParam("bno") Long bno) {
+	@GetMapping("/book/{bno}")
+	public String bookDetails(Model model, @PathVariable("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
 		
 		List<AuthorVO> authors = book.getAuthors();
@@ -91,7 +91,7 @@ public class BookController {
 		model.addAttribute("authors", authors);
 		model.addAttribute("review", review);
 		
-		return "/book/one";
+		return "/books/book";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -101,11 +101,11 @@ public class BookController {
 		
 		if(bnos != null) {
 			bookService.removeBooks(bnos);
-			return "redirect:/book";
+			return "redirect:/books";
 		}
 		
 		bookService.remove(bno);
 		rttr.addFlashAttribute("result", "Book remove successfully");
-		return "redirect:/book";
+		return "redirect:/books";
 	}
 }

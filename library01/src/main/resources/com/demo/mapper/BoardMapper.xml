@@ -4,14 +4,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.mapper.BoardMapper">
 	<select id="getList" resultType="com.demo.domain.Board">
-		select * from tbl_board
+		select /*+INDEX_DESC(tbl_board pk_board)*/ 
+		* from tbl_board
 	</select>
 	<select id="getPost" resultType="com.demo.domain.Board">
 		select * from tbl_board where board_id = #{id}
 	</select>
 
 	<insert id="insert">
-		insert into tbl_board (book_id, title, content, writer)
-		values (seq_board.nextval, #{title}, #{content}, #{writer})
+		<selectKey keyProperty="board_id" order="BEFORE" resultType="long">
+			select seq_board.nextval from dual
+		</selectKey>
+		insert into tbl_board (board_id, title, content, writer)
+		values (#{board_id}, #{title}, #{content}, #{writer})
 	</insert>
 </mapper>

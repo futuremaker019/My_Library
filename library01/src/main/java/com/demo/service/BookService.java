@@ -34,8 +34,11 @@ public class BookService{
 		return bookMapper.getListWithPaging(cri, userId);
 	}
 
-	public int getTotal(Criteria criteria) {
-		return bookMapper.getTotalCount(criteria);
+	public int getTotal(Criteria criteria, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = (String) userDetails.getUsername();
+		
+		return bookMapper.getTotalCount(criteria, userId);
 	}
 
 	public List<BookVO> getSearchListWithPaging(Criteria criteria) {

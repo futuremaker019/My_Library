@@ -6,7 +6,7 @@ import com.demo.domain.Board;
 
 public interface BoardMapper {
 	
-	public void insert(Board board);
+	public int insert(Board board);
 	
 	public List<Board> getList();
 

@@ -3,6 +3,7 @@ package com.demo.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.Authentication;
 
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
@@ -23,7 +24,9 @@ public interface BookMapper {
 
 	public int insert(BookVO bookVO);
 	
-	public int getTotalCount(Criteria criteria);
+	public int getTotalCount(
+			@Param("criteria") Criteria criteria, 
+			@Param("userId") String userId);
 	
 	public int getTotalSearchCount(Criteria criteria);
 

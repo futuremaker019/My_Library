@@ -164,7 +164,7 @@ $(document).ready(function () {
                 strTag += "<div>" + content[i].datetime.slice(0, 10) + "</div></td>";
                 strTag += "<td class='info'><div class='btnBundle'>";
                	<sec:authorize access="isAuthenticated()">
-                	strTag += "<button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>서재에 담기</button>"
+                	strTag += "<button name='addMyLib' class='addMyLib btn btn-primary' data-isbn='" + content[i].isbn + "'>내책 담기</button>"
                 </sec:authorize>
                 strTag += "<button class='linkUrl btn btn-warning' onClick='window.open(\""+ content[i].url +"\")'>상세보기</button></div></td></tr>"
             }
@@ -200,5 +200,7 @@ $(document).ready(function () {
     }
 });
 </script>
+
+
 
 <%@ include file="../includes/footer.jsp"%>

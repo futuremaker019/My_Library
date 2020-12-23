@@ -79,7 +79,7 @@ ul {
   background: #fff;
   box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
   transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-  width: 90%;
+  width: 80%;
   cursor: pointer;
 }
 
@@ -145,8 +145,12 @@ ul {
 /* Footer Section */
 
 #footer {
-  padding: 7% 15%;
+  width: 100%;
+  hight: 100px;
   text-align: center;
+  position: relative;
+  bottom:0;
+  background-color:white;
 }
 
 .social-icon {
@@ -158,8 +162,8 @@ ul {
     text-align: center;
   }
 
-  .title-image {
+  /* .title-image {
     position: static;
     transform: rotate(0);
-  }
+  } */
 }

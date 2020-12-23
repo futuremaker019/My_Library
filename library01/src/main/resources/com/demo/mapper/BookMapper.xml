@@ -64,7 +64,7 @@
 	
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_book
-		where bno > 0
+		where userid = #{userId}
 	</select>
 	
 	<select id="getSearchListWithPaging" resultMap="bookMap">

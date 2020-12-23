@@ -6,29 +6,39 @@
 <%@ include file="../includes/header.jsp"%>
 
 <div class="container">
-	<div class="">
-		<div class="">
+	<div class="row border-bottom">
+		<div class="col mb-3">
 			<h3><c:out value="${post.title}"/></h3>
-			<div><span><c:out value="${post.writer}"/></span></div>
-			<div><span>조회수, 공감</span></div>
-		</div>		
-		<div class="">
+				<div class="mt-2">
+					<span><c:out value="${post.writer}"/></span>
+					<span class="float-right ml-5">조회수, 공감</span>
+				</div>
+			<div class="mt-2"><c:out value="${post.createdDate }"/></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
 			<div>
 				<p><c:out value="${post.content }"/></p>
 			</div>			
 		</div>
-		<div class="form-group">
-			<button type="button" class="btn btn-success">Modify</button>
-			<button type="button" class="btn btn-primary">List</button>
-		</div>
-		<div class="">
-		
+	</div>
+	<div class="row border-top">
+		<div class="col mt-3">
+			<div class="float-right">
+				<button type="button" id="modifyBtn" class="btn btn-success">수정</button>
+				<button type="button" id="listBtn" class="btn btn-primary">게시판</button>
+			</div>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$("#listBtn").click(function(){
+		location.href = "/board/list";
+	})
+});
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.demo.dto.AttachmentDto;
 import com.demo.dto.BoardDto;
 import com.demo.service.BoardService;
 
@@ -39,15 +42,26 @@ public class BoardController {
 	}
 	
 	@GetMapping("/create")
-	public String getCreatePage() {
+	public String getCreatePage(Authentication authentication, Model model) {
+		
+		/* model.addAttribute("authentication", ) */
+		
 		return "/board/create";
 	}
 	
-	@PostMapping("/create")
+	
+	@PostMapping("/posting") 
 	public String create(BoardDto boardDto, RedirectAttributes rttr, Authentication authentication) {
-		boardService.addPost(boardDto, authentication);
-		rttr.addFlashAttribute("Post added successfully");
+		List<AttachmentDto> attechmentDtos = boardDto.getFiles();
+		  
+		log.info("===============================");
+		log.info("boardDto : " + boardDto);
+		log.info("===============================");
 		
-		return "redirect:/board/list";
-	}
+		boardService.addPost(boardDto, attechmentDtos, authentication);
+		rttr.addFlashAttribute("Post added successfully");
+	  
+	return "redirect:/board/list"; 
+  }
+	 
 }
