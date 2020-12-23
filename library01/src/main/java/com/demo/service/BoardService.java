@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.domain.Attachment;
 import com.demo.domain.Board;
@@ -19,6 +20,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
+@Transactional
 public class BoardService {
 	
 	@Autowired
@@ -37,14 +39,17 @@ public class BoardService {
 				.writer(userId)
 				.build();
 		
-		List<Attachment> attachments = attachmentDtos.stream()
-			.map(attachmentDto -> new Attachment(attachmentDto.getFileName(), attachmentDto.getUploadPath(), attachmentDto.getUuid()))
-			.collect(Collectors.toList());
-		
 		if(boardMapper.insert(board) == 1) {
-			for (Attachment attachment : attachments) {
-				attachment.setBoard_id(board.getBoard_id());
-				attachmentMapper.insert(attachment);
+			if(attachmentDtos != null) {
+				List<Attachment> attachments = attachmentDtos.stream()
+						.map(attachmentDto -> new Attachment(attachmentDto.getFileName(), attachmentDto.getUploadPath(), attachmentDto.getUuid()))
+						.collect(Collectors.toList());
+				
+				for (Attachment attachment : attachments) {
+					attachment.setBoard_id(board.getBoard_id());
+					log.info("attachment : " + attachment);
+					attachmentMapper.insert(attachment);
+				}
 			}
 		}
 	}

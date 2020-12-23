@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ public class BoardController {
 		return "/board/post";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/create")
 	public String getCreatePage(Authentication authentication, Model model) {
 		
@@ -51,15 +53,9 @@ public class BoardController {
 	
 	
 	@PostMapping("/posting") 
-	public String create(BoardDto boardDto, RedirectAttributes rttr, Authentication authentication) {
-		List<AttachmentDto> attechmentDtos = boardDto.getFiles();
-		  
-		log.info("===============================");
-		log.info("boardDto : " + boardDto);
-		log.info("===============================");
-		
+	public String create(BoardDto boardDto, Authentication authentication) {
+		List<AttachmentDto> attechmentDtos = boardDto.getAttachments();
 		boardService.addPost(boardDto, attechmentDtos, authentication);
-		rttr.addFlashAttribute("Post added successfully");
 	  
 	return "redirect:/board/list"; 
   }

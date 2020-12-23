@@ -7,27 +7,26 @@
 
 <div class="container">
 	<div>
+	<div class="border-bottom" style="margin: 20px 0;">
+		<h4>게시판 글쓰기</h4>
+	</div>
 		<form id="f1" action="/board/posting" method="post">
-			<div class="border-bottom" style="margin: 20px 0;">
-				<h4>게시판 글쓰기</h4>
-			</div>
 			<div class="form-group">
 				<input type="text" id="titleInput" class="form-control" name="title" placeholder="글 제목을 작성해주세요.">
 			</div> 
 			<div>
 				<textarea id="summernote" name="content"></textarea>
 			</div>
-			
-			
-			<div class="d-flex justify-content-end mt-3">
-				<button type="button" id="submitBtn" class="btn btn-primary">글 등록</button>
-			</div>
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		</form>
 		<div class="form-group">
 			<input type="file" class="form-control" name="uploadFile" id="upload" multiple>
+			<button type="button" id="submitBtn" class="btn btn-primary">글 등록</button>
 		</div>
 		<div id=fileList>
+		</div>
+		<div class="d-flex justify-content-end mt-3">
+			
 		</div>
 	</div>
 </div>
@@ -55,7 +54,6 @@ function deleteFile(eventParam, orderParam) {
 function addFiles(e) {
     var files = e.target.files;
     var filesArr = Array.prototype.slice.call(files);
-    console.log(filesArr);
     
     var filesArrLen = filesArr.length;
     var filesTempArrLen = filesTempArr.length;
@@ -64,8 +62,6 @@ function addFiles(e) {
         filesTempArr.push(filesArr[i]);
         $("#fileList").append("<div>" + filesArr[i].name + "<a href='#' onclick=\"deleteFile(event, " + (filesTempArrLen + i) + ");\">[삭제]</a></div>");
     }
-    console.log("filesTempArr는 나오냐?");
-    console.log(filesTempArr);
     $(this).val('');
 }
 
@@ -78,9 +74,6 @@ function submitWithUploadFiles() {
     
     var str = "";
     
-    console.log("filesTempArr가 뜨는 곳")
-    console.log(filesTempArr);
-
     $(document).ajaxSend(function (e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
@@ -91,17 +84,14 @@ function submitWithUploadFiles() {
         data: formData,
         processData: false,
         contentType: false,
+        dataType:'json',
         success: function (data) {
-        	console.log(data);
             for (var i = 0; i < data.length; i++) {
-                str += "<input type='hidden' name='files[" + i + "].fileName' value='" + data[i].fileName + "'>";
-                str += "<input type='hidden' name='files[" + i + "].uuid' value='" + data[i].uuid + "'>";
-                str += "<input type='hidden' name='files[" + i + "].uploadPath' value='" + data[i].uploadPath + "'>";
+                str += "<input type='hidden' name='attachments[" + i + "].fileName' value='" + data[i].fileName + "'>";
+                str += "<input type='hidden' name='attachments[" + i + "].uuid' value='" + data[i].uuid + "'>";
+                str += "<input type='hidden' name='attachments[" + i + "].uploadPath' value='" + data[i].uploadPath + "'>";
             }
-            console.log("str은 나오냐?");
-           	console.log(str);
-            f1.append(str);
-            /* f1.submit(); */
+            f1.append(str).submit();
         },
         err: function (err) {
             alert(err.status);
@@ -129,7 +119,7 @@ $(document).ready(function() {
         if (filesTempArr.length > 0) {
         	submitWithUploadFiles();
         } else {
-            /* f1.submit(); */
+            f1.submit();
         }
     });
     
@@ -148,16 +138,16 @@ $(document).ready(function() {
 	      ['insert', ['link', 'picture', 'video']],
 	      ['view', ['codeview', 'help']]
 	    ],
-	    callbacks: {
+	    /* callbacks: {
             onImageUpload: function (files, editor, welEditable) {
             	console.log(files[0]);
             	sendFile(files[0], this);
             	
-                /* for (var i = 0; i < files.length; i++) {
+                for (var i = 0; i < files.length; i++) {
                    	sendFile(files[i], this);
-                } */
+                
             }
-        }
+        } */
 	});
 	
 	function sendFile(file, el) {

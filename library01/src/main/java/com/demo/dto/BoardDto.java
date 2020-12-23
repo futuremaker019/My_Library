@@ -10,5 +10,5 @@ public class BoardDto {
 	private String title;
 	private String content;
 	
-	private List<AttachmentDto> files;
+	private List<AttachmentDto> attachments;
 }

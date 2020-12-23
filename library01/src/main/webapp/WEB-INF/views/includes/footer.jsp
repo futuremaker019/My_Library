@@ -2,14 +2,8 @@
     pageEncoding="UTF-8"%>
     
 	<footer id="footer">
-	    <i class="social-icon fab fa-facebook-square"></i>
-	    <i class="social-icon fab fa-twitter-square"></i>
-	    <i class="social-icon fab fa-instagram"></i>
-	    <i class="social-icon fas fa-envelope"></i>
-	
 	    <p>© Copyright 2020 MyLibrary</p>
-
-  </footer>
+	</footer>
   
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->

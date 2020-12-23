@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="col">
 			<div>
-				<p><c:out value="${post.content }"/></p>
+				<c:out value="${post.content }" escapeXml="false"/>
 			</div>			
 		</div>
 	</div>

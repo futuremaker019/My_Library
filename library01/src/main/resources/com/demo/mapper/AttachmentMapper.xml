@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.mapper.UploadMapper">
+<mapper namespace="com.demo.mapper.AttachmentMapper">
 	<select id="findById" resultType="com.demo.domain.Attachment">
 		select * from tbl_upload where file_id = #{id}	
 	</select>
 
 	<insert id="insert">
-		insert into tbl_upload (file_id, filename, uploadpath, uuid)
-		values (seq_upload.nextval, #{fileName}, #{uploadPath}, #{uuid})
+		insert into tbl_upload (file_id, filename, uploadpath, uuid, board_id)
+		values (seq_upload.nextval, #{fileName}, #{uploadPath}, #{uuid}, #{board_id})
 	</insert>
 </mapper>
