@@ -25,4 +25,9 @@ public class Board {
 	private LocalDate updatedDate;
 	
 	List<Attachment> files;
+	
+	public void updateElements(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 }

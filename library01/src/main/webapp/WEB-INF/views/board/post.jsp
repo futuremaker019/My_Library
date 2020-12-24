@@ -33,11 +33,24 @@
 	</div>
 </div>
 
+<form id='page-form' action="/board/list" method="get">
+	<input type="hidden" name="pageNum" value="${criteria.pageNum }">
+	<input type="hidden" name="amount" value="${criteria.amount }">	
+</form>
+
 <script type="text/javascript">
 $(document).ready(function(){
+	var pageForm = $("#page-form");
+	var board_id = '<c:out value="${post.board_id}"/>';
+	
 	$("#listBtn").click(function(){
-		location.href = "/board/list";
-	})
+		pageForm.submit();
+	});
+	
+	$("#modifyBtn").on("click", function(e){
+		pageForm.attr("action", "/board/modify/" + board_id);
+		pageForm.submit();
+	});
 });
 </script>
 

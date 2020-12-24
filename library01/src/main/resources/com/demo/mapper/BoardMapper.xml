@@ -7,9 +7,34 @@
 		select /*+INDEX_DESC(tbl_board pk_board)*/ 
 		* from tbl_board
 	</select>
+	<select id="getListWithPaging" resultType="com.demo.domain.Board">
+		<![CDATA[
+			select 
+				board_id, title, content, writer, createddate, updateddate
+			from
+				(
+					select /*+INDEX_DESC(tbl_board pk_board)*/
+					rownum rn, board_id, title, content, writer, createddate, updateddate
+					from tbl_board
+					where rownum <= #{pageNum} * #{amount} 
+				)
+			where rn > (#{pageNum} - 1) * #{amount}	
+		]]>
+	</select>
 	<select id="getPost" resultType="com.demo.domain.Board">
 		select * from tbl_board where board_id = #{id}
 	</select>
+	<select id="total" resultType="int">
+		select count(*) from tbl_board
+	</select>
+	
+	<update id="updatePost">
+		update tbl_board set
+		title = #{title},
+		content = #{content},
+		updateddate = sysdate
+		where board_id = #{board_id}
+	</update>
 
 	<insert id="insert">
 		<selectKey keyProperty="board_id" order="BEFORE" resultType="long">

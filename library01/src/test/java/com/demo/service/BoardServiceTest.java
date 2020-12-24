@@ -26,11 +26,20 @@ public class BoardServiceTest {
 //				.board_id(1L).title("타이틀1").content("내용1").writer("작가").build();
 //		Board board2 = Board.builder()
 //				.board_id(2L).title("타이틀2").content("내용2").writer("작가2").build();
-		
 	}
 
 	@Test
 	public void getOneElement() {
 //		boardService.getList().forEach(post -> log.info(post));
+	}
+	
+	@Test
+	public void insertValue() {
+		
+	}
+	
+	@Test
+	public void modifyPost_작동테스트() {
+		
 	}
 }

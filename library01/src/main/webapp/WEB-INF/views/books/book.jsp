@@ -131,7 +131,7 @@
   </div>
 </div>
 
-<form role="form" action="/book/remove" method="post">
+<form role="form" action="/books/remove" method="post">
 	<input type="hidden" name="bno" value='<c:out value="${book.bno}"/>'>
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 </form>

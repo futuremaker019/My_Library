@@ -30,10 +30,10 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${boardList}" var="board">
-						<tr>
+						<tr id="post">
 							<td><c:out value="${board.board_id}"/></td>
 							<td>
-								<a id="post" href='/board/post/<c:out value="${board.board_id }"/>'>
+								<a href='<c:out value="${board.board_id }"/>'>
 									<c:out value="${board.title }"/>
 								</a>
 							</td>
@@ -48,17 +48,57 @@
 		<div class="d-flex justify-content-end">
 			<button type="button" id="createPostBtn" class="btn btn-info">글쓰기</button>
 		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="pagination">
+					<c:if test = "${pageMaker.previous }">
+						<li class = "page-item previous">
+							<a class="page-link" href = "${pageMaker.startPage - 1 }">Previous</a>
+						</li>
+					</c:if>
+					
+					<c:forEach var="number" begin="${pageMaker.startPage }" end = "${pageMaker.endPage }">
+						<li class="page-item ${pageMaker.criteria.pageNum == number ? 'active' : '' }">
+							<a class="page-link" href="${number }">${number }</a>				
+						</li>
+					</c:forEach>
+					
+					<c:if test="${pageMaker.next }">
+						<li class="page-item next">
+							<a class="page-link" href="${pageMaker.endPage + 1 }">Next</a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+		<!-- end-pagination -->
 	</div>
 </div>
 
-<form id="form" action="/board/list" method="get">
-	
+<form id='page-form' action="/board/list" method="get">
+	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
+	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
 </form>
 
 <script>
 $(document).ready(function(){
+	var pageForm = $("#page-form");
+	
 	$("#createPostBtn").click(function(){
 		location.href = "/board/create";
+	});
+	
+	$(".page-item a").on("click", function(e){
+		e.preventDefault();
+		
+		pageForm.find("input[name='pageNum']").val($(this).attr("href"));	
+		pageForm.submit();
+	});
+	
+	$("#post a").on("click", function(e){
+		e.preventDefault();
+		pageForm.attr("action", "/board/post/" + $(this).attr("href"));
+		pageForm.submit();
 	});
 });
 </script>

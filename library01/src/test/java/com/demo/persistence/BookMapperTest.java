@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.demo.config.RootConfig;
+import com.demo.config.ServletConfig;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
 import com.demo.mapper.BookMapper;
@@ -21,7 +23,8 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+//@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration(classes= {RootConfig.class, ServletConfig.class})
 @Log4j
 public class BookMapperTest {
 

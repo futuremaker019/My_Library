@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.domain.Attachment;
 import com.demo.domain.Board;
+import com.demo.domain.Criteria;
 import com.demo.dto.AttachmentDto;
 import com.demo.dto.BoardDto;
 import com.demo.mapper.BoardMapper;
@@ -47,7 +48,24 @@ public class BoardService {
 				
 				for (Attachment attachment : attachments) {
 					attachment.setBoard_id(board.getBoard_id());
-					log.info("attachment : " + attachment);
+					attachmentMapper.insert(attachment);
+				}
+			}
+		}
+	}
+	
+	public void modifyPost(Long board_id, BoardDto boardDto, List<AttachmentDto> attachmentDtos) {
+		Board board = boardMapper.getPost(board_id);
+		board.updateElements(boardDto.getTitle(), boardDto.getContent());
+		
+		if(boardMapper.updatePost(board) == 1) {
+			if(attachmentDtos != null) {
+				List<Attachment> attachments = attachmentDtos.stream()
+						.map(attachmentDto -> new Attachment(attachmentDto.getFileName(), attachmentDto.getUploadPath(), attachmentDto.getUuid()))
+						.collect(Collectors.toList());
+				
+				for (Attachment attachment : attachments) {
+					attachment.setBoard_id(board.getBoard_id());
 					attachmentMapper.insert(attachment);
 				}
 			}
@@ -58,7 +76,15 @@ public class BoardService {
 		return boardMapper.getList();
 	}
 	
+	public List<Board> getPostListWithPaging(Criteria criteria) {
+		return boardMapper.getListWithPaging(criteria);
+	}
+	
 	public Board getPostPage(Long id) {
 		return boardMapper.getPost(id);
+	}
+	
+	public int getTotalPost() {
+		return boardMapper.total();
 	}
 }

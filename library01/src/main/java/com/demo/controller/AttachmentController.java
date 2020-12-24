@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,18 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.dto.AttachmentDto;
+import com.demo.service.AttachmentService;
 import com.demo.service.UploadService;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-public class UploadController {
+public class AttachmentController {
 	
 	private final static String uploadFolder = "C:\\upload\\image";
 	
 	@Autowired
-	private UploadService uploadService;
+	private AttachmentService attachmentService;
 	
 	@ResponseBody
 	@PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,11 +55,11 @@ public class UploadController {
 			log.info("Upload File Name in uploadAjaxAction : " + multipartFile.getOriginalFilename());
 			log.info("Upload File size in uploadAjaxAction : " + multipartFile.getSize());
 			
-			AttachmentDto attachDTO = new AttachmentDto();
+			AttachmentDto attachmentDto = new AttachmentDto();
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			// 파일의 이름을 객체에 set
-			attachDTO.setFileName(uploadFileName);
+			attachmentDto.setFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
@@ -68,10 +70,10 @@ public class UploadController {
 				multipartFile.transferTo(saveFile);
 				
 				// 파일의 uuid와 uploadPath를 set
-				attachDTO.setUuid(uuid.toString());
-				attachDTO.setUploadPath(uploadFolderPath);
+				attachmentDto.setUuid(uuid.toString());
+				attachmentDto.setUploadPath(uploadFolderPath);
 				
-				list.add(attachDTO);
+				list.add(attachmentDto);
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
@@ -79,6 +81,25 @@ public class UploadController {
 		
 		return new ResponseEntity<List<AttachmentDto>>(list, HttpStatus.OK);
 	}
+	
+	@ResponseBody
+	@PostMapping("/file/delete")
+	public ResponseEntity<String> deleteFile(String fileName, Long id) {
+		log.info("fileName : " + fileName);
+		log.info("id : " + id);
+		attachmentService.deleteFileById(id);
+		
+		try {
+			File file = new File(uploadFolder + "\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+		
+		return ResponseEntity.ok().body("file deleted : " + fileName);
+	}
+	
 	
 	// 날짜로 파일 경로를 만드는 메서드
 	private String getFolderFormat() {
