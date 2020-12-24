@@ -33,7 +33,7 @@
 						<tr id="post">
 							<td><c:out value="${board.board_id}"/></td>
 							<td>
-								<a href='<c:out value="${board.board_id }"/>'>
+								<a href='<c:out value="${board.board_id }"/>' style="display:block;">
 									<c:out value="${board.title }"/>
 								</a>
 							</td>
@@ -48,9 +48,9 @@
 		<div class="d-flex justify-content-end">
 			<button type="button" id="createPostBtn" class="btn btn-info">글쓰기</button>
 		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<ul class="pagination">
+		<div class="">
+			<div class="col-lg-12 ">
+				<ul class="pagination d-flex justify-content-center">
 					<c:if test = "${pageMaker.previous }">
 						<li class = "page-item previous">
 							<a class="page-link" href = "${pageMaker.startPage - 1 }">Previous</a>

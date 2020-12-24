@@ -50,6 +50,7 @@ public class BoardController {
 	public String getPage(@PathVariable("id") Long id, Model model, 
 							@ModelAttribute("criteria") Criteria criteria) {
 		model.addAttribute("post",boardService.getPostPage(id));
+		model.addAttribute("attachments", attachmentService.getAttachments(id));
 		
 		return "/board/post";
 	}
@@ -57,8 +58,6 @@ public class BoardController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/create")
 	public String getCreatePage(Authentication authentication, Model model) {
-		
-		/* model.addAttribute("authentication", ) */
 		
 		return "/board/create";
 	}

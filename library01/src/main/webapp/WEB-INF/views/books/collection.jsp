@@ -78,7 +78,7 @@
 </section>
 <!-- end-pagination -->
 
-<form id='actionForm' action="/book" method="get">
+<form id='actionForm' action="/books" method="get">
 	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
 	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
 </form>
