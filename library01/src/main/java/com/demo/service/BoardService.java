@@ -30,6 +30,9 @@ public class BoardService {
 	@Autowired
 	private AttachmentMapper attachmentMapper;
 	
+	@Autowired
+	private AttachmentService attachmentService; 
+	
 	public void addPost(BoardDto boardDto, List<AttachmentDto> attachmentDtos, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
@@ -86,5 +89,15 @@ public class BoardService {
 	
 	public int getTotalPost() {
 		return boardMapper.total();
+	}
+	
+	// 게시글을 지우면 on delete cascade 조건으로 인해 연관관계의 첨부파일 정보도 지워진다.
+	// 데이터베이스의 정보를 지운 후, 디렉토리에 저장된 파일을 지워준다.
+	public void removePostAndFiles(Long board_id) {
+		List<AttachmentDto> attachmentDtos = attachmentService.getAttachments(board_id);
+		
+		if(boardMapper.removeSinglePost(board_id)) {
+			attachmentService.deleteFiles(attachmentDtos);
+		}
 	}
 }

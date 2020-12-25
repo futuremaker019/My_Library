@@ -43,4 +43,8 @@
 		insert into tbl_board (board_id, title, content, writer)
 		values (#{board_id}, #{title}, #{content}, #{writer})
 	</insert>
+	
+	<delete id="removeSinglePost">
+		delete from tbl_board where board_id = #{board_id}
+	</delete>
 </mapper>

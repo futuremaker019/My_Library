@@ -35,9 +35,11 @@
 			<sec:authorize access="isAuthenticated()">
 				<c:if test="${userinfo.username eq post.writer}">
 					<button type="button" id="modifyBtn" class="btn btn-success">수정</button>
+					<button type="button" id="deleteBtn" class="btn btn-danger">삭제</button>
 				</c:if>
 			</sec:authorize>
 			<button type="button" id="listBtn" class="btn btn-primary">게시판</button>
+			
 		</div>
 	</div>
 </div>
@@ -53,49 +55,31 @@ $(document).ready(function(){
 	var token = "${_csrf.token}";
 	
 	var pageForm = $("#page-form");
+	var deleteBtn = $("#deleteBtn");
+	var modifyBtn = $("#modifyBtn");
+	var listBtn = $("#listBtn");
+	
 	var board_id = '<c:out value="${post.board_id}"/>';
 	
-	$("#listBtn").click(function(){
+	listBtn.click(function(){
 		pageForm.submit();
 	});
 	
-	$("#modifyBtn").on("click", function(e){
+	modifyBtn.on("click", function(){
 		pageForm.attr("action", "/board/modify/" + board_id);
 		pageForm.submit();
 	});
-	/* $("#existedFileList a").on("click", function(e){
-		e.preventDefault();
-		
-		var fileId = $(this).data("fileid");
-		var fileName = $(this).data("filename");
-		var uploadPath = $(this).data("uploadpath");
-		var uuid = $(this).data("uuid");
-		
-		console.log(fileId);
-		console.log(fileName);
-		console.log(uploadPath);
-		console.log(uuid);
-		
-		fileName = uploadPath + "\\" + uuid + "_" + fileName;
-		console.log("fileName : " + fileName);
-		
-		$(document).ajaxSend(function (e, xhr, options) {
-	        xhr.setRequestHeader(header, token);
-	    });
-		
-		$.ajax({
-			url: '/file/download',
-			type: 'GET',
-			data: {fileName: fileName},
-			success: function(result) {
-				console.log(result);
-				alert(result);
-			},
-			error:function(request,status,error){
-	            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        }
-		})
-	}); */
+	
+	deleteBtn.on("click", function(){
+		if(confirm("글을 지우겠습니까?")){
+			pageForm.attr("action", "/board/delete/" + board_id);
+			pageForm.attr("method", "post");
+			pageForm.append("<input type='hidden' name='${_csrf.parameterName }' value='${_csrf.token }'>");
+			pageForm.submit();
+		}
+	})
+	
+	
 });
 </script>
 <script>
@@ -105,7 +89,6 @@ var board_id = '<c:out value="${post.board_id}"/>';
 $(document).ready(function(){
 	(function(){
 		$.getJSON("/files/" + board_id, function(data){
-			console.log(data);
 			str = "";
 			var filePath;
 			

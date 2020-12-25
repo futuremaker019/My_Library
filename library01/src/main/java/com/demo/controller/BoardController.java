@@ -86,6 +86,13 @@ public class BoardController {
 		List<AttachmentDto> attachmentDtos = boardDto.getAttachments();
 		boardService.modifyPost(board_id, boardDto, attachmentDtos);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + criteria.getListLink();
+	}
+	
+	@PostMapping("/delete/{board_id}")
+	public String deletePost(@PathVariable("board_id") Long board_id, @ModelAttribute("criteria") Criteria criteria) {
+		boardService.removePostAndFiles(board_id);
+		
+		return "redirect:/board/list" + criteria.getListLink();
 	}
 }

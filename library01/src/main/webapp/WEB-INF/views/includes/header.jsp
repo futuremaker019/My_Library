@@ -43,7 +43,7 @@
 		<div class="container">
 			<!-- Nav Bar -->
 			<nav class="navbar navbar-expand-lg navbar-dark pb-1 pt-0">
-				<a class="navbar-brand pt-4" href="/books">My Library</a>
+				<a class="navbar-brand pt-4" href="/">My Library</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarToggler"
 					aria-controls="navbarToggler" aria-expanded="false"

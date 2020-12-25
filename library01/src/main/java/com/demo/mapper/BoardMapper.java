@@ -18,4 +18,6 @@ public interface BoardMapper {
 	public int total();
 	
 	public int updatePost(Board board);
+	
+	public boolean removeSinglePost(Long board_id);
 }

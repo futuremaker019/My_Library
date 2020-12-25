@@ -33,7 +33,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class AttachmentController {
 	
-	private final static String uploadFolder = "C:\\upload\\image";
+	private final static String rootDerictory = "C:\\upload\\image";
 	
 	@Autowired
 	private AttachmentService attachmentService;
@@ -47,7 +47,7 @@ public class AttachmentController {
 		
 		// 날짜를 디렉토리로 구분해여 path를 만들어준다.
 		String uploadFolderPath = getFolderFormat();
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(rootDerictory, uploadFolderPath);
 		log.info("upload path in uploadAjaxAction: " + uploadPath);
 		
 		// 날짜로 들어오는 디렉토리가 없으면 만들어준다.
@@ -96,7 +96,7 @@ public class AttachmentController {
 		attachmentService.deleteFileById(id);
 		
 		try {
-			File file = new File(uploadFolder + "\\" + URLDecoder.decode(fileName, "UTF-8"));
+			File file = new File(rootDerictory + "\\" + URLDecoder.decode(fileName, "UTF-8"));
 			file.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class AttachmentController {
 	public ResponseEntity<Resource> download(String fileName) {
 		log.info("fileName: " + fileName);
 		
-		Resource resource = new FileSystemResource(uploadFolder + "\\" + fileName);
+		Resource resource = new FileSystemResource(rootDerictory + "\\" + fileName);
 		
 		log.info("resource : " + resource );
 		
@@ -138,14 +138,11 @@ public class AttachmentController {
 	}
 	
 	
-	// 날짜로 파일 경로를 만드는 메서드
+	// 날짜를 이용하여 파일 경로를 생성하는 메서드
 	private String getFolderFormat() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
 		return str.replace("-", File.separator);
 	}
-	
-	
-	
 }
