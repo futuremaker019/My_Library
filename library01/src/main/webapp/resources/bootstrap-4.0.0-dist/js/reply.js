@@ -1,5 +1,3 @@
-console.log("reply.js activated.");
-
 var replyService = (function() {
     function getReplies(param, callback, error) {
         console.log("get Replise");
@@ -18,7 +16,7 @@ var replyService = (function() {
          });
     }
 
-    function createReply(reply, callback, error) {
+    function createReply(param, header, token, callback, error) {
         console.log("add reply.");
         
         $(document).ajaxSend(function (e, xhr, options) {
@@ -27,14 +25,16 @@ var replyService = (function() {
 
         $.ajax({
             type: "POST",
-            url: "/replis/creation",
-            data: JSON.stringify(reply),
+            url: "/reply/creation",
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            data: JSON.stringify(param),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if(callback) {
                     callback(data);
                 }
-                console.log(data);
             }
         });
     }

@@ -10,4 +10,11 @@
 		select * from tbl_reply where reply_id = #{reply_id}
 	</select>
 	
+	<insert id="insert">
+		<selectKey keyProperty="reply_id" order="BEFORE" resultType="long">
+			select seq_reply.nextval from dual
+		</selectKey>
+		insert into tbl_reply (reply_id, reply, replier, board_id)
+		values (#{reply_id}, #{reply}, #{replier}, #{board_id})
+	</insert>
 </mapper>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.domain.Reply;
 import com.demo.dto.ReplyRequestDto;
 import com.demo.dto.ReplyResponseDto;
 import com.demo.service.ReplyService;
@@ -26,7 +29,7 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 
-	@GetMapping("/reply/{reply_id}")
+	@GetMapping("/replies/{reply_id}")
 	public ResponseEntity<String> getReply(@PathVariable("reply_id") Long reply_id) {
 		
 		return ResponseEntity.ok().body("replies brought done.");
@@ -40,11 +43,17 @@ public class ReplyController {
 		return ResponseEntity.ok().body(replyResponseDtos);
 	}
 	
-	@PostMapping("/creation")
-	public ResponseEntity<String> createReply(@RequestBody ReplyRequestDto replyRequestDto) {
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/reply/creation", 
+			consumes = "application/json",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto,
+									Authentication authentication) {
 		log.info("replyRequestDto : " + replyRequestDto);
 		
-		return ResponseEntity.ok().body("replied done.");
+		ReplyResponseDto replyResponseDto = replyService.addReply(replyRequestDto, authentication);
+		
+		return ResponseEntity.ok().body(replyResponseDto);
 	}
 	
 	@DeleteMapping("/{reply_id}")

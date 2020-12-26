@@ -48,9 +48,10 @@ public class BoardController {
 	
 	@GetMapping("/post/{id}")
 	public String getPage(@PathVariable("id") Long id, Model model, 
-							@ModelAttribute("criteria") Criteria criteria) {
+							@ModelAttribute("criteria") Criteria criteria, Authentication authentication) {
 		model.addAttribute("post",boardService.getPostPage(id));
 		model.addAttribute("attachments", attachmentService.getAttachments(id));
+		model.addAttribute("authentication", authentication);
 		
 		return "/board/post";
 	}

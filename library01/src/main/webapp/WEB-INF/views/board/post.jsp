@@ -62,7 +62,7 @@
 				<h5 class="pt-3 pl-3">댓글</h5>
 			</div>
 			<div class="card-body">
-				<textarea class="form-control" rows="5" placeholder="댓글을 작성해주세요."></textarea>
+				<textarea class="form-control" rows="5" placeholder="댓글을 작성해주세요." id="reply"></textarea>
 				<div class="mt-2">
 					<button id="addReplyBtn" class="btn btn-success">댓글 등록하기</button>
 					<div class="float-right">
@@ -111,8 +111,10 @@ $(document).ready(function(){
 	var addReplyBtn = $("#addReplyBtn");
 
 	var replyList = $("#reply-list");
+	var reply = $("#reply");
 	
 	var board_id = '<c:out value="${post.board_id}"/>';
+	var authentication = "${authentication.principal.member.userId}";
 	
 	showReplies(1);
 	
@@ -135,14 +137,45 @@ $(document).ready(function(){
 	})
 
 	addReplyBtn.on("click", function(){
-		console.log("clicked");
-		// replyService.createReply(param, function(response){
-		// 	console.log(response);
-		// });
+		if(!reply.val()){
+			alert("댓글을 작성해주세요.");
+			return;
+		}
+		
+		if(authentication == ""){
+			if(confirm("로그인 후 댓글을 남길수 있습니다. 로그인 하시겠습니까?")){
+				location.href = "/member/login";
+			}
+		}
+
+		var param = {
+			board_id : board_id,
+			reply : reply.val()
+		}
+
+		console.log(param);
+
+		replyService.createReply(param, header, token, function(reply){
+			var str = "";
+			
+			str += "<li class='list-group-item'><div><strong>" + reply.replier + "</strong>";
+			str += "<small class='ml-4 text-muted'>" + util.displayTime(reply.updateddate) + "</small>";
+			str += "<div class='btn-group btn-group-sm float-right'>";
+			str += "<button class='btn btn-default' name='sentence-modify' data-sno='1'>수정하기</button>";
+			str += "<button class='btn btn-default' name='sentence-delete' data-sno='1'>삭제하기</button></div>";
+			str += "</div><p class='mt-2'>" + reply.reply + "</p></li>";
+			
+			replyList.append(str);
+		});
 	});
 	
 	function showReplies(page) {
-		replyService.getReplies({board_id : board_id, page : page}, function(replies){
+		var param = {
+				board_id : board_id,
+				page : page
+		}
+		
+		replyService.getReplies(param, function(replies){
 			var str = "";
 			if (replies == null || replies.length == 0){
 				replyList.html("");
@@ -150,8 +183,8 @@ $(document).ready(function(){
 			}
 			
 			for(var i = 0; i < replies.length; i++) {
-				str += "<li class='list-group-item'><div><strong>" + replies[i].replyer + "</strong>";
-				str += "<small class='ml-4 text-muted'>" + util.displayTime(replies[i].createddate) + "</small>";
+				str += "<li class='list-group-item'><div><strong>" + replies[i].replier + "</strong>";
+				str += "<small class='ml-4 text-muted'>" + util.displayTime(replies[i].updateddate) + "</small>";
 				str += "<div class='btn-group btn-group-sm float-right'>";
 				str += "<button class='btn btn-default' name='sentence-modify' data-sno='1'>수정하기</button>";
 				str += "<button class='btn btn-default' name='sentence-delete' data-sno='1'>삭제하기</button></div>";

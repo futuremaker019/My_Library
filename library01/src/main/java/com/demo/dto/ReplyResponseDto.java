@@ -11,6 +11,6 @@ public class ReplyResponseDto {
 
 	private Long reply_id;
 	private String reply;
-	private String replyer;
-	private Date createddate;
+	private String replier;
+	private Date updateddate;
 }
