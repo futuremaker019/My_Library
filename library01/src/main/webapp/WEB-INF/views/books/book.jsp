@@ -50,7 +50,7 @@
             <c:if test="${review.mention != null }">
                <div class="form-group col-lg-12" id="mention-group" style="padding-top: 30px;">
                  <label class="metion-label">서평</label>
-                 <textarea class="form-control" rows="8" readonly><c:out value="${review.mention }" /></textarea>
+                 <p><c:out value="${review.mention }" /></p>
                </div>
                <div class="gorm-group col-lg-12">
                  <div class="form-inline float-right" id="buttonController">
@@ -184,8 +184,6 @@
 				reviewMention = review.mention;
 				reviewMention = reviewMention.replace("/(?:\r\n|\r|\n)/g", "<br />");
 				
-				console.log("replace applied review mention : " + reviewMention);
-				
 				textArea.val(reviewMention);
 			});
 			
@@ -234,8 +232,7 @@
 		
 		// 서평 삭제 버튼 클릭 이벤트
 		modalRemoveBtn.on("click", function(e){
-			var askDelete = confirm("서평을 삭제하시겠습니까?");
-			if(askDelete) {
+			if(confirm("서평을 삭제하시겠습니까?")) {
 				reviewService.deleteReview(bnoValue, function(result){
 					alert(result);	
 				});
@@ -310,8 +307,7 @@
 		$("ul").on("click", "button[id='sentenceDeleteBtn']", function(e){
             let sno = $(this).data("sno");
             
-            var askDelete = confirm("문장수집을 삭제하시겠습니까?");
-			if(askDelete) {
+			if(confirm("문장수집을 삭제하시겠습니까?")) {
 				sentenceService.removeSentence(sno, function(result){
 	                alert(result);
 	            });
@@ -324,8 +320,7 @@
 		
 		// 책 삭제하기 버튼 클릭 이벤트
 		 $("#bookRemoveBtn").on("click", function(e){
-			var askDelete = confirm("책을 삭제하시겠습니까?");
-			if(askDelete) {
+			if(confirm("책을 삭제하시겠습니까?")) {
 				$("form").submit();
 			} else {
 				return;

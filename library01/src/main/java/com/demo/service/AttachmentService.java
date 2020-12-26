@@ -54,9 +54,6 @@ public class AttachmentService {
 			return;
 		}
 		
-		log.info("delete attach files");
-		log.info("attachmentDtos : " + attachmentDtos);
-		
 		for (AttachmentDto attachment : attachmentDtos) {
 			try {
 				Path file = Paths.get(rootDirectory 

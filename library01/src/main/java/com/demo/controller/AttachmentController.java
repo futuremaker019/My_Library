@@ -43,12 +43,9 @@ public class AttachmentController {
 	public ResponseEntity<List<AttachmentDto>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		
 		List<AttachmentDto> list = new ArrayList<AttachmentDto>();
-		log.info("upload ajax post........");
-		
 		// 날짜를 디렉토리로 구분해여 path를 만들어준다.
 		String uploadFolderPath = getFolderFormat();
 		File uploadPath = new File(rootDerictory, uploadFolderPath);
-		log.info("upload path in uploadAjaxAction: " + uploadPath);
 		
 		// 날짜로 들어오는 디렉토리가 없으면 만들어준다.
 		if (!uploadPath.exists()) {
@@ -57,10 +54,6 @@ public class AttachmentController {
 		}
 		
 		for (MultipartFile multipartFile : uploadFile) {
-			log.info("---------------------");
-			log.info("Upload File Name in uploadAjaxAction : " + multipartFile.getOriginalFilename());
-			log.info("Upload File size in uploadAjaxAction : " + multipartFile.getSize());
-			
 			AttachmentDto attachmentDto = new AttachmentDto();
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
@@ -91,8 +84,6 @@ public class AttachmentController {
 	@ResponseBody
 	@PostMapping("/file/delete")
 	public ResponseEntity<String> deleteFile(String fileName, Long id) {
-		log.info("fileName : " + fileName);
-		log.info("id : " + id);
 		attachmentService.deleteFileById(id);
 		
 		try {
@@ -109,11 +100,7 @@ public class AttachmentController {
 	@ResponseBody
 	@GetMapping(value="/file/download", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> download(String fileName) {
-		log.info("fileName: " + fileName);
-		
 		Resource resource = new FileSystemResource(rootDerictory + "\\" + fileName);
-		
-		log.info("resource : " + resource );
 		
 		String resourceName = resource.getFilename();
 		String resourceNameWithoutUuid = resourceName.substring(resourceName.indexOf("_")+1); 

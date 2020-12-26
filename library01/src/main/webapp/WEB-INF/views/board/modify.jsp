@@ -127,7 +127,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		
 		var targetDiv = $(this).closest("div");
-		targetDiv.remove();
+		
 		
 		var fileId = $(this).data("fileid");
 		var fileName = $(this).data("filename");
@@ -152,7 +152,7 @@ $(document).ready(function(){
 			data: {fileName: fileName, id:fileId},
 			success: function(result) {
 				console.log(result);
-				alert(result);
+				targetDiv.remove();
 			},
 			error:function(request,status,error){
 	            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
