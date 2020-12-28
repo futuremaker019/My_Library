@@ -24,9 +24,11 @@ public class Board {
 	private LocalDate createdDate;
 	private LocalDate updatedDate;
 	
+	private int replyCount;
+	
 	List<Attachment> files;
 	
-	public void updateElements(String title, String content) {
+	public void updateBoard(String title, String content) {
 		this.title = title;
 		this.content = content;
 	}

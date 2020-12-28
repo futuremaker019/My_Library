@@ -32,6 +32,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#userid").focus();
+		
 		$("#signupBtn").on("click", function(e){
 			$("form").submit();
 		});

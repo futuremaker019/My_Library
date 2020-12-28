@@ -59,7 +59,7 @@ public class BoardService {
 	
 	public void modifyPost(Long board_id, BoardDto boardDto, List<AttachmentDto> attachmentDtos) {
 		Board board = boardMapper.getPost(board_id);
-		board.updateElements(boardDto.getTitle(), boardDto.getContent());
+		board.updateBoard(boardDto.getTitle(), boardDto.getContent());
 		
 		if(boardMapper.updatePost(board) == 1) {
 			if(attachmentDtos != null) {

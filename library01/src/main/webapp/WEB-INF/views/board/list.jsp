@@ -34,8 +34,8 @@
 							<td><c:out value="${board.board_id}"/></td>
 							<td>
 								<a href='<c:out value="${board.board_id }"/>' style="display:block;">
-									<c:out value="${board.title }"/>
-								</a>
+									<c:out value="${board.title }"/> [<c:out value="${board.replyCount }"/>]
+								</a> 
 							</td>
 							<td><c:out value="${board.writer }"/></td>
 							<td><c:out value="${board.createdDate }"/></td>

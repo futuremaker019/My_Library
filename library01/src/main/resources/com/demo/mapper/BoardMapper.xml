@@ -10,11 +10,11 @@
 	<select id="getListWithPaging" resultType="com.demo.domain.Board">
 		<![CDATA[
 			select 
-				board_id, title, content, writer, createddate, updateddate
+				board_id, title, content, writer, createddate, updateddate, replycount
 			from
 				(
 					select /*+INDEX_DESC(tbl_board pk_board)*/
-					rownum rn, board_id, title, content, writer, createddate, updateddate
+					rownum rn, board_id, title, content, writer, createddate, updateddate, replycount
 					from tbl_board
 					where rownum <= #{pageNum} * #{amount} 
 				)
@@ -33,6 +33,11 @@
 		title = #{title},
 		content = #{content},
 		updateddate = sysdate
+		where board_id = #{board_id}
+	</update>
+	<update id="updateReplyCount">
+		update tbl_board set
+		replycount = replycount + #{count} 
 		where board_id = #{board_id}
 	</update>
 

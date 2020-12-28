@@ -30,6 +30,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#idInput").focus();
+		
 		$("#loginBtn").on("click", function(e){
 			$("form").submit();
 		});

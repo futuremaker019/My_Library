@@ -12,7 +12,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @ControllerAdvice
 public class ExceptionAdvice {
-	
+
+	// security access handler와 충돌, 수정 요망
 //	@ExceptionHandler(Exception.class) 
 //	public void getExcepttionPage(Exception ex, Model model) {
 //		log.error("==========================");
