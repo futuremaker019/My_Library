@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.domain.Reply;
 import com.demo.dto.ReplyRequestDto;
 import com.demo.dto.ReplyResponseDto;
 import com.demo.service.ReplyService;
@@ -29,12 +28,6 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 
-	@GetMapping("/replies/{reply_id}")
-	public ResponseEntity<String> getReply(@PathVariable("reply_id") Long reply_id) {
-		
-		return ResponseEntity.ok().body("replies brought done.");
-	}
-	
 	@GetMapping(value = "/board/{board_id}/replies/page/{page}",
 			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<ReplyResponseDto>> getReplies(@PathVariable("board_id") Long board_id,
@@ -49,16 +42,24 @@ public class ReplyController {
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto,
 									Authentication authentication) {
-		log.info("replyRequestDto : " + replyRequestDto);
-		
 		ReplyResponseDto replyResponseDto = replyService.addReply(replyRequestDto, authentication);
 		
 		return ResponseEntity.ok().body(replyResponseDto);
 	}
 	
-	@DeleteMapping("/{reply_id}")
-	public ResponseEntity<String> deleteReply(@PathVariable("board_id") Long board_id) {
-		
+	@DeleteMapping("/replies/{reply_id}")
+	public ResponseEntity<String> deleteReply(@PathVariable("reply_id") Long reply_id) {
+		replyService.removeReply(reply_id);
 		return ResponseEntity.ok().body("reply deleted done.");
+	}
+	
+	@PutMapping(value = "/replies/{reply_id}", 
+			consumes = "application/json",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ReplyResponseDto> modifyReply(@PathVariable("reply_id") Long reply_id, 
+			@RequestBody ReplyRequestDto replyRequestDto){
+		
+		ReplyResponseDto replyResponseDto = replyService.updateReply(replyRequestDto);
+		return ResponseEntity.ok().body(replyResponseDto);
 	}
 }

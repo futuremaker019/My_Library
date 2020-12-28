@@ -61,14 +61,13 @@
 			<div class="card-body">
 				<h5 class="pt-3 pl-3">댓글</h5>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="reply-input">
 				<textarea class="form-control" rows="5" placeholder="댓글을 작성해주세요." id="reply"></textarea>
 				<div class="mt-2">
 					<button id="addReplyBtn" class="btn btn-success">댓글 등록하기</button>
 					<div class="float-right">
 						<span>0</span><span> / 2000</span>
 					</div>
-					
 				</div>
 			</div>
 			<!-- /.card-heading -->
@@ -110,11 +109,12 @@ $(document).ready(function(){
 	var listBtn = $("#listBtn");
 	var addReplyBtn = $("#addReplyBtn");
 
+	var replyInput = $("#reply-input");
 	var replyList = $("#reply-list");
-	var reply = $("#reply");
+	var replyContent = $("#reply");
 	
 	var board_id = '<c:out value="${post.board_id}"/>';
-	var authentication = "${authentication.principal.member.userId}";
+	var loginUserId = "${authentication.principal.member.userId}";
 	
 	showReplies(1);
 	
@@ -128,7 +128,7 @@ $(document).ready(function(){
 	});
 	
 	deleteBtn.on("click", function(){
-		if(confirm("글을 지우시겠습니까?")){
+		if(confirm("글을 삭제하시겠습니까?")){
 			pageForm.attr("action", "/board/delete/" + board_id);
 			pageForm.attr("method", "post");
 			pageForm.append("<input type='hidden' name='${_csrf.parameterName }' value='${_csrf.token }'>");
@@ -137,65 +137,125 @@ $(document).ready(function(){
 	})
 
 	addReplyBtn.on("click", function(){
-		if(!reply.val()){
+		if(!replyContent.val()){
 			alert("댓글을 작성해주세요.");
 			return;
 		}
 		
-		if(authentication == ""){
+		if(loginUserId == ""){
 			if(confirm("로그인 후 댓글을 남길수 있습니다. 로그인 하시겠습니까?")){
 				location.href = "/member/login";
 			}
+			replyContent.val("");
+			return;
 		}
 
-		var param = {
+		let param = {
 			board_id : board_id,
-			reply : reply.val()
+			reply : replyContent.val()
 		}
-
-		console.log(param);
 
 		replyService.createReply(param, header, token, function(reply){
-			var str = "";
+			let str = "";
 			
 			str += "<li class='list-group-item'><div><strong>" + reply.replier + "</strong>";
 			str += "<small class='ml-4 text-muted'>" + util.displayTime(reply.updateddate) + "</small>";
 			str += "<div class='btn-group btn-group-sm float-right'>";
-			str += "<button class='btn btn-default' name='sentence-modify' data-sno='1'>수정하기</button>";
-			str += "<button class='btn btn-default' name='sentence-delete' data-sno='1'>삭제하기</button></div>";
+			str += "<button class='btn btn-default' id='replyActiveModifyBtn' data-replyid='"+reply.reply_id+"' "
+				+ "data-reply='" + reply.reply + "' data-replier='"+reply.replier+"' >수정하기</button>";
+			str += "<button class='btn btn-default' id='replyDeleteBtn' data-replyid='"+reply.reply_id+"' data-replier='"+reply.replier+"'>삭제하기</button></div>";
 			str += "</div><p class='mt-2'>" + reply.reply + "</p></li>";
 			
 			replyList.append(str);
+			replyContent.val("");
 		});
 	});
 	
+	replyList.on("click", "#replyDeleteBtn", function(){
+		let reply_id = $(this).data("replyid");
+		let replier = $(this).data("replier");
+		let targetli = $(this).closest("li");
+		
+		if(loginUserId != replier) {
+			alert("해당 댓글은 삭제할 수 없습니다.");
+			return;
+		}
+		
+		if(confirm("댓글을 삭제하시겠습니까?")){
+			replyService.deleteReply(reply_id, header, token, function(result){
+				targetli.remove();
+			});	
+		}
+	})
+	
+	replyList.on("click", "#replyActiveModifyBtn", function(){
+		let reply_id = $(this).data("replyid");
+		let replier = $(this).data("replier");
+		let reply = $(this).data("reply");
+		let targetLi = $(this).closest("li");
+		
+		if(loginUserId != replier) {
+			alert("해당 댓글은 수정할 수 없습니다.");
+			return;
+		}
+		
+		let str ="";
+		
+ 		str += "<textarea class='form-control' rows='3' id='modify-reply'>" + reply + "</textarea>";
+		str += "<div class='mt-2'>";
+		str += "<button id='replyModifyBtn' class='btn btn-info' data-replyid='" + reply_id + "'>수정완료</button>";
+		str += "<button id='replyModifyCancelBtn' class='btn btn-default'>취소</button>";
+		str += "<div class='float-right'><span>0</span><span> / 2000</span></div></div>";
+		
+		targetLi.html(str);
+	})
+	
+	replyList.on("click", "#replyModifyBtn", function() {
+		let reply_id = $(this).data("replyid");
+		let modifyReply = replyList.find("#modify-reply").val();
+		let targetLi = $(this).closest("li");
+		
+		let param = {
+			reply_id : reply_id,
+			reply : modifyReply
+		}
+		
+		replyService.modifyReply(param, header, token, function(reply) {
+			showReplies(1);
+		});
+	});
+	
+	replyList.on("click", "#replyModifyCancelBtn", function(modifiedReply){
+		showReplies(1);
+	});
+	
 	function showReplies(page) {
-		var param = {
-				board_id : board_id,
-				page : page
+		let param = {
+			board_id : board_id,
+			page : page
 		}
 		
 		replyService.getReplies(param, function(replies){
-			var str = "";
+			let str = "";
 			if (replies == null || replies.length == 0){
 				replyList.html("");
 				return;
 			}
 			
-			for(var i = 0; i < replies.length; i++) {
+			for(let i = 0; i < replies.length; i++) {
 				str += "<li class='list-group-item'><div><strong>" + replies[i].replier + "</strong>";
 				str += "<small class='ml-4 text-muted'>" + util.displayTime(replies[i].updateddate) + "</small>";
 				str += "<div class='btn-group btn-group-sm float-right'>";
-				str += "<button class='btn btn-default' name='sentence-modify' data-sno='1'>수정하기</button>";
-				str += "<button class='btn btn-default' name='sentence-delete' data-sno='1'>삭제하기</button></div>";
+				str += "<button class='btn btn-default' id='replyActiveModifyBtn' data-replyid='"+replies[i].reply_id+"' " 
+					+ "data-reply='"+replies[i].reply+"' data-replier='"+replies[i].replier+"'>수정하기</button>";
+				str += "<button class='btn btn-default' id='replyDeleteBtn' data-replyid='"+replies[i].reply_id+"' "
+					+ "data-replier='"+replies[i].replier+"'>삭제하기</button></div>";
 				str += "</div><p class='mt-2'>" + replies[i].reply + "</p></li>";
 			}
 			
 			replyList.html(str);
 		})
 	}
-
-	
 });
 </script>
 <script>

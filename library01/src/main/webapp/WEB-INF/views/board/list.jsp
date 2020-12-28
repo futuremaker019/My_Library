@@ -9,7 +9,7 @@
 	<div class="">
 		<div class="mt-5">
 			<div class="mb-3">
-				<h3 style="text-align: center;">게시판 (의견을 남겨주세요.)</h3>
+				<h3 style="text-align: center;">의견을 남겨주세요.</h3>
 			</div>
 			<table class="table table-bordered table-hover">
 				<colgroup>
@@ -80,6 +80,7 @@
 	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
 </form>
 
+<script src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script>
 $(document).ready(function(){
 	var pageForm = $("#page-form");
@@ -93,6 +94,8 @@ $(document).ready(function(){
 		
 		pageForm.find("input[name='pageNum']").val($(this).attr("href"));	
 		pageForm.submit();
+		
+		util.scrollToTop();
 	});
 	
 	$("#post a").on("click", function(e){

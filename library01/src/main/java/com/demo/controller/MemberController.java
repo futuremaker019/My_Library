@@ -53,6 +53,6 @@ public class MemberController {
 	@PostMapping("/signup")
 	public String signup(MemberDto memberDto) {
 		memberService.saveMemberInfo(memberDto);
-		return "redirect:/customLogin";
+		return "redirect:/member/login";
 	}
 }

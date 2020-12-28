@@ -55,4 +55,27 @@ public class ReplyService {
 		
 		return replyResponseDto;
 	}
+	
+	public void removeReply(Long reply_id) {
+		replyMapper.delete(reply_id);
+	}
+	
+	public ReplyResponseDto updateReply(ReplyRequestDto replyRequestDto) {
+		Reply reply = Reply.builder()
+				.reply(replyRequestDto.getReply())
+				.reply_id(replyRequestDto.getReply_id())
+				.build();
+		
+		replyMapper.update(reply);
+		Reply findReply = replyMapper.getReply(reply.getReply_id());
+		
+		ReplyResponseDto replyResponseDto = ReplyResponseDto.builder()
+				.replier(findReply.getReplier())
+				.reply_id(findReply.getReply_id())
+				.reply(findReply.getReply())
+				.updateddate(findReply.getUpdateddate())
+				.build();
+		
+		return replyResponseDto;
+	}
 }

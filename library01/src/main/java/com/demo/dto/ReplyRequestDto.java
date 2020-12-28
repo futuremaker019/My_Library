@@ -7,6 +7,7 @@ import lombok.ToString;
 @ToString
 public class ReplyRequestDto {
 
+	private Long reply_id;
 	private Long board_id;
 	private String reply;
 }

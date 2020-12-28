@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.mapper.ReplyMapper">
 	<select id="getReplies" resultType="com.demo.domain.Reply">
-		select * from tbl_reply where board_id = #{board_id}
+		select * from tbl_reply where board_id = #{board_id} order by reply_id asc
 	</select>
 	<select id="getReply" resultType="com.demo.domain.Reply">
 		select * from tbl_reply where reply_id = #{reply_id}
@@ -17,4 +17,15 @@
 		insert into tbl_reply (reply_id, reply, replier, board_id)
 		values (#{reply_id}, #{reply}, #{replier}, #{board_id})
 	</insert>
+	
+	<update id="update">
+		update tbl_reply set
+		reply = #{reply},
+		updateddate = sysdate
+		where reply_id = #{reply_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_reply where reply_id = #{reply_id}
+	</delete>
 </mapper>

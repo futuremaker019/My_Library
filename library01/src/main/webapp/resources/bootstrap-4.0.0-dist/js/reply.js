@@ -26,11 +26,47 @@ var replyService = (function() {
         $.ajax({
             type: "POST",
             url: "/reply/creation",
+            data: JSON.stringify(param),
+            contentType: "application/json; charset=utf-8",
             beforeSend : function(xhr) {
                 xhr.setRequestHeader(header, token);
             },
-            data: JSON.stringify(param),
-            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if(callback) {
+                    callback(data);
+                }
+            }
+        });
+    }
+
+    function deleteReply(reply_id, header, token, callback, error) {
+        console.log("call delete reply");
+
+        $.ajax({
+            type: "delete",
+            url: "/replies/" + reply_id,
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                if(callback) {
+                    callback(data);
+                }
+            }
+        });
+    }
+
+    function modifyReply(param, header, token, callback, error) {
+        console.log("call modify reply");
+
+        $.ajax({
+            type: "put",
+            url: "/replies/" + param.reply_id,
+            data : JSON.stringify(param),
+            contentType : "application/json; charset=utf-8",
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             success: function (data) {
                 if(callback) {
                     callback(data);
@@ -41,6 +77,8 @@ var replyService = (function() {
 
     return {
         createReply : createReply,
-        getReplies : getReplies
+        getReplies : getReplies,
+        deleteReply : deleteReply,
+        modifyReply : modifyReply
     }
 })();

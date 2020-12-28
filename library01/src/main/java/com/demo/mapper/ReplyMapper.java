@@ -10,4 +10,8 @@ public interface ReplyMapper {
 	public Reply getReply(Long reply_id);
 	
 	public List<Reply> getReplies(Long board_id);
+	
+	public void delete(Long reply_id);
+	
+	public void update(Reply reply);
 }
