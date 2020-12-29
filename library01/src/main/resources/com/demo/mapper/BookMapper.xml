@@ -50,11 +50,11 @@
 	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">
 		<![CDATA[
 			select
-				bno, isbn, title, publisher, thumbnail, url, datetime, userid
+				bno, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
 			from
 				(
 					select /*+INDEX_DESC(tbl_book pk_book)*/
-					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime, userid
+					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
 					from tbl_book
 					where rownum <= #{criteria.pageNum} * #{criteria.amount} and userid = #{userId}
 				)

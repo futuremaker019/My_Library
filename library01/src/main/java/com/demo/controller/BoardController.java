@@ -84,7 +84,7 @@ public class BoardController {
 		List<AttachmentDto> attachmentDtos = boardDto.getAttachments();
 		boardService.modifyPost(board_id, boardDto, attachmentDtos);
 		
-		return "redirect:/board/list" + criteria.getListLink();
+		return "redirect:/board/post/"+ board_id + criteria.getListLink();
 	}
 	
 	@PostMapping("/delete/{board_id}")
