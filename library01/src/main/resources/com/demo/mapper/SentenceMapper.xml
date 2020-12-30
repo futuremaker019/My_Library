@@ -4,29 +4,30 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.demo.mapper.SentenceMapper">
-	<insert id="insert">
-		insert into tbl_sentence(sno, bno, sentence)
-		values(seq_sentence.nextval, #{bno}, #{sentence})
+	<insert id="save">
+		<selectKey keyProperty="sentence_id" order="BEFORE" resultType="long">
+			select seq_sentence.nextval from dual
+		</selectKey>
+		insert into tbl_sentence(sentence_id, bno, content)
+		values(#{sentence_id}, #{bno}, #{content})
 	</insert>
 	
-	<select id="read" resultType="com.demo.domain.SentenceVO">
-		select sno, bno, sentence, createdate, modifieddate  
-		from tbl_sentence where sno = #{sno}
+	<select id="findById" resultType="com.demo.domain.Sentence">
+		select * from tbl_sentence where sentence_id = #{sentence_id}
 	</select>
-	<select id="getListWithPaging" resultType="com.demo.domain.SentenceVO">
-		select sno, bno, sentence, createdate, modifieddate 
-		from tbl_sentence
-		where bno = ${bno}
-		order by sno asc
+	<select id="findAllByBookId" resultType="com.demo.domain.Sentence">
+		select * from tbl_sentence
+		where bno = #{bno}
+		order by sentence_id asc
 	</select>
 	
-	<delete id="delete">
-		delete from tbl_sentence where sno = #{sno}
+	<delete id="deleteById">
+		delete from tbl_sentence where sentence_id = #{sentence_id}
 	</delete>
 	<update id="update">
 		update tbl_sentence set
-		sentence = #{sentence},
+		content = #{content},
 		modifieddate = sysdate
-		where sno = #{sno}
+		where sentence_id = #{sentence_id}
 	</update>
 </mapper>

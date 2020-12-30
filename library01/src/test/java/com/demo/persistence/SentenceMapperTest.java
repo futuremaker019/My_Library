@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.config.RootConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.SentenceVO;
+import com.demo.domain.Sentence;
 import com.demo.mapper.SentenceMapper;
 
 import lombok.Setter;
@@ -33,17 +33,17 @@ public class SentenceMapperTest {
 	}
 	
 	
-	@Test
-	public void insertTest() {
-		IntStream.rangeClosed(1, 10).forEach(i -> {
-			SentenceVO sentence = SentenceVO.builder()
-					.bno(bnoArray[i % 5])
-					.sentence("sentence " + i)
-					.build();
-
-			sentenceMapper.insert(sentence);
-		});
-	}
+//	@Test
+//	public void insertTest() {
+//		IntStream.rangeClosed(1, 10).forEach(i -> {
+//			Sentence sentence = Sentence.builder()
+//					.bno(bnoArray[i % 5])
+//					.sentence("sentence " + i)
+//					.build();
+//
+//			sentenceMapper.insert(sentence);
+//		});
+//	}
 	 
 	
 	/*

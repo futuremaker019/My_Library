@@ -2,22 +2,17 @@ package com.demo.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.demo.domain.Criteria;
-import com.demo.domain.SentenceVO;
+import com.demo.domain.Sentence;
 
 public interface SentenceMapper {
 
-	public int insert(SentenceVO sentenceVO);
+	public boolean save(Sentence sentence);
 	
-	public SentenceVO read(Long sno);
+	public Sentence findById(Long sentence_id);
 	
-	public int delete(Long sno);
+	public List<Sentence> findAllByBookId(Long bno);
 	
-	public int update(SentenceVO sentenceVO);
+	public int deleteById(Long sentence_id);
 	
-	public List<SentenceVO> getListWithPaging(
-			@Param("cri") Criteria criteria, 
-			@Param("bno") Long bno);
+	public boolean update(Sentence sentence);
 }

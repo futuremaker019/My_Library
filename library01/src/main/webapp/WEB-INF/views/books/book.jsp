@@ -64,7 +64,7 @@
 	</div>
 </section>
 
-<section class="container pt-3">
+<section class="container pt-3 mb-5">
 	<div class="col-lg-12">
 		<!-- /.card -->
 		<div class="card">
@@ -74,7 +74,7 @@
 			</div>
 			<!-- /.card-heading -->
 			<div class="card-body">
-				<ul class="list-group">
+				<ul class="list-group" id="sentence-group">
 					<li class='list-group-item'>
 	                    <div>
 	                        <div class='header'>
@@ -141,6 +141,9 @@
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
 	var book_id = '<c:out value="${book.bno}"/>';
 	
 	var modal = $(".modal");
@@ -149,7 +152,7 @@ $(document).ready(function(){
 	var reviewGroup = $("#review-group");
 	var modalTextArea = $("#summernote");
 	
-	var sentenceCollectionUL = $(".sentence-collection");
+	var sentenceGroup = $("#sentence-group");
 	
 	var modalModifyBtn = $("#modalModifyBtn");
 	var modalRegisterBtn = $("#modalRegisterBtn");
@@ -160,24 +163,22 @@ $(document).ready(function(){
 	
 	showList(1);
 	
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
-	
 	// Ajax spring security header
 	$(document).ajaxSend(function(e, xhr, options){
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	});
 	
-	// 서평 작성 모달 활성화 클릭 이벤트
+	// 서평 작성 모달 활성화 클릭 이벤트 - 모달 호출
 	$("#add-review-modal-active-btn").on("click", function(e){
-		modalTextArea.val("");
+		modalTextArea.summernote('code', "");
+		$(".modal-title").text("서평");
 		modal.find("button[id != 'modalCloseBtn']").hide();
 		modalRegisterBtn.show();
 		
 		modal.modal('show');
 	});
 	
-	// 서평 수정 모달 활성화 클릭 이벤트
+	// 서평 수정 모달 호출 클릭 이벤트
 	reviewGroup.on("click", "#modify-review-modal-active-btn", function(){
 		reviewService.getReview(book_id, function(review){
 			modalTextArea.summernote('code', review.content);
@@ -224,11 +225,6 @@ $(document).ready(function(){
 			};
 		
 		reviewService.updateReview(review, csrfHeaderName, csrfTokenValue, function(review){
-			/* var reviewContent = "";
-			
-			reviewContent = review.content;
-			reviewContent = reviewContent.replace("/(?:\r\n|\r|\n)/g", "<br />"); */
-			
 			let str = "";
 			
 			str += "<span><small class='text-muted pb-3 d-inline-block'>작성일자 : "+util.displayTime(review.modifieddate)+"</small></span>"; 
@@ -245,8 +241,6 @@ $(document).ready(function(){
 	modalRemoveBtn.on("click", function(e){
 		if(confirm("서평을 삭제하시겠습니까?")) {
 			reviewService.deleteReview(book_id, function(result){
-				console.log(result);
-				
 				let str = "";
 				
 				str += "<span><small class='text-muted pb-3 d-inline-block'>작성일자 :</small></span>"; 
@@ -261,9 +255,10 @@ $(document).ready(function(){
 		refresh();
 	});
 	
-	// 문장 등록하기 버튼 클릭 이벤트
+	
+	// 문장 등록하기 버튼 클릭 이벤트 - 모달 호출
 	$("#modalSentenceAddActive").on("click", function(e) {
-		modalTextArea.val("");
+		modalTextArea.summernote('code', "");
 		$(".modal-title").text("문장수집");
 		modal.find("button[id != modalCloseBtn]").hide();
 		modalSentenceAddBtn.show();
@@ -275,66 +270,77 @@ $(document).ready(function(){
 	modalSentenceAddBtn.on("click", function(e){
 		let sentence = {
 			bno : book_id,
-			sentence : modalTextArea.val()
+			content : modalTextArea.val()
 		};
 		
-		sentenceService.addSentence(sentence, function(result) {
-			alert(result);
+		sentenceService.addSentence(sentence, csrfHeaderName, csrfTokenValue, function(sentence) {
+			var str = "";
+			
+			str += "<li class='list-group-item'><div>"
+			str += "<div class='header'>"
+			str += "<small class='text-muted'>" + util.displayTime(sentence.modifieddate) + "</small>"
+			str += "<div class='btn-group btn-group-sm float-right'>"
+			str += "<button class='btn btn-default' id='sentenceModifyBtn' data-sentenceid='" + sentence.sentence_id + "'>수정하기</button>" 
+			str += "<button class='btn btn-default' id='sentenceDeleteBtn' data-sentenceid='" + sentence.sentence_id + "'>삭제하기</button>"
+			str += "</div></div><p class='mt-2'>" + sentence.content + "</p></div></li>"
+			
+			sentenceGroup.append(str);
 		});
 		
 		modalTextArea.val("");
 		modal.modal('hide');
-		
-		refresh();
 	});
+	
+	// 문장 수정하기 버튼 클릭 이벤트 - 모달 호출
+	sentenceGroup.on("click", "#sentenceModifyBtn", function(e){
+        let sentence_id = $(this).data("sentenceid");
+
+        sentenceService.getSentence(sentence_id, function(sentence){
+     	   modalTextArea.summernote('code', sentence.content);
+        });
+
+        modal.data("sentenceid", sentence_id);
+        modalTitle.text("문장수집");
+        modal.find("button[id != modalCloseBtn]").hide();
+        modalSentenceModifyBtn.show();
+
+        modal.modal('show');
+    });
 	
 	// 문장 수정 버튼 클릭 이벤트
 	modalSentenceModifyBtn.on("click", function(e){
 		let sentence = {
-			sno : modal.data("sno"),
-			sentence : modalTextArea.val()
+			sentence_id : modal.data("sentenceid"),
+			content : modalTextArea.val()
 		};
 		
-		sentenceService.updateSentence(sentence, function(result) {
-			alert(result);
+		sentenceService.updateSentence(sentence, function(sentence) {
+			console.log(sentence);
+			showList();
 		});
 		
 		modalTextArea.val("");
 		modal.modal('hide');
-		
-		refresh();
 	});
 	
-	// 문장 수정하기 버튼 클릭 이벤트
-	$("ul").on("click", "button[id='sentenceModifyBtn']", function(e){
-           let sno = $(this).data("sno");
 
-           sentenceService.getSentence(sno, function(sentence){
-           	modalTextArea.val(sentence.sentence);
-           });
-		
-           modal.data("sno", sno);
-           modalTitle.text("문장수집");
-           modal.find("button[id != modalCloseBtn]").hide();
-           modalSentenceModifyBtn.show();
-
-           modal.modal('show');
-       });
 	
 	// 문장수집 삭제하기 버튼 클릭 이벤트
-	$("ul").on("click", "button[id='sentenceDeleteBtn']", function(e){
-           let sno = $(this).data("sno");
-           
+	sentenceGroup.on("click", "#sentenceDeleteBtn", function(e){
+        let sentence_id = $(this).data("sentenceid");
+        let targetli = $(this).closest("li");
+          
 		if(confirm("문장수집을 삭제하시겠습니까?")) {
-			sentenceService.removeSentence(sno, function(result){
-                alert(result);
-            });
+			sentenceService.removeSentence(sentence_id, function(result){
+	     	   console.log(result);
+       	       targetli.remove();
+           });
 		} else {
 			return;
 		}
-           
-		refresh();
-       });
+          
+		showList();
+     });
 	
 	// 책 삭제하기 버튼 클릭 이벤트
 	 $("#bookRemoveBtn").on("click", function(e){
@@ -346,21 +352,21 @@ $(document).ready(function(){
 	});
 	
 	// 문장 수집 불러오기
-	function showList(page) {
+	function showList() {
 		let str ="";
 		
-		sentenceService.getList({bno:book_id, page:page}, function(list) {
-			for(let i = 0, len = list.length || 0; i < len; i++) {
+		sentenceService.getList(book_id, function(sentences) {
+			for(let i = 0, len = sentences.length || 0; i < len; i++) {
 				str += "<li class='list-group-item'><div>"
 				str += "<div class='header'>"
-				str += "<small class='text-muted'>" + util.displayTime(list[i].modifieddate) + "</small>"
+				str += "<small class='text-muted'>" + util.displayTime(sentences[i].modifieddate) + "</small>"
 				str += "<div class='btn-group btn-group-sm float-right'>"
-				str += "<button class='btn btn-default' id='sentenceModifyBtn' data-sno='" + list[i].sno + "'>수정하기</button>" 
-				str += "<button class='btn btn-default' id='sentenceDeleteBtn' data-sno='" + list[i].sno + "'>삭제하기</button>"
-				str += "</div></div><p class='mt-2'>" + list[i].sentence + "</p></div></li>"
+				str += "<button class='btn btn-default' id='sentenceModifyBtn' data-sentenceid='" + sentences[i].sentence_id + "'>수정하기</button>" 
+				str += "<button class='btn btn-default' id='sentenceDeleteBtn' data-sentenceid='" + sentences[i].sentence_id + "'>삭제하기</button>"
+				str += "</div></div><p class='mt-2'>" + sentences[i].content + "</p></div></li>"
 			}
 			
-			$(".list-group").html(str);
+			sentenceGroup.html(str);
 		});
 	}
 	
@@ -370,7 +376,7 @@ $(document).ready(function(){
 	
 	$('#summernote').summernote({
 	    placeholder: '내용을 작성해주세요.',
-	    height: 400,
+	    height: 200,
 	    minHeight: null,
 	    maxHeight: null,
 	    focus: true,

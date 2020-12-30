@@ -1,9 +1,12 @@
 var sentenceService = (function() {
 
-	function addSentence(sentence, callback, error) {
+	function addSentence(sentence, csrfHeaderName, csrfTokenValue, callback, error) {
 	  $.ajax({
 	     method : "POST",
-	     url : "/sentence/new",            
+	     url : "/sentence",            
+	     beforeSend : function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
 	     data: JSON.stringify(sentence),
 	     contentType : "application/json; charset=utf-8"
 	  })
@@ -19,11 +22,8 @@ var sentenceService = (function() {
 	  });
     }
     
-    function getList(sentences, callback, error) {
-        let bno = sentences.bno;
-        let page = sentences.page || 1;
-
-        $.getJSON("/sentence/" + bno + "/" + page + ".json",
+    function getList(book_id, callback, error) {
+        $.getJSON("/books/" + book_id + "/sentences",
             function (data, textStatus, jqXHR) {
                 if (callback) {
                     callback(data);
@@ -37,7 +37,7 @@ var sentenceService = (function() {
     }
 	
 	function getSentence(sno, callback, error) {
-		$.getJSON("/sentence/" + sno + ".json",
+		$.getJSON("/sentences/" + sno,
 			function(data) {
 				if(callback) {
 					callback(data);
@@ -50,11 +50,11 @@ var sentenceService = (function() {
 	}
 	
 	function updateSentence(sentence, callback, error) {
-		let sno = sentence.sno;
+		let sentence_id = sentence.sentence_id;
 
 		$.ajax({
 			type: "put",
-			url: "/sentence/" + sno,
+			url: "/sentences/" + sentence_id,
 			data: JSON.stringify(sentence),
 			contentType : "application/json; charset=utf-8"
 		})
@@ -70,10 +70,10 @@ var sentenceService = (function() {
 		});
 	}
 
-	function removeSentence(sno, callback, error) {
+	function removeSentence(sentence_id, callback, error) {
 		$.ajax({
 			type: "delete",
-			url: "/sentence/" + sno,
+			url: "/sentences/" + sentence_id,
 		})
 		.done(function (data, status, xhr) {
 			if (callback) {
