@@ -36,10 +36,10 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/books")
 public class BookController {
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private BookService bookService;
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private ReviewService reviewService;
 	
 	@PreAuthorize("isAuthenticated()")
@@ -93,7 +93,6 @@ public class BookController {
 	@GetMapping("/{bno}")
 	public String bookDetails(Model model, @PathVariable("bno") Long bno) {
 		BookVO book = bookService.getBook(bno);
-		
 		List<AuthorVO> authors = book.getAuthors();
 		
 		ReviewVO review = reviewService.getReview(bno);
@@ -116,9 +115,8 @@ public class BookController {
 	
 	@DeleteMapping("/{bno}")
 	public ResponseEntity<String> removeBookInEdit(@PathVariable("bno") Long bno) {
-		log.info("bnos : " + bno);
-		
 		bookService.remove(bno);
+		
 		return ResponseEntity.ok().build();
 	}
 	
@@ -127,6 +125,7 @@ public class BookController {
 			produces = {MediaType.TEXT_PLAIN_VALUE}) 
 	public ResponseEntity<String> removeBooksInEdit(@RequestBody BookDeleteDto bookDeleteDto) {
 		bookService.removeBooks(bookDeleteDto.getBnos());
+		
 		return ResponseEntity.ok().build();
 	}
 }

@@ -28,6 +28,7 @@
 					</div>
 					<div class="col-md-4">
 						<button class="btn btn-default">Search</button>
+						<span class="float-right mr-4"><a href="/books/editing" class="btn btn-warning">책 삭제하기</a></span>
 					</div>
 					<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
 					<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
@@ -41,7 +42,7 @@
 	<div class="row">
 		<c:forEach items="${bookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href='/books/book/<c:out value="${list.bno }"/>' >
+				<a class="thumbnail" href='/books/<c:out value="${list.bno }"/>' >
 					<img src="<c:out value='${list.thumbnail }'/>" id="collections" class="card img-thumbnail">
 				</a>
 			</div>
@@ -117,10 +118,10 @@
 			searchForm.submit();
 		});
 		
-		var content = ''; 
+		/* var content = ''; 
 			
-		content += "<div><a class='btn btn-primary' href='/books/book/<c:out value="${book.bno }"/>'>상세</a>";
-		content += "<button class='btn btn-danger ml-2' id='bookDeleteBtn'>삭제</button></div>";
+		content += "<div><a class='btn btn-primary' href='/books/<c:out value="${book.bno }"/>'>상세</a>";
+		content += "<button class='btn btn-danger ml-2' id='bookDeleteBtn'>삭제</button></div>"; */
 		
 		/* $('[data-toggle="popover"]').popover({
             placement : 'right',

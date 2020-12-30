@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j;
 public class SentenceServiceTest {
 
 	@Setter(onMethod_ = @Autowired)
-	private SentenceService sentenceService;
+	private SentenceCollectionService sentenceService;
 	
 	@Test
 	public void testSentenceList() {

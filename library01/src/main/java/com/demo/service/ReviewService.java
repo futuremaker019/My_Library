@@ -4,29 +4,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.domain.ReviewVO;
+import com.demo.dto.ReviewRequestDto;
+import com.demo.dto.ReviewResponseDto;
 import com.demo.mapper.ReviewMapper;
-
-import lombok.Setter;
 
 @Service
 public class ReviewService{
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private ReviewMapper reviewMapper;
 
-	public int register(ReviewVO reviewVO) {
-		return reviewMapper.insert(reviewVO);
+	public ReviewResponseDto register(ReviewRequestDto reviewRequestDto) {
+		ReviewVO review = ReviewVO.builder()
+				.bno(reviewRequestDto.getBno())
+				.content(reviewRequestDto.getContent())
+				.rating(reviewRequestDto.getRating())
+				.build();
+
+		ReviewResponseDto reviewResponseDto = null;
+		if(reviewMapper.save(review)){
+			ReviewVO findReview = reviewMapper.findByBookId(review.getBno());
+			reviewResponseDto = ReviewResponseDto.builder()
+					.bno(findReview.getBno())
+					.content(findReview.getContent())
+					.modifieddate(findReview.getModifieddate())
+					.build();
+		}
+		
+		return reviewResponseDto;
+	}
+	
+	public ReviewResponseDto modify(ReviewRequestDto reviewRequestDto) {
+		ReviewVO review = ReviewVO.builder()
+				.bno(reviewRequestDto.getBno())
+				.content(reviewRequestDto.getContent())
+				.rating(reviewRequestDto.getRating())
+				.build();
+		
+		ReviewResponseDto reviewResponseDto = null;
+		if(reviewMapper.update(review)){
+			ReviewVO findReview = reviewMapper.findByBookId(review.getBno());
+			reviewResponseDto = ReviewResponseDto.builder()
+					.bno(findReview.getBno())
+					.content(findReview.getContent())
+					.modifieddate(findReview.getModifieddate())
+					.build();
+		}
+		
+		return reviewResponseDto;
 	}
 
 	public ReviewVO getReview(Long bno) {
-		return reviewMapper.read(bno);
+		return reviewMapper.findByBookId(bno);
 	}
 
 	public int delete(Long bno) {
 		return reviewMapper.delete(bno);
-	}
-
-	public int modify(ReviewVO reviewVO) {
-		return reviewMapper.update(reviewVO);
 	}
 }

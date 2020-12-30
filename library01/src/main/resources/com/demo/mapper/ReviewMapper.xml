@@ -4,12 +4,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.mapper.ReviewMapper">
 	
-	<insert id="insert"> 
-		insert into tbl_review (rno, bno, mention, rating)
-		values (seq_review.nextval, #{bno}, #{mention}, #{rating})
+	<insert id="save"> 
+		insert into tbl_review (review_id, bno, content, rating)
+		values (seq_review.nextval, #{bno}, #{content}, #{rating})
 	</insert>
 	
-	<select id="read" resultType="com.demo.domain.ReviewVO">
+	<select id="findByBookId" resultType="com.demo.domain.ReviewVO">
 		select *
 		from tbl_review 
 		where bno = #{bno}
@@ -21,7 +21,7 @@
 	
 	<update id="update">
 		update tbl_review set 
-		mention = #{mention}, 
+		content = #{content}, 
 		rating = #{rating},
 		modifieddate = sysdate 
 		where bno = #{bno}

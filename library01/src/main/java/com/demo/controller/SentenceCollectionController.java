@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.domain.Criteria;
 import com.demo.domain.SentenceVO;
-import com.demo.service.SentenceService;
+import com.demo.service.SentenceCollectionService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -27,10 +27,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RestController
 @RequestMapping("/sentence")
-public class SentenceController {
+public class SentenceCollectionController {
 
 	@Setter(onMethod_ = @Autowired)
-	private SentenceService sentenceService;
+	private SentenceCollectionService sentenceService;
 	
 	@GetMapping(value="/{bno}/{page}",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})

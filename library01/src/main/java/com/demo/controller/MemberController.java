@@ -39,7 +39,7 @@ public class MemberController {
 		log.info("custom logout");
 	}
 	
-	@GetMapping("/signup")
+	@GetMapping("/member/signup")
 	public String getSignupPage() {
 		return "/member/signup";
 	}
@@ -50,7 +50,7 @@ public class MemberController {
 		return "/member/myinfo";
 	}
 	
-	@PostMapping("/signup")
+	@PostMapping("/member/signup")
 	public String signup(MemberDto memberDto) {
 		memberService.saveMemberInfo(memberDto);
 		return "redirect:/member/login";

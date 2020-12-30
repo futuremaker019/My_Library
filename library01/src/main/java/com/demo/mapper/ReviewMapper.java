@@ -4,11 +4,11 @@ import com.demo.domain.ReviewVO;
 
 public interface ReviewMapper {
 
-	public int insert(ReviewVO reviewVO);
+	public boolean save(ReviewVO reviewVO);
 	
-	public ReviewVO read(Long bno);
+	public ReviewVO findByBookId(Long bno);
 	
 	public int delete(Long bno);
 	
-	public int update(ReviewVO reviewVO);
+	public boolean update(ReviewVO reviewVO);
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 
 
 @Service
-public class SentenceService{
+public class SentenceCollectionService{
 	
 	@Autowired
 	private SentenceMapper sentenceMapper;

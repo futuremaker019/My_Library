@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.domain.ReviewVO;
+import com.demo.dto.ReviewRequestDto;
+import com.demo.dto.ReviewResponseDto;
 import com.demo.service.ReviewService;
 
 import lombok.Setter;
@@ -37,30 +40,31 @@ public class ReviewController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/new",
 			consumes = "application/json",
-			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> create(@RequestBody ReviewVO reviewVO) {
-		int insertCount  = reviewService.register(reviewVO);
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ReviewResponseDto> create(@RequestBody ReviewRequestDto reviewVO) {
+		ReviewResponseDto reviewResponseDto = reviewService.register(reviewVO);
 		
-		return insertCount == 1 
-				? new ResponseEntity<>("review added successfully.", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
+		return ResponseEntity.ok().body(reviewResponseDto);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value="/admin/{bno}", 
+	@PutMapping(value="/{bno}", 
 			consumes = "application/json; charset=utf-8",
-			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody ReviewVO review, 
-										 @PathVariable("bno")Long bno) {
-		return reviewService.modify(review) == 1
-				? new ResponseEntity<>("Modified successfully", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ReviewResponseDto> modify(@RequestBody ReviewRequestDto reviewRequestDto, 
+										 @PathVariable("bno") Long bno) {
+		
+		ReviewResponseDto reviewResponseDto = reviewService.modify(reviewRequestDto);
+		try {
+			return ResponseEntity.ok().body(reviewResponseDto);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(value="/admin/{bno}")
-	public ResponseEntity<String> remove(@PathVariable("bno")Long bno) {
+	@DeleteMapping(value="/{bno}")
+	public ResponseEntity<String> remove(@PathVariable("bno") Long bno) {
 		return reviewService.delete(bno) == 1 
 				? new ResponseEntity<>("Deleted successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -56,8 +56,6 @@
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/books/search">책 검색</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="/books/editing">책 삭제</a>
-						</li>
 						<li class="nav-item"><a class="nav-link" href="/board/list">게시판</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/info">내 정보</a>
@@ -83,6 +81,9 @@
                    <sec:authorize access="isAnonymous()">
                   		<li class="list-inline-item">
                   			<button class="btn btn-link" onclick="location.href='/member/login'" style="color:white;">로그인</button>
+              			</li>
+              			<li class="list-inline-item">
+                  			<button class="btn btn-link" onclick="location.href='/member/signup'" style="color:white;">회원가입</button>
               			</li>
                	   </sec:authorize>
                </ul>

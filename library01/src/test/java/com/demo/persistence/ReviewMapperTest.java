@@ -42,7 +42,7 @@ public class ReviewMapperTest {
 
 	@Test
 	public void testReadOne() {
-		ReviewVO vo = reviewMapper.read(2L);
+		ReviewVO vo = reviewMapper.findByBookId(2L);
 		log.info(vo);
 	}
 
