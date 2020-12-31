@@ -49,16 +49,20 @@ public class ApiService{
 	
 	public BookDto findBookByIsbnUsingLike(String isbn) {
 		String isbnWithoutUuid = null;
+		String userId = null;
 				
 		List<BookVO> findBookList = bookMapper.getBookByIsbnUsingLike(isbn);
 		if (findBookList.size() != 0) {
 			BookVO bookVO = findBookList.get(0);
 			String findIsbn = bookVO.getIsbn();
 			isbnWithoutUuid = findIsbn.substring(0, findIsbn.indexOf("-"));
+			
+			userId = bookVO.getUserId();
 		}
 		
 		BookDto bookDto = BookDto.builder()
 				.isbn(isbnWithoutUuid)
+				.userId(userId)
 				.build();
 		
 		return bookDto;

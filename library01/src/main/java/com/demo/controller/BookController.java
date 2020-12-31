@@ -68,7 +68,9 @@ public class BookController {
 	}
 	
 	@GetMapping("/search")
-	public String search() {
+	public String search(Authentication authentication, Model model) {
+		model.addAttribute("authentication", authentication);
+		
 		return "/books/search";
 	}
 	

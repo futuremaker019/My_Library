@@ -50,4 +50,26 @@ public class MemberService {
 			}
 		}
 	}
+	
+	public Boolean verifyUserId(String userId) {
+		MemberVO member = memberMapper.findByUserId(userId);
+		
+		if(member != null) {
+			if (member.getUserId().equals(userId)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Boolean verifyEmail(String email) {
+		MemberVO member = memberMapper.findByEmail(email);
+		if(member != null) {
+			if (member.getEmail().equals(email)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

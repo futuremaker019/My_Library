@@ -41,15 +41,12 @@ public class AttachmentController {
 	@ResponseBody
 	@PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<AttachmentDto>> uploadAjaxPost(MultipartFile[] uploadFile) {
-		
 		List<AttachmentDto> list = new ArrayList<AttachmentDto>();
-		// 날짜를 디렉토리로 구분해여 path를 만들어준다.
+		
 		String uploadFolderPath = getFolderFormat();
 		File uploadPath = new File(rootDerictory, uploadFolderPath);
 		
-		// 날짜로 들어오는 디렉토리가 없으면 만들어준다.
 		if (!uploadPath.exists()) {
-			// make yyyy/MM/dd folder
 			uploadPath.mkdirs();
 		}
 		
@@ -57,7 +54,6 @@ public class AttachmentController {
 			AttachmentDto attachmentDto = new AttachmentDto();
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
-			// 파일의 이름을 객체에 set
 			attachmentDto.setFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID();
@@ -68,7 +64,6 @@ public class AttachmentController {
 			try {
 				multipartFile.transferTo(saveFile);
 				
-				// 파일의 uuid와 uploadPath를 set
 				attachmentDto.setUuid(uuid.toString());
 				attachmentDto.setUploadPath(uploadFolderPath);
 				
@@ -76,7 +71,7 @@ public class AttachmentController {
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
-		} // end for loop
+		}
 		
 		return new ResponseEntity<List<AttachmentDto>>(list, HttpStatus.OK);
 	}
@@ -124,8 +119,6 @@ public class AttachmentController {
 		return ResponseEntity.ok().body(attachmentDtos);
 	}
 	
-	
-	// 날짜를 이용하여 파일 경로를 생성하는 메서드
 	private String getFolderFormat() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();

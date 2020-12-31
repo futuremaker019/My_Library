@@ -23,6 +23,7 @@ public class BookDto {
 	private String thumbnail;
 	private String publisher;
 	private String url;
+	private String userId;
 	
 	private Date datetime;
 	

@@ -24,6 +24,12 @@
 		on member.userid = auth.userid
 		where member.userid = #{userId}
 	</select>
+	<select id="findByUserId" resultType="com.demo.domain.MemberVO">
+		select userid from tbl_member where userid = #{userId}
+	</select>
+	<select id="findByEmail" resultType="com.demo.domain.MemberVO">
+		select email from tbl_member where email = #{email}
+	</select>
 	
 	<insert id="insert">
 		insert into tbl_member (userid, userpw, email) 

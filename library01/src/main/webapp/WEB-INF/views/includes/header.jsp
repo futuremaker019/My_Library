@@ -58,7 +58,7 @@
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/board/list">게시판</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="/info">내 정보</a>
+						<li class="nav-item"><a class="nav-link" href="/member/info">내 정보</a>
 						</li>
 					</ul>
 				</div>
@@ -90,9 +90,3 @@
            </div>
 		</div>
 	</section>
-
-<script type="text/javascript">
-	$(document).ready(function (){
-		
-	});
-</script>

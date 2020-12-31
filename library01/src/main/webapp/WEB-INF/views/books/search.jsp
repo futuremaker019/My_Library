@@ -45,7 +45,10 @@
 <script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
 <script>
 $(document).ready(function () {
-    var contents = $(".contents-items");
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	var contents = $(".contents-items");
     var operationForm = $("#operationForm");
     var bookSearch = $("#bookSearch");
     var pageCounter = $(".page-control");
@@ -53,8 +56,7 @@ $(document).ready(function () {
     
     var pageNum = 1;
     
-    var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
+	var loginUserId = "${authentication.principal.member.userId}";
     
     searchButton.on("click", function() {
 
@@ -98,12 +100,12 @@ $(document).ready(function () {
         }
         
         searchService.getBook(isbn, function(data){
-        	if(isbn == data.isbn) {
+        	if(isbn == data.isbn && loginUserId == data.userId) {
           	  alert("서제에 책이 존재합니다.")
           	  return false;
-            }
+            } 
             
-            bookAdded(isbn);
+           bookAdded(isbn);
         })
     });
 

@@ -49,7 +49,6 @@ public class UploadService {
                 e.printStackTrace();
             }
         }
-        log.info("보드에 들어오는 파일들 : " + listOfAttachments);
         return listOfAttachments;
     }
 	

@@ -112,7 +112,7 @@
 	</select>
 	
 	<select id="getBookByIsbnUsingLike" resultType="com.demo.domain.BookVO">
-		select bno, isbn 
+		select bno, isbn, userid
 		from tbl_book 
 		where isbn like #{isbn}||'%'
 	</select>
