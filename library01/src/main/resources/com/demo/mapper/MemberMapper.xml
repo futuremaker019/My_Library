@@ -25,11 +25,24 @@
 		where member.userid = #{userId}
 	</select>
 	<select id="findByUserId" resultType="com.demo.domain.MemberVO">
-		select userid from tbl_member where userid = #{userId}
+		select * from tbl_member where userid = #{userId}
 	</select>
 	<select id="findByEmail" resultType="com.demo.domain.MemberVO">
 		select email from tbl_member where email = #{email}
 	</select>
+	
+	<update id="modifyPassword">
+		update tbl_member set
+		userpw = #{userPw},
+		updateddate = sysdate
+		where userid = #{userId}
+	</update>
+	<update id="modifyEmail">
+		update tbl_member set
+		email = #{email},
+		updateddate = sysdate
+		where userid = #{userId}
+	</update>
 	
 	<insert id="insert">
 		insert into tbl_member (userid, userpw, email) 

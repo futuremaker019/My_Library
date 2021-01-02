@@ -10,4 +10,8 @@ public interface MemberMapper {
 	public MemberVO findByUserId(String userId);
 	
 	public MemberVO findByEmail(String email);
+	
+	public boolean modifyPassword(MemberVO member);
+	
+	public boolean modifyEmail(MemberVO member);
 }

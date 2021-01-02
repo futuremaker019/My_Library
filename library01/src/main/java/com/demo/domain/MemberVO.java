@@ -28,4 +28,12 @@ public class MemberVO {
 	private Date updatedDate;
 	
 	private List<AuthVO> authList;
+	
+	public void changePassword(String userPw) {
+		this.userPw = userPw;
+	}
+	
+	public void changeEmail(String email) {
+		this.email = email;
+	}
 }

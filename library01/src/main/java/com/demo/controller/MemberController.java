@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.demo.domain.MemberVO;
 import com.demo.dto.MemberDto;
 import com.demo.service.MemberService;
 
@@ -48,7 +49,10 @@ public class MemberController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/member/info")
-	public String getMyInfoPage() {
+	public String getMyInfoPage(Model model, Authentication authentication) {
+		MemberVO member = memberService.getMember(authentication);
+		model.addAttribute("member", member);
+		
 		return "/member/myinfo";
 	}
 	
@@ -59,11 +63,11 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/member/identification",
+	@PostMapping(value="/member/verification/userid",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Boolean> checkIdDuplication(String userId) {
-		Boolean isUserExisted = memberService.verifyUserId(userId);
-		if(isUserExisted) {
+		Boolean hasUserId = memberService.verifyUserId(userId);
+		if(hasUserId) {
 			return ResponseEntity.ok().body(true);
 		}
 		return ResponseEntity.ok().body(false);
@@ -73,8 +77,41 @@ public class MemberController {
 	@PostMapping(value="/member/verification/email",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Boolean> checkEmailDuplication(String email) {
-		Boolean isEmailExisted = memberService.verifyEmail(email);
-		if(isEmailExisted) {
+		Boolean hasEmail = memberService.verifyEmail(email);
+		if(hasEmail) {
+			return ResponseEntity.ok().body(true);
+		}
+		return ResponseEntity.ok().body(false);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/member/verification/password",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Boolean> checkPasswordExisted(String password, Authentication authentication) {
+		Boolean hasPassword = memberService.verifyPassword(password, authentication);
+		if(hasPassword) {
+			return ResponseEntity.ok().body(true);
+		}
+		return ResponseEntity.ok().body(false);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/member/password",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Boolean> changePassword(String changedPassword, Authentication authentication){
+		Boolean isPasswordChanged = memberService.changePassword(changedPassword, authentication);
+		if(isPasswordChanged) {
+			return ResponseEntity.ok().body(true);
+		}
+		return ResponseEntity.ok().body(false);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/member/email",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Boolean> changeEmail (String changedEmail, Authentication authentication) {
+		Boolean isEmailChanged = memberService.changeEmail(changedEmail, authentication);
+		if(isEmailChanged) {
 			return ResponseEntity.ok().body(true);
 		}
 		return ResponseEntity.ok().body(false);

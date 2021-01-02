@@ -1,7 +1,5 @@
-var replyService = (function() {
+const replyService = (function() {
     function getReplies(param, callback, error) {
-        console.log("get Replise");
-
         $.getJSON("/board/" + param.board_id + "/replies/page/" + param.page,
             function (data) {
                 if(callback){
@@ -17,8 +15,6 @@ var replyService = (function() {
     }
 
     function createReply(param, header, token, callback, error) {
-        console.log("add reply.");
-        
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
@@ -40,8 +36,6 @@ var replyService = (function() {
     }
 
     function deleteReply(reply_id, header, token, callback, error) {
-        console.log("call delete reply");
-
         $.ajax({
             type: "delete",
             url: "/replies/" + reply_id,
@@ -57,8 +51,6 @@ var replyService = (function() {
     }
 
     function modifyReply(param, header, token, callback, error) {
-        console.log("call modify reply");
-
         $.ajax({
             type: "put",
             url: "/replies/" + param.reply_id,

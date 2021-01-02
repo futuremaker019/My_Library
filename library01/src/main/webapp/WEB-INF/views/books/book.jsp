@@ -9,12 +9,10 @@
 	<div class="col-lg-12">
 		<div class="form-row" style="padding-top: 30px;">
 			<div class="form-group col-md-6 text-center">
-                <img src="${book.thumbnail }" style="width: 180px;">
+                <img src="${book.thumbnail }" style="width: 180px;" class="img-thumbnail">
             </div>
             <div class="form-group col-md-6 text-center" >
-            	<p>
-            		<h5 style="margin:auto 0;"><c:out value="${book.title }"/></h5>
-            	</p>
+           		<h5 style="margin:auto 0;"><c:out value="${book.title }"/></h5>
                 <p> 작가 : 
                 <c:forEach items="${authors}" var="authors" >
                 	<span><c:out value="${authors.authors }"/>.</span>

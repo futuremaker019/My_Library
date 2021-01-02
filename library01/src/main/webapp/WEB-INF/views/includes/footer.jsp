@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 	<footer id="footer">
-	    <p>© Copyright 2020 MyLibrary</p>
+	    
 	</footer>
   
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

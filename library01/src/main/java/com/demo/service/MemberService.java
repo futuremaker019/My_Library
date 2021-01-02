@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +61,6 @@ public class MemberService {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -71,5 +72,49 @@ public class MemberService {
 			}
 		}
 		return false;
+	}
+	
+	public Boolean verifyPassword(String password, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
+		MemberVO member = memberMapper.findByUserId(userId);
+		if(passwordEncoder.matches(password, member.getUserPw())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean changePassword(String password, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
+		MemberVO member = memberMapper.findByUserId(userId);
+		member.changePassword(passwordEncoder.encode(password));
+		
+		if(memberMapper.modifyPassword(member)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean changeEmail(String email, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
+		MemberVO member = memberMapper.findByUserId(userId);
+		member.changeEmail(email);
+		
+		if(memberMapper.modifyEmail(member)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public MemberVO getMember(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
+		return memberMapper.findByUserId(userId);
 	}
 }
