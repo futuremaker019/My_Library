@@ -1,19 +1,21 @@
 package com.demo.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class AuthVO {
 
-	private String userId;
-	private String auth;
-	
-	@Builder
-	public AuthVO(String userId, String auth) {
-		this.userId = userId;
-		this.auth = auth;
-	}
+	private Long member_id;
+	private String role;
 }

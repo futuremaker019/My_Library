@@ -9,13 +9,12 @@ import com.demo.domain.MemberVO;
 import com.demo.mapper.MemberMapper;
 import com.demo.security.domain.CustomUser;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class CustomUserDetailsService implements UserDetailsService{
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private MemberMapper memberMapper;
 	
 	@Override

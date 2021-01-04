@@ -51,15 +51,16 @@ public class ReplyService {
 						.board_id(replyRequestDto.getBoard_id())
 						.build();
 		
-		replyMapper.insert(reply);
-		
-		Reply findReply = replyMapper.getReply(reply.getReply_id());
-		ReplyResponseDto replyResponseDto = ReplyResponseDto.builder()
-										.reply_id(findReply.getReply_id())
-										.reply(findReply.getReply())
-										.replier(findReply.getReplier())
-										.updateddate(findReply.getUpdateddate())
-										.build();
+		ReplyResponseDto replyResponseDto = null;
+		if(replyMapper.insert(reply)) {
+			Reply findReply = replyMapper.getReply(reply.getReply_id());
+			replyResponseDto = ReplyResponseDto.builder()
+											.reply_id(findReply.getReply_id())
+											.reply(findReply.getReply())
+											.replier(findReply.getReplier())
+											.updateddate(findReply.getUpdateddate())
+											.build();
+		}
 		
 		return replyResponseDto;
 	}
@@ -77,15 +78,17 @@ public class ReplyService {
 				.reply_id(replyRequestDto.getReply_id())
 				.build();
 		
-		replyMapper.update(reply);
-		Reply findReply = replyMapper.getReply(reply.getReply_id());
-		
-		ReplyResponseDto replyResponseDto = ReplyResponseDto.builder()
-				.replier(findReply.getReplier())
-				.reply_id(findReply.getReply_id())
-				.reply(findReply.getReply())
-				.updateddate(findReply.getUpdateddate())
-				.build();
+		ReplyResponseDto replyResponseDto = null;
+		if(replyMapper.update(reply)) {
+			Reply findReply = replyMapper.getReply(reply.getReply_id());
+			
+			replyResponseDto = ReplyResponseDto.builder()
+					.replier(findReply.getReplier())
+					.reply_id(findReply.getReply_id())
+					.reply(findReply.getReply())
+					.updateddate(findReply.getUpdateddate())
+					.build();
+		}
 		
 		return replyResponseDto;
 	}

@@ -42,6 +42,7 @@ public class ReplyController {
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto,
 									Authentication authentication) {
+		log.info("replyRequestDto : " + replyRequestDto);
 		ReplyResponseDto replyResponseDto = replyService.addReply(replyRequestDto, authentication);
 		
 		return ResponseEntity.ok().body(replyResponseDto);

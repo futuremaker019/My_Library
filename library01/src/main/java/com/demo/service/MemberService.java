@@ -33,20 +33,16 @@ public class MemberService {
 	private PasswordEncoder passwordEncoder;
 	
 	public void saveMemberInfo(MemberDto memberDto) {
+		List<AuthVO> authList = new ArrayList<>();
+		
 		MemberVO member = MemberVO.builder()
 				.userId(memberDto.getUserId())
-				.userPw(passwordEncoder.encode(memberDto.getUserPw()))
+				.password(passwordEncoder.encode(memberDto.getPassword()))
 				.email(memberDto.getEmail())
 				.build();
 		
-		saveRoles(memberDto, member);
-	}
-
-	private void saveRoles(MemberDto memberDto, MemberVO member) {
-		List<AuthVO> authList = new ArrayList<>(); 
-		authList.add(new AuthVO(memberDto.getUserId(), Role.MEMBER.getValue()));
-		
 		if(memberMapper.insert(member) == 1) {
+			authList.add(new AuthVO(member.getMember_id(), Role.MEMBER.getValue()));
 			for (AuthVO authVO : authList) {
 				authMapper.insert(authVO);
 			}
@@ -79,7 +75,7 @@ public class MemberService {
 		String userId = userDetails.getUsername();
 		
 		MemberVO member = memberMapper.findByUserId(userId);
-		if(passwordEncoder.matches(password, member.getUserPw())) {
+		if(passwordEncoder.matches(password, member.getPassword())) {
 			return true;
 		}
 		return false;

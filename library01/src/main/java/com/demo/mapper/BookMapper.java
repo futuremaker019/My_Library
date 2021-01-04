@@ -18,6 +18,8 @@ public interface BookMapper {
 	
 	public BookVO getOne(Long bno);
 	
+	public List<BookVO> getThumbnails(String userId);
+	
 	public BookVO getBookByIsbn(String isbn);
 	
 	public List<BookVO> getBookByIsbnUsingLike(String isbn);

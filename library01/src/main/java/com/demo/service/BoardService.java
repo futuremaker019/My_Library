@@ -14,6 +14,7 @@ import com.demo.domain.Board;
 import com.demo.domain.Criteria;
 import com.demo.dto.AttachmentDto;
 import com.demo.dto.BoardDto;
+import com.demo.dto.BoardResponseDto;
 import com.demo.mapper.BoardMapper;
 import com.demo.mapper.AttachmentMapper;
 
@@ -99,5 +100,16 @@ public class BoardService {
 		if(boardMapper.removeSinglePost(board_id)) {
 			attachmentService.deleteFiles(attachmentDtos);
 		}
+	}
+	
+	public List<BoardResponseDto> getPostsTop4() {
+		return boardMapper.getPostsTop4().stream()
+					.map(post -> BoardResponseDto.builder()
+							.board_id(post.getBoard_id())
+							.title(post.getTitle())
+							.content(post.getContent())
+							.updatedDate(post.getUpdatedDate())
+							.build())
+					.collect(Collectors.toList());
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.demo.domain.Reply;
 
 public interface ReplyMapper {
-	public int insert(Reply reply);
+	public boolean insert(Reply reply);
 	
 	public Reply getReply(Long reply_id);
 	
@@ -13,5 +13,5 @@ public interface ReplyMapper {
 	
 	public void delete(Long reply_id);
 	
-	public void update(Reply reply);
+	public boolean update(Reply reply);
 }

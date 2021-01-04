@@ -9,9 +9,15 @@
 <head>
   <meta charset="utf-8">
   <title>MyLibrary</title>
-  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   
-  <!-- <link rel="stylesheet" href="/resources/bootstrap-4.0.0-dist/css/bootstrap.min.css"> -->
+  <!-- BootStrap config -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+  <!-- slide css -->
+  <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
+  <link rel="stylesheet" type="text/css" href="/resources/slick/slick.css"/>
+  <!-- Add the new slick-theme.css if you want the default styling -->
+  <link rel="stylesheet" type="text/css" href="/resources/slick/slick-theme.css"/>	
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400|Ubuntu&display=swap" rel="stylesheet">
@@ -20,22 +26,13 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/c0be56fbbf.js" crossorigin="anonymous"></script>
   
-  <!-- jquery-3.5.1 -->
-  <!-- <script src="/resources/bootstrap-4.0.0-dist/jquery/jquery-3.5.1.js"></script> -->
-  
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
   
+  <!-- summernote config -->
   <script src="/resources/summernote-0.8.18-dist/summernote-lite.js"></script>
   <link rel="stylesheet" href="/resources/summernote-0.8.18-dist/summernote-lite.css">
   
-  <!-- include libraries(jQuery, bootstrap) -->
-<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-
-<!-- include summernote css/js -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> -->
 </head>
 
 <body>

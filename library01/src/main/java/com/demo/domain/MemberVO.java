@@ -19,18 +19,20 @@ import lombok.ToString;
 @ToString
 public class MemberVO {
 
+	private Long member_id;
+	
 	private String userId;
-	private String userPw;
+	private String password;
 	private String email;
 	private boolean enabled;
 	
 	private Date createdDate;
 	private Date updatedDate;
 	
-	private List<AuthVO> authList;
+	private List<AuthVO> roles;
 	
-	public void changePassword(String userPw) {
-		this.userPw = userPw;
+	public void changePassword(String password) {
+		this.password = password;
 	}
 	
 	public void changeEmail(String email) {

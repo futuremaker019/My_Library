@@ -24,6 +24,13 @@
 	<select id="getPost" resultType="com.demo.domain.Board">
 		select * from tbl_board where board_id = #{id}
 	</select>
+	<select id="getPostsTop4" resultType="com.demo.domain.Board">
+		<![CDATA[
+			select rownum, board_id, title, content, writer, createddate, updateddate, replycount
+			from tbl_board
+			where rownum <= 4 order by board_id desc
+		]]>
+	</select>
 	<select id="total" resultType="int">
 		select count(*) from tbl_board
 	</select>

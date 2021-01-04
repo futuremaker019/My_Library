@@ -5,24 +5,25 @@
 	
 <mapper namespace="com.demo.mapper.MemberMapper">
 	<resultMap type="com.demo.domain.MemberVO" id="memberMap">
-		<id property="userId" column="userId"/>
+		<id property="member_id" column="member_id"/>
+		<result property="member_id" column="member_id"/>
 		<result property="userId" column="userid"/>
-		<result property="userPw" column="userpw"/>
+		<result property="password" column="password"/>
 		<result property="email" column="email"/>
 		<result property="createdDate" column="createddate"/>
 		<result property="updatedDate" column="updateddate"/>
-		<collection property="authList" resultMap="authMap"></collection>
+		<collection property="roles" resultMap="authMap"></collection>
 	</resultMap>
 	<resultMap type="com.demo.domain.AuthVO" id="authMap">
-		<result property="userId" column="userid"/>
-		<result property="auth" column="auth"/>
+		<result property="member_id" column="member_id"/>
+		<result property="role" column="role"/>
 	</resultMap>
 	
 	<select id="read" resultMap="memberMap">
-		select member.userid, userpw, email, createddate, updateddate, auth
+		select member.member_id, userid, password, email, createddate, updateddate, role
 		from tbl_member member left outer join tbl_member_auth auth
-		on member.userid = auth.userid
-		where member.userid = #{userId}
+		on member.member_id = auth.member_id
+		where userid = #{userId}
 	</select>
 	<select id="findByUserId" resultType="com.demo.domain.MemberVO">
 		select * from tbl_member where userid = #{userId}
@@ -33,7 +34,7 @@
 	
 	<update id="modifyPassword">
 		update tbl_member set
-		userpw = #{userPw},
+		password = #{password},
 		updateddate = sysdate
 		where userid = #{userId}
 	</update>
@@ -45,7 +46,10 @@
 	</update>
 	
 	<insert id="insert">
-		insert into tbl_member (userid, userpw, email) 
-		values (#{userId}, #{userPw}, #{email})
+		<selectKey keyProperty="member_id" order="BEFORE" resultType="long">
+			select seq_member.nextval from dual
+		</selectKey>
+		insert into tbl_member (member_id, userid, password, email) 
+		values (#{member_id}, #{userId}, #{password}, #{email})
 	</insert>
 </mapper>

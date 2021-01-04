@@ -8,23 +8,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
 import com.demo.mapper.AuthorMapper;
 import com.demo.mapper.BookMapper;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
 public class BookService{
 	
-	@Setter (onMethod_= @Autowired)
+	@Autowired
 	private BookMapper bookMapper;
 	
-	@Setter(onMethod_ = @Autowired)
+	@Autowired
 	private AuthorMapper authorMapper;
 	
 	public List<BookVO> getListWithPaging(Criteria cri, Authentication authentication) {
@@ -51,6 +49,19 @@ public class BookService{
 
 	public BookVO getBook(Long bno) {
 		return bookMapper.getOne(bno);
+	}
+	
+	public List<BookVO> getBooksImage(Authentication authentication){
+		List<BookVO> books = null;
+		
+		if(authentication != null) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			String userId = (String) userDetails.getUsername();
+			
+			books = bookMapper.getThumbnails(userId);
+			return books;
+		}
+		return books;
 	}
 	
 	public int remove(Long bno) {

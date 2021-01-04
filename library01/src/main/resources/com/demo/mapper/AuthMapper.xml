@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.mapper.AuthMapper">
 	<insert id="insert">
-		insert into tbl_member_auth (userid, auth)
-		values (#{userId}, #{auth})
+		insert into tbl_member_auth (member_id, role)
+		values (#{member_id}, #{role})
 	</insert>
 </mapper>

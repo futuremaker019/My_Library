@@ -17,6 +17,8 @@ public interface BoardMapper {
 
 	public Board getPost(Long id);
 	
+	public List<Board> getPostsTop4();
+	
 	public int total();
 	
 	public int updatePost(Board board);

@@ -74,6 +74,11 @@ ul {
   font-family: "Montserrat-light"
 }
 
+/* home - image */
+.books-image .prev{
+	color : blue;
+}
+
 /* collection - card */
 
 #collections{

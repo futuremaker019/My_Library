@@ -21,7 +21,6 @@
 			  <li class="list-group-item d-flex justify-content-between">즐겨찾기 목록의 책 수
 			  	<span class="badge badge-light badge-pill">14</span>
 			  </li>
-			  <li class="list-group-item">Vestibulum at eros</li>
 			</ul>
 		</div>
 		<div class="form-group col-md-6 pl-5 pr-5">
@@ -33,9 +32,6 @@
 			  <li class="list-group-item d-flex justify-content-between">댓글 착성 갯수
 			  	<span class="badge badge-light badge-pill">14</span>
 			  </li>
-			  <li class="list-group-item">Morbi leo risus</li>
-			  <li class="list-group-item">Porta ac consectetur ac</li>
-			  <li class="list-group-item">Vestibulum at eros</li>
 			</ul>
 		</div>
 	</div>

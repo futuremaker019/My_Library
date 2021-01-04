@@ -9,6 +9,7 @@ public class BoardDto {
 	
 	private String title;
 	private String content;
+	private String thumbnail;
 	
 	private List<AttachmentDto> attachments;
 }

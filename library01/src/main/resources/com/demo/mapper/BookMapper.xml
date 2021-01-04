@@ -43,8 +43,8 @@
 	</sql>
 	
 	<!-- select -->
-	<select id="getList" resultType="com.demo.domain.BookVO">
-		select * from tbl_book order by bno
+	<select id="getThumbnails" resultType="com.demo.domain.BookVO">
+		select thumbnail from tbl_book where userId = #{userId}
 	</select>
 	
 	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">

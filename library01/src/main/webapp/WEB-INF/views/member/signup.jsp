@@ -21,7 +21,7 @@
 	            	</div>
 	                <div class="form-group mb-3">
 	                    <label for="password">패스워드</label>
-	                    <input type="password" class="form-control" id="password" name="userPw" placeholder="패스워드">
+	                    <input type="password" class="form-control" id="password" name="password" placeholder="패스워드">
 	                    <P id="password-msg" class="mt-2 d-flex justify-content-end" >10자이상 20자이하 영문, 숫자, 특수문자 혼합</P>
 	                </div>
 	                <div class="form-group">
