@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class AttachmentService {
 	
-	private final static String rootDirectory = "C:\\upload\\image\\";
+	private final static String rootDirectory = "/usr/local/tomcat/upload";
 
 	@Autowired
 	private AttachmentMapper attachmentMapper;
@@ -57,7 +57,7 @@ public class AttachmentService {
 		for (AttachmentDto attachment : attachmentDtos) {
 			try {
 				Path file = Paths.get(rootDirectory 
-						+ attachment.getUploadPath() + "\\" + attachment.getUuid() + "_" + attachment.getFileName());
+						+ attachment.getUploadPath() + "/" + attachment.getUuid() + "_" + attachment.getFileName());
 				Files.deleteIfExists(file);
 			} catch (Exception e) {
 				log.error(e.getMessage());
