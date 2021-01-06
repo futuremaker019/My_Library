@@ -33,7 +33,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class AttachmentController {
 	
-	private final static String rootDerictory = "C:\\upload\\image";
+	private final static String rootDerictory = "/usr/local/tomcat/upload";
 	
 	@Autowired
 	private AttachmentService attachmentService;
@@ -82,7 +82,7 @@ public class AttachmentController {
 		attachmentService.deleteFileById(id);
 		
 		try {
-			File file = new File(rootDerictory + "\\" + URLDecoder.decode(fileName, "UTF-8"));
+			File file = new File(rootDerictory + "/" + URLDecoder.decode(fileName, "UTF-8"));
 			file.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class AttachmentController {
 	@ResponseBody
 	@GetMapping(value="/file/download", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> download(String fileName) {
-		Resource resource = new FileSystemResource(rootDerictory + "\\" + fileName);
+		Resource resource = new FileSystemResource(rootDerictory + "/" + fileName);
 		
 		String resourceName = resource.getFilename();
 		String resourceNameWithoutUuid = resourceName.substring(resourceName.indexOf("_")+1); 
