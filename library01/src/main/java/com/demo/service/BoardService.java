@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.demo.domain.Attachment;
 import com.demo.domain.Board;
 import com.demo.domain.Criteria;
+import com.demo.domain.MemberVO;
 import com.demo.dto.AttachmentDto;
 import com.demo.dto.BoardDto;
 import com.demo.dto.BoardResponseDto;
+import com.demo.dto.MemberDto;
 import com.demo.mapper.BoardMapper;
+import com.demo.mapper.MemberMapper;
 import com.demo.mapper.AttachmentMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -32,19 +35,25 @@ public class BoardService {
 	private AttachmentMapper attachmentMapper;
 	
 	@Autowired
-	private AttachmentService attachmentService; 
+	private AttachmentService attachmentService;
+	
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	public void addPost(BoardDto boardDto, List<AttachmentDto> attachmentDtos, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 		
+		MemberVO member = memberMapper.findByUserId(userId);
+		
 		Board board = Board.builder()
 				.title(boardDto.getTitle())
 				.content(boardDto.getContent())
 				.writer(userId)
+				.member_id(member.getMember_id())
 				.build();
 		
-		if(boardMapper.insert(board) == 1) {
+		if(boardMapper.insert(board)) {
 			if(attachmentDtos != null) {
 				List<Attachment> attachments = attachmentDtos.stream()
 						.map(attachmentDto -> new Attachment(attachmentDto.getFileName(), attachmentDto.getUploadPath(), attachmentDto.getUuid()))
@@ -62,7 +71,7 @@ public class BoardService {
 		Board board = boardMapper.getPost(board_id);
 		board.updateBoard(boardDto.getTitle(), boardDto.getContent());
 		
-		if(boardMapper.updatePost(board) == 1) {
+		if(boardMapper.updatePost(board)) {
 			if(attachmentDtos != null) {
 				List<Attachment> attachments = attachmentDtos.stream()
 						.map(attachmentDto -> new Attachment(attachmentDto.getFileName(), attachmentDto.getUploadPath(), attachmentDto.getUuid()))

@@ -5,7 +5,7 @@
 <%@ include file="../includes/header.jsp"%>
 
 <section class="container">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-5">
     	<div class="col-lg-6">
 	        <form role="form" action="/member/signup" method="post">
 	            <div class="pt-4 pb-5">

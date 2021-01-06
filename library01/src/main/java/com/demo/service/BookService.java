@@ -8,15 +8,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.domain.AuthorVO;
 import com.demo.domain.BookVO;
 import com.demo.domain.Criteria;
+import com.demo.domain.MemberVO;
+import com.demo.dto.BookRequestDto;
 import com.demo.mapper.AuthorMapper;
 import com.demo.mapper.BookMapper;
+import com.demo.mapper.MemberMapper;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
+@Transactional
 public class BookService{
 	
 	@Autowired
@@ -24,6 +29,9 @@ public class BookService{
 	
 	@Autowired
 	private AuthorMapper authorMapper;
+	
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	public List<BookVO> getListWithPaging(Criteria cri, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -47,8 +55,8 @@ public class BookService{
 		return bookMapper.getTotalSearchCount(criteria);
 	}
 
-	public BookVO getBook(Long bno) {
-		return bookMapper.getOne(bno);
+	public BookVO getBook(Long book_id) {
+		return bookMapper.getOne(book_id);
 	}
 	
 	public List<BookVO> getBooksImage(Authentication authentication){
@@ -64,12 +72,45 @@ public class BookService{
 		return books;
 	}
 	
-	public int remove(Long bno) {
-		return bookMapper.delete(bno);
+	public int remove(Long book_id) {
+		return bookMapper.delete(book_id);
 	}
-
-	@Transactional
-	public void removeBooks(List<Long> bnos) {
-		bnos.forEach(bno -> bookMapper.delete(bno));
+	
+	public void removeBooks(List<Long> book_ids) {
+		book_ids.forEach(book_id -> bookMapper.delete(book_id));
+	}
+	
+	public void register(BookRequestDto bookRequestDto, List<AuthorVO> authors, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = (String) userDetails.getUsername();
+		
+		MemberVO member = memberMapper.findByUserId(userId); 
+		
+		BookVO bookVO = bookRequestDto.toEntity();
+		bookVO.saveMemberInfo(member.getMember_id(), member.getUserId());
+		
+		if (bookMapper.insert(bookVO)) {
+			for (AuthorVO author : authors) {
+				author.setBook_id(bookVO.getBook_id());
+				authorMapper.insert(author);
+			}
+		}
+	}
+	
+	public Boolean verifyExistedBook(BookRequestDto bookRequestDto, Authentication authentication) {
+		List<BookVO> findBookList = bookMapper.getBookByIsbnUsingLike(bookRequestDto.getIsbn());
+		
+		if(findBookList != null && findBookList.size() != 0) {
+			Boolean hasBook = findBookList.stream()
+				.anyMatch(book -> book.getUserId().equals(bookRequestDto.getUserId()));
+				
+			return hasBook;
+		}
+		
+		return false;
+	}
+	
+	private BookVO findBookByIsbn(String isbn) {
+		return bookMapper.getBookByIsbn(isbn);
 	}
 }

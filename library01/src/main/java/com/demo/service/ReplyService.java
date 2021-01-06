@@ -29,7 +29,7 @@ public class ReplyService {
 	private BoardMapper boardMapper;
 	
 	public List<ReplyResponseDto> getReplies(Long board_id) {
-		return replyMapper.getReplies(board_id).stream()
+		return replyMapper.findAllByBoardId(board_id).stream()
 					.map(reply -> ReplyResponseDto.builder()
 									.reply_id(reply.getReply_id())
 									.reply(reply.getReply())
@@ -39,11 +39,20 @@ public class ReplyService {
 					.collect(Collectors.toList());
 	}
 	
+	public ReplyResponseDto getReply(Long reply_id) {
+		Reply reply = replyMapper.findById(reply_id);
+		
+		return ReplyResponseDto.builder()
+				.reply_id(reply.getReply_id())
+				.reply(reply.getReply())
+				.replier(reply.getReplier())
+				.updateddate(reply.getUpdateddate())
+				.build();
+	}
+	
 	public ReplyResponseDto addReply(ReplyRequestDto replyRequestDto, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
-		
-		boardMapper.updateReplyCount(replyRequestDto.getBoard_id(), 1);
 		
 		Reply reply = Reply.builder()
 						.reply(replyRequestDto.getReply())
@@ -53,23 +62,24 @@ public class ReplyService {
 		
 		ReplyResponseDto replyResponseDto = null;
 		if(replyMapper.insert(reply)) {
-			Reply findReply = replyMapper.getReply(reply.getReply_id());
+			Reply findReply = replyMapper.findById(reply.getReply_id());
 			replyResponseDto = ReplyResponseDto.builder()
 											.reply_id(findReply.getReply_id())
 											.reply(findReply.getReply())
 											.replier(findReply.getReplier())
 											.updateddate(findReply.getUpdateddate())
 											.build();
+			boardMapper.updateReplyCount(replyRequestDto.getBoard_id(), 1);
 		}
 		
 		return replyResponseDto;
 	}
 	
 	public void removeReply(Long reply_id) {
-		Reply reply = replyMapper.getReply(reply_id);
-		boardMapper.updateReplyCount(reply.getBoard_id(), -1);
-		
-		replyMapper.delete(reply_id);
+		Reply reply = replyMapper.findById(reply_id);
+		if(replyMapper.delete(reply_id)) {
+			boardMapper.updateReplyCount(reply.getBoard_id(), -1);
+		}
 	}
 	
 	public ReplyResponseDto updateReply(ReplyRequestDto replyRequestDto) {
@@ -80,7 +90,7 @@ public class ReplyService {
 		
 		ReplyResponseDto replyResponseDto = null;
 		if(replyMapper.update(reply)) {
-			Reply findReply = replyMapper.getReply(reply.getReply_id());
+			Reply findReply = replyMapper.findById(reply.getReply_id());
 			
 			replyResponseDto = ReplyResponseDto.builder()
 					.replier(findReply.getReplier())

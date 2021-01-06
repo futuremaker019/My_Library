@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   
   <!-- slide css -->
-  <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
   <link rel="stylesheet" type="text/css" href="/resources/slick/slick.css"/>
   <!-- Add the new slick-theme.css if you want the default styling -->
   <link rel="stylesheet" type="text/css" href="/resources/slick/slick-theme.css"/>	
@@ -53,7 +52,7 @@
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/books/search">책 검색</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="/board/list">게시판</a>
+						<li class="nav-item"><a class="nav-link" href="/board">게시판</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/member/info">내 정보</a>
 						</li>

@@ -19,8 +19,8 @@ var reviewService = (function() {
 	  });
 	}
 	
-	function getReview(bno, callback, error) {
-		$.getJSON("/review/" + bno + ".json",
+	function getReview(book_id, callback, error) {
+		$.getJSON("/review/" + book_id + ".json",
 			function(data) {
 				if(callback) {
 					callback(data);
@@ -33,11 +33,11 @@ var reviewService = (function() {
 	}
 	
 	function updateReview(review, csrfHeaderName, csrfTokenValue, callback, error) {
-		let bno = review.bno;
+		let book_id = review.book_id;
 
 		$.ajax({
 			type: "put",
-			url: "/review/" + bno,
+			url: "/review/" + book_id,
 			data: JSON.stringify(review),
 			contentType : "application/json; charset=utf-8"
 		})
@@ -53,10 +53,10 @@ var reviewService = (function() {
 		});
 	}
 
-	function deleteReview(bno, callback, error) {
+	function deleteReview(book_id, callback, error) {
 		$.ajax({
 			type: "delete",
-			url: "/review/" + bno,
+			url: "/review/" + book_id,
 		})
 		.done(function (data, status, xhr) {
 			if (callback) {

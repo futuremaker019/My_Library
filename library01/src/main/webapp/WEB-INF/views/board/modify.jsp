@@ -46,9 +46,9 @@
 		</div>
 	</div>
 </div>
-<form id='page-form' action="/board/list" method="get">
-	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
-	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
+<form id='page-form' action="/board" method="get">
+	<input type="hidden" name="pageNum" value="${criteria.pageNum }">
+	<input type="hidden" name="amount" value="${criteria.amount }">	
 </form>
 
 <script>
@@ -134,13 +134,7 @@ $(document).ready(function(){
 		var uploadPath = $(this).data("uploadpath");
 		var uuid = $(this).data("uuid");
 		
-		console.log(fileId);
-		console.log(fileName);
-		console.log(uploadPath);
-		console.log(uuid);
-		
 		fileName = uploadPath + "\\" + uuid + "_" + fileName;
-		console.log("fileName : " + fileName);
 		
 		$(document).ajaxSend(function (e, xhr, options) {
 	        xhr.setRequestHeader(header, token);
@@ -198,7 +192,7 @@ $(document).ready(function(){
 	});
 	
 	$("#listBtn").click(function(){
-		form.submit();
+		pageForm.submit();
 	});
 });
 </script>

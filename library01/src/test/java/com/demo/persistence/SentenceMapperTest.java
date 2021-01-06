@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.config.RootConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.Sentence;
-import com.demo.mapper.SentenceMapper;
+import com.demo.domain.Collection;
+import com.demo.mapper.CollectionMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -25,7 +25,7 @@ public class SentenceMapperTest {
 	private Long[] bnoArray = {1L, 2L, 3L, 4L, 5L};
 
 	@Setter(onMethod_ = @Autowired)
-	private SentenceMapper sentenceMapper;
+	private CollectionMapper sentenceMapper;
 	
 	@Test
 	public void testMapperExited() {

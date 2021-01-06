@@ -7,11 +7,11 @@ import com.demo.domain.Reply;
 public interface ReplyMapper {
 	public boolean insert(Reply reply);
 	
-	public Reply getReply(Long reply_id);
+	public Reply findById(Long reply_id);
 	
-	public List<Reply> getReplies(Long board_id);
+	public List<Reply> findAllByBoardId(Long board_id);
 	
-	public void delete(Long reply_id);
+	public boolean delete(Long reply_id);
 	
 	public boolean update(Reply reply);
 }

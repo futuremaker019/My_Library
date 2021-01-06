@@ -5,18 +5,18 @@
 <mapper namespace="com.demo.mapper.ReviewMapper">
 	
 	<insert id="save"> 
-		insert into tbl_review (review_id, bno, content, rating)
-		values (seq_review.nextval, #{bno}, #{content}, #{rating})
+		insert into tbl_review (review_id, book_id, content, rating)
+		values (seq_review.nextval, #{book_id}, #{content}, #{rating})
 	</insert>
 	
 	<select id="findByBookId" resultType="com.demo.domain.ReviewVO">
 		select *
 		from tbl_review 
-		where bno = #{bno}
+		where book_id = #{book_id}
 	</select>
 	
 	<delete id="delete">
-		delete from tbl_review where bno = #{bno} 
+		delete from tbl_review where book_id = #{book_id} 
 	</delete>
 	
 	<update id="update">
@@ -24,6 +24,6 @@
 		content = #{content}, 
 		rating = #{rating},
 		modifieddate = sysdate 
-		where bno = #{bno}
+		where book_id = #{book_id}
 	</update>
 </mapper>

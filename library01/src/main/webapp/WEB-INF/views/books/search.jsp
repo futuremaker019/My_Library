@@ -99,12 +99,18 @@ $(document).ready(function () {
             isbn = dividedIsbn[1];
         }
         
-        searchService.getBook(isbn, function(data){
-        	if(isbn == data.isbn && loginUserId == data.userId) {
+        var param = {
+        	isbn : isbn,
+        	userId : loginUserId
+        }
+        
+        searchService.verifyBook(param, csrfHeaderName, csrfTokenValue, function(data){
+        	if(data) {
           	  alert("서제에 책이 존재합니다.")
           	  return false;
-            } 
             
+        	}
+        	
            bookAdded(isbn);
         })
     });
@@ -192,7 +198,7 @@ $(document).ready(function () {
               }
 
             for (var i = 0; i < content[0].authors.length; i++) {
-                book.authors.push({isbn : isbn, authors : content[0].authors[i]});
+                book.authors.push({author : content[0].authors[i]});
             }
             
             searchService.addBook(book, csrfHeaderName, csrfTokenValue, function (result) {

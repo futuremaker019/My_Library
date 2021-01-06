@@ -100,7 +100,7 @@ $(document).ready(function(){
 	
 	$("#post a").on("click", function(e){
 		e.preventDefault();
-		pageForm.attr("action", "/board/post/" + $(this).attr("href"));
+		pageForm.attr("action", "/board/" + $(this).attr("href"));
 		pageForm.submit();
 	});
 });

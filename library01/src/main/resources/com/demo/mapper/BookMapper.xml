@@ -5,20 +5,22 @@
 
 <mapper namespace="com.demo.mapper.BookMapper">
 	<resultMap type="com.demo.domain.BookVO" id="bookMap">
-		<id property="isbn" column="isbn"/>
-		<result property="bno" column="bno" />
+		<id property="book_id" column="book_id"/>
+		<result property="book_id" column="book_id" />
 		<result property="isbn" column="isbn" />
 		<result property="title" column="title" />
 		<result property="publisher" column="publisher" />
 		<result property="thumbnail" column="thumbnail" />
 		<result property="url" column="url" />
+		<result property="userId" column="userid"/>
+		<result property="member_id" column="member_id"/>
 		<result property="datetime" column="datetime" />
 		<result property="createdate" column="createdate" />
 		<collection property="authors" resultMap="authorMap"></collection>
 	</resultMap>
 	<resultMap type="com.demo.domain.AuthorVO" id="authorMap">
-		<result property="isbn" column="isbn"/>
-		<result property="authors" column="authors"/>
+		<result property="book_id" column="book_id"/>
+		<result property="author" column="author"/>
 	</resultMap>
 	
 	<!-- search sql -->
@@ -34,7 +36,7 @@
 							book.isbn like '%'||#{keyword}||'%'
 						</when>
 						<when test="type == 'A'.toString()">
-							author.authors like '%'||#{keyword}||'%'
+							author.author like '%'||#{keyword}||'%'
 						</when>
 					</choose>
 				</trim>
@@ -50,11 +52,11 @@
 	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">
 		<![CDATA[
 			select
-				bno, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
+				book_id, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
 			from
 				(
 					select /*+INDEX_DESC(tbl_book pk_book)*/
-					rownum rn, bno, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
+					rownum rn, book_id, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
 					from tbl_book
 					where rownum <= #{criteria.pageNum} * #{criteria.amount} and userid = #{userId}
 				)
@@ -70,13 +72,13 @@
 	<select id="getSearchListWithPaging" resultMap="bookMap">
 		<![CDATA[
 			select distinct
-				bno, isbn, title, publisher, thumbnail, url, datetime
+				book_id, isbn, title, publisher, thumbnail, url, datetime
 			from
 				(
 					select
-					rownum rn, bno, book.isbn, title, publisher, thumbnail, url, datetime
+					rownum rn, book.book_id, book.isbn, title, publisher, thumbnail, url, datetime
 					from tbl_book book left outer join tbl_book_author author
-					on book.bno = author.bno
+					on book.book_id = author.book_id
 					where 
 		]]>
 			
@@ -86,45 +88,48 @@
 					rownum <= #{pageNum} * #{amount}
 				)
 			where rn > (#{pageNum} - 1) * #{amount}
-			order by bno desc
+			order by book_id desc
 		]]>
 	</select>
 	
 	<select id="getTotalSearchCount" resultType="int">
 		select count(distinct book.isbn) 
 		from tbl_book book left outer join tbl_book_author author
-		on book.isbn = author.isbn
+		on book.book_id = author.book_id
 		where 
 			<include refid="search"></include>
-		bno > 0
+		book.book_id > 0
 	</select>
 	
 	<select id="getOne" resultMap="bookMap">
-		select book.bno, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, authors  
-		from tbl_book book inner join tbl_book_author author on book.bno = author.bno
-		where book.bno = #{bno}
+		select book.book_id, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, author  
+		from tbl_book book inner join tbl_book_author author on book.book_id = author.book_id
+		where book.book_id = #{book_id}
 	</select>
 	
 	<select id="getBookByIsbn" resultType="com.demo.domain.BookVO">
-		select bno, isbn, title, publisher, thumbnail, url, datetime, createdate  
+		select book_id, isbn, title, publisher, thumbnail, url, datetime, createdate  
 		from tbl_book
 		where isbn = #{isbn}
 	</select>
 	
 	<select id="getBookByIsbnUsingLike" resultType="com.demo.domain.BookVO">
-		select bno, isbn, userid
+		select book_id, isbn, userid
 		from tbl_book 
 		where isbn like #{isbn}||'%'
 	</select>
 
 	<!-- insert -->
 	<insert id="insert">
-		insert into tbl_book (bno, isbn, title,  publisher, thumbnail, url, datetime, userid)
-		values (seq_book.nextval, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime}, #{userId})
+		<selectKey keyProperty="book_id" order="BEFORE" resultType="long">
+			select seq_book.nextval from dual
+		</selectKey>
+		insert into tbl_book (book_id, isbn, title,  publisher, thumbnail, url, datetime, member_id, userid)
+		values (#{book_id}, #{isbn}, #{title}, #{publisher}, #{thumbnail}, #{url}, #{datetime}, #{member_id}, #{userId})
 	</insert>
 	
 	<!-- delete -->
 	<delete id="delete">
-		delete from tbl_book where bno = #{bno}	
+		delete from tbl_book where book_id = #{book_id}	
 	</delete>
 </mapper>

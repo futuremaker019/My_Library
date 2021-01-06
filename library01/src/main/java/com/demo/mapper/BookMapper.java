@@ -16,7 +16,7 @@ public interface BookMapper {
 	
 	public List<BookVO> getSearchListWithPaging(Criteria criteria);
 	
-	public BookVO getOne(Long bno);
+	public BookVO getOne(Long book_id);
 	
 	public List<BookVO> getThumbnails(String userId);
 	
@@ -24,7 +24,7 @@ public interface BookMapper {
 	
 	public List<BookVO> getBookByIsbnUsingLike(String isbn);
 
-	public int insert(BookVO bookVO);
+	public boolean insert(BookVO bookVO);
 	
 	public int getTotalCount(
 			@Param("criteria") Criteria criteria, 
@@ -32,5 +32,5 @@ public interface BookMapper {
 	
 	public int getTotalSearchCount(Criteria criteria);
 
-	public int delete(Long bno);
+	public int delete(Long book_id);
 }

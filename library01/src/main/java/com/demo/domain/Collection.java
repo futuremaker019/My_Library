@@ -15,14 +15,12 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewVO {
+public class Collection {
 
-	private Long review_id;
 	private Long book_id;
-	
+	private Long collection_id;
 	private String content;
-	private int rating;
-	
 	private Date createdate;
 	private Date modifieddate;
+	
 }

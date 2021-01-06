@@ -29,7 +29,7 @@
             <c:forEach items="${bookList}" var="list">
             	<tr class="content">
             		<td>
-            			<input type="checkbox" name="check" style='zoom:2.0; margin-top:10px;' data-bookid="${list.bno }">
+            			<input type="checkbox" id="check" name="check" style='zoom:2.0; margin-top:10px;' data-bookid="${list.book_id }">
             		</td>
                 	<td>
                 		<div>
@@ -38,14 +38,13 @@
           			</td>
                 	<td class='details'>
                 		<div><strong><c:out value='${list.title }'/></strong></div>
-                		<div><c:out value='${list.authors }'/></div>
-                		<div><c:out value='${list.publisher }'/></div>
-                		<div><c:out value='${list.datetime }'/></div>
-                		<div><c:out value='${list.createdate }'/></div>
+                		<div>출판사 : <c:out value='${list.publisher }'/></div>
+                		<div>출판일 : <c:out value='${list.datetime }'/></div>
+                		<div>서재 등록일 : <c:out value='${list.createdate }'/></div>
                		</td>
                 	<td class='info'>
                 		<div class='btnBundle'>
-                			<button id="deleteBookBtn" class='btn btn-danger mt-4' data-bookid="${list.bno }">책 삭제</button>
+                			<button id="deleteBookBtn" class='btn btn-danger mt-4' data-bookid="${list.book_id }">책 삭제</button>
                 		</div>
                		</td>
             	</tr>
@@ -123,6 +122,7 @@
 		
 		$(".contents-items").on("click", "#deleteBookBtn", function(){
 			var book_id = $(this).data("bookid");
+			let targetTr = $(this).closest("tr");
 			
 			if(confirm("책을 삭제하시겠습니까?")){
 				$.ajax({
@@ -133,23 +133,21 @@
 		            },
 		            success: function (data) {
 		                console.log(data);
+		                targetTr.remove();
 		            }
 		        });
 			}
-			
-			location.reload(true);
 		});
 		
 		bulkDelete.click(function(){
 			var bookIdArr = [];
+			var checked_boxes = $("input[name='check']:checked"); 
 			
-			$("input[name='check']:checked").each(function(){
+			checked_boxes.each(function(){
 				bookIdArr.push($(this).data("bookid"));
 			});
 			
-			console.log(bookIdArr);
-			
-			var bookid = {bnos : bookIdArr}
+			var bookid = {book_ids : bookIdArr}
 			
 			if(confirm("책을 삭제하시겠습니까?")){
 				$.ajax({
@@ -161,11 +159,13 @@
 		                xhr.setRequestHeader(header, token);
 		            },
 		            success: function (data) {
-		                console.log(data);
+		            	checked_boxes.each(function(){
+		            		$(this).closest("tr").remove();
+		    			});
+		            	location.reload(true);
 		            }
 		        });
 			}
-			location.reload(true); 
 		});
 	});
 </script>

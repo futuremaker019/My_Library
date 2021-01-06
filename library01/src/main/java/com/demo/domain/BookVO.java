@@ -22,7 +22,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class BookVO {
 	
-	private Long bno;
+	private Long book_id;
+	private Long member_id;
 	
 	private String isbn;
 	private String title;
@@ -35,4 +36,9 @@ public class BookVO {
 	private Date createdate;
 	
 	private List<AuthorVO> authors;
+	
+	public void saveMemberInfo(Long member_id, String userId) {
+		this.member_id = member_id;
+		this.userId = userId;
+	}
 }

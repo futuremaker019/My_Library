@@ -9,7 +9,7 @@
 	</select>
 
 	<insert id="insert">
-		insert into tbl_book_author(isbn, authors, bno)
-		values (#{isbn}, #{authors}, #{bno})
+		insert into tbl_book_author(author, book_id)
+		values (#{author}, #{book_id})
 	</insert>
 </mapper>

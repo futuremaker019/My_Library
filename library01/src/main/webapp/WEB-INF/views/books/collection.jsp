@@ -42,7 +42,7 @@
 	<div class="row">
 		<c:forEach items="${bookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href='/books/<c:out value="${list.bno }"/>' >
+				<a class="thumbnail" href='/books/<c:out value="${list.book_id }"/>' >
 					<img src="<c:out value='${list.thumbnail }'/>" id="collections" class="card img-thumbnail">
 				</a>
 			</div>
@@ -120,7 +120,7 @@
 		
 		/* var content = ''; 
 			
-		content += "<div><a class='btn btn-primary' href='/books/<c:out value="${book.bno }"/>'>상세</a>";
+		content += "<div><a class='btn btn-primary' href='/books/<c:out value="${book.book_id }"/>'>상세</a>";
 		content += "<button class='btn btn-danger ml-2' id='bookDeleteBtn'>삭제</button></div>"; */
 		
 		/* $('[data-toggle="popover"]').popover({

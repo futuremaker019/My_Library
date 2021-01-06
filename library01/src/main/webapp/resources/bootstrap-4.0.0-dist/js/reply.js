@@ -13,6 +13,21 @@ const replyService = (function() {
             }
          });
     }
+    
+    function getReply(reply_id, callback, error) {
+        $.getJSON("/reply/" + reply_id,
+            function (data) {
+                if(callback){
+                    callback(data)
+                }
+            }
+        )
+        .fail(function (xhr, status, err) {
+            if(error) {
+            error(err);
+            }
+         });
+    }
 
     function createReply(param, header, token, callback, error) {
         $(document).ajaxSend(function (e, xhr, options) {
@@ -70,6 +85,7 @@ const replyService = (function() {
     return {
         createReply : createReply,
         getReplies : getReplies,
+        getReply : getReply,
         deleteReply : deleteReply,
         modifyReply : modifyReply
     }

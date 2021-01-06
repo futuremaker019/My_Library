@@ -65,21 +65,10 @@
 			<div class="card-body">
 				<h5 class="pt-3 pl-3">댓글</h5>
 			</div>
-			<div class="card-body" id="reply-input">
-				<textarea class="form-control" rows="5" placeholder="댓글을 작성해주세요." id="reply"></textarea>
-				<div class="mt-2">
-					<button id="addReplyBtn" class="btn btn-success">댓글 등록하기</button>
-					<div class="float-right">
-						<span>0</span><span> / 2000</span>
-					</div>
-				</div>
-			</div>
-			<!-- /.card-heading -->
 			<div class="card-body">
 				<ul id="reply-list" class="list-group">
 					<li class='list-group-item'>
                         <div class='header'>
-                            <strong>댓글 작성자</strong>
                             <small class='ml-4 text-muted'>댓글 작성 날짜</small>
                             <div class='btn-group btn-group-sm float-right'>
                                 <button class='btn btn-default' name='sentence-modify' data-sno='1'>수정하기</button> 
@@ -91,11 +80,21 @@
 				</ul>
 			</div>
 			<!-- /.card-body -->
+			<div class="card-body" id="reply-input">
+				<textarea class="form-control" rows="5" placeholder="댓글을 작성해주세요." id="reply"></textarea>
+				<div class="mt-2">
+					<button id="addReplyBtn" class="btn btn-success">댓글 등록하기</button>
+					<div id="reply-text-counter" class="float-right">
+						<span id="text-counter">0</span><span> / 1400</span>
+					</div>
+				</div>
+			</div>
+			<!-- /.reply-text -->
 		</div>
 	</div>
 </section>
 
-<form id='page-form' action="/board/list" method="get">
+<form id='page-form' action="/board" method="get">
 	<input type="hidden" name="pageNum" value="${criteria.pageNum }">
 	<input type="hidden" name="amount" value="${criteria.amount }">	
 </form>
@@ -120,17 +119,21 @@ $(document).ready(function(){
 	var board_id = '<c:out value="${post.board_id}"/>';
 	var loginUserId = "${authentication.principal.member.userId}";
 	
+	// 페이지 로드시 댓글을 보여준다.
 	showReplies(1);
 	
+	// '게시판'버튼 클릭시 페이지 번호와 함께 게시판으로 이동한다.
 	listBtn.click(function(){
 		pageForm.submit();
 	});
 	
+	// '수정' 버튼 클릭시 페이지 번호와 함계 수정 페이지로 이동한다. 
 	modifyBtn.on("click", function(){
 		pageForm.attr("action", "/board/modify/" + board_id);
 		pageForm.submit();
 	});
 	
+	// 글 삭제 버튼 클릭 이벤트
 	deleteBtn.on("click", function(){
 		if(confirm("글을 삭제하시겠습니까?")){
 			pageForm.attr("action", "/board/delete/" + board_id);
@@ -146,12 +149,17 @@ $(document).ready(function(){
 			return;
 		}
 		
+		// 로그인 하지 않고 댓글을 등록하면 로그인 페이지로 이동힌다.
 		if(loginUserId == ""){
 			if(confirm("로그인 후 댓글을 남길수 있습니다. 로그인 하시겠습니까?")){
 				location.href = "/member/login";
 			}
 			replyContent.val("");
 			return;
+		}
+		
+		if(replyContent.val().length > 1400) {
+			alert("한글은 최대 1400자까지 가능합니다.");
 		}
 
 		let param = {
@@ -166,7 +174,7 @@ $(document).ready(function(){
 			str += "<small class='ml-4 text-muted'>" + util.displayTime(reply.updateddate) + "</small>";
 			str += "<div class='btn-group btn-group-sm float-right'>";
 			str += "<button class='btn btn-default' id='replyActiveModifyBtn' data-replyid='"+reply.reply_id+"' "
-				+ "data-reply='" + reply.reply + "' data-replier='"+reply.replier+"' >수정하기</button>";
+				+ " data-replier='"+reply.replier+"' >수정하기</button>";
 			str += "<button class='btn btn-default' id='replyDeleteBtn' data-replyid='"+reply.reply_id+"' data-replier='"+reply.replier+"'>삭제하기</button></div>";
 			str += "</div><p class='mt-2'>" + reply.reply + "</p></li>";
 			
@@ -174,6 +182,18 @@ $(document).ready(function(){
 			replyContent.val("");
 		});
 	});
+	
+	$("#reply").keyup(function(e){
+		var content = $(this).val();
+		$("#text-counter").text(content.length);
+		
+		if(content.length >= 1400) {
+			$(this).val(content.substring(0, 1400));
+			$("#text-counter").text($(this).val().length);
+			alert("한글은 최대 1400자까지 가능합니다.");
+			return false;
+		}
+	})
 	
 	replyList.on("click", "#replyDeleteBtn", function(){
 		let reply_id = $(this).data("replyid");
@@ -195,7 +215,6 @@ $(document).ready(function(){
 	replyList.on("click", "#replyActiveModifyBtn", function(){
 		let reply_id = $(this).data("replyid");
 		let replier = $(this).data("replier");
-		let reply = $(this).data("reply");
 		let targetLi = $(this).closest("li");
 		
 		if(loginUserId != replier) {
@@ -203,15 +222,17 @@ $(document).ready(function(){
 			return;
 		}
 		
-		let str ="";
-		
- 		str += "<textarea class='form-control' rows='3' id='modify-reply'>" + reply + "</textarea>";
-		str += "<div class='mt-2'>";
-		str += "<button id='replyModifyBtn' class='btn btn-info' data-replyid='" + reply_id + "'>수정완료</button>";
-		str += "<button id='replyModifyCancelBtn' class='btn btn-default'>취소</button>";
-		str += "<div class='float-right'><span>0</span><span> / 2000</span></div></div>";
-		
-		targetLi.html(str);
+		replyService.getReply(reply_id, function(reply){
+			let str ="";
+			
+	 		str += "<textarea class='form-control' rows='3' id='modify-reply'>" + reply.reply + "</textarea>";
+			str += "<div class='mt-2'>";
+			str += "<button id='replyModifyBtn' class='btn btn-info' data-replyid='" + reply.reply_id + "'>수정완료</button>";
+			str += "<button id='replyModifyCancelBtn' class='btn btn-default'>취소</button>";
+			str += "<div class='float-right'><span>0</span><span> / 2000</span></div></div>";
+			
+			targetLi.html(str);
+		})
 	})
 	
 	replyList.on("click", "#replyModifyBtn", function() {
@@ -251,7 +272,7 @@ $(document).ready(function(){
 				str += "<small class='ml-4 text-muted'>" + util.displayTime(replies[i].updateddate) + "</small>";
 				str += "<div class='btn-group btn-group-sm float-right'>";
 				str += "<button class='btn btn-default' id='replyActiveModifyBtn' data-replyid='"+replies[i].reply_id+"' " 
-					+ "data-reply='"+replies[i].reply+"' data-replier='"+replies[i].replier+"'>수정하기</button>";
+					+  "data-replier='"+replies[i].replier+"'>수정하기</button>";
 				str += "<button class='btn btn-default' id='replyDeleteBtn' data-replyid='"+replies[i].reply_id+"' "
 					+ "data-replier='"+replies[i].replier+"'>삭제하기</button></div>";
 				str += "</div><p class='mt-2'>" + replies[i].reply + "</p></li>";

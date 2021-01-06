@@ -41,7 +41,7 @@ public class MemberService {
 				.email(memberDto.getEmail())
 				.build();
 		
-		if(memberMapper.insert(member) == 1) {
+		if(memberMapper.insert(member)) {
 			authList.add(new AuthVO(member.getMember_id(), Role.MEMBER.getValue()));
 			for (AuthVO authVO : authList) {
 				authMapper.insert(authVO);

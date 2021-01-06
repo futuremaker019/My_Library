@@ -10,7 +10,7 @@
 	<div class="border-bottom" style="margin: 20px 0;">
 		<h4>게시판 글쓰기</h4>
 	</div>
-		<form id="form" action="/board/posting" method="post">
+		<form id="form" action="/board/post" method="post">
 			<div class="form-group">
 				<input type="text" id="titleInput" class="form-control" name="title" placeholder="글 제목을 작성해주세요.">
 			</div> 
@@ -26,7 +26,7 @@
 		</div>
 		<div class="mt-3 mb-5 d-flex justify-content-end">
 			<button type="button" id="submitBtn" class="btn btn-success">글 등록</button>
-			<button type="button" id="listBtn" class="btn btn-primary ml-2">리스트로 돌아가기</button>
+			<a href="/board" id="listBtn" class="btn btn-primary ml-2">리스트로 돌아가기</a>
 		</div>	
 		
 	</div>
@@ -141,14 +141,15 @@ $(document).ready(function() {
 	    ],
 	    /* callbacks: {
             onImageUpload: function (files, editor, welEditable) {
-            	console.log(files[0]);
-            	sendFile(files[0], this);
+            	console.log(files[0]); */
+            	/* sendFile(files[0], this); */
             	
-                for (var i = 0; i < files.length; i++) {
+        /*         for (var i = 0; i < files.length; i++) {
                    	sendFile(files[i], this);
                 
-            }
-        } */
+	            }
+	        }
+	    } */
 	});
 	
 	function sendFile(file, el) {

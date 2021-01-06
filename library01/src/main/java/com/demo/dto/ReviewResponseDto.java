@@ -12,7 +12,7 @@ import lombok.ToString;
 public class ReviewResponseDto {
 
 	private Long review_id;
-	private Long bno;
+	private Long book_id;
 	
 	private String content;
 	private int rating;

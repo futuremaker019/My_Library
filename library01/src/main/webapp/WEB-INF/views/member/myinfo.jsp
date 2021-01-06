@@ -10,16 +10,16 @@
 			<h5>내 서재 현황</h5>
 			<ul class="list-group list-group-flush border-top">
 			  <li class="list-group-item d-flex justify-content-between">내서제 책 총 수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  	<span class="badge badge-light badge-pill">5</span>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-between">서평 작성 총 수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  	<span class="badge badge-light badge-pill">8</span>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-between">문장 수집 작성 총 수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  	<span class="badge badge-light badge-pill">12</span>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-between">즐겨찾기 목록의 책 수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  	<span class="badge badge-light badge-pill">8</span>
 			  </li>
 			</ul>
 		</div>
@@ -27,10 +27,10 @@
 			<h5>게시판 현황</h5>
 			<ul class="list-group list-group-flush border-top">
 			  <li class="list-group-item d-flex justify-content-between">게시판 글 작성 갯수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  	<span class="badge badge-light badge-pill">5</span>
 			  </li>
-			  <li class="list-group-item d-flex justify-content-between">댓글 착성 갯수
-			  	<span class="badge badge-light badge-pill">14</span>
+			  <li class="list-group-item d-flex justify-content-between">댓글 작성 갯수
+			  	<span class="badge badge-light badge-pill">25</span>
 			  </li>
 			</ul>
 		</div>

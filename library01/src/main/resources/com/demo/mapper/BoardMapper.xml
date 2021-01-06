@@ -52,8 +52,8 @@
 		<selectKey keyProperty="board_id" order="BEFORE" resultType="long">
 			select seq_board.nextval from dual
 		</selectKey>
-		insert into tbl_board (board_id, title, content, writer)
-		values (#{board_id}, #{title}, #{content}, #{writer})
+		insert into tbl_board (board_id, title, content, writer, member_id)
+		values (#{board_id}, #{title}, #{content}, #{writer}, #{member_id})
 	</insert>
 	
 	<delete id="removeSinglePost">

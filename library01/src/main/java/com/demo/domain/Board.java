@@ -21,6 +21,8 @@ public class Board {
 	private String title;
 	private String content;
 	private String writer;
+	private Long member_id;
+	
 	private LocalDate createdDate;
 	private LocalDate updatedDate;
 	

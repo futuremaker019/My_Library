@@ -16,16 +16,16 @@ public class ReviewService{
 
 	public ReviewResponseDto register(ReviewRequestDto reviewRequestDto) {
 		ReviewVO review = ReviewVO.builder()
-				.bno(reviewRequestDto.getBno())
+				.book_id(reviewRequestDto.getBook_id())
 				.content(reviewRequestDto.getContent())
 				.rating(reviewRequestDto.getRating())
 				.build();
 
 		ReviewResponseDto reviewResponseDto = null;
 		if(reviewMapper.save(review)){
-			ReviewVO findReview = reviewMapper.findByBookId(review.getBno());
+			ReviewVO findReview = reviewMapper.findByBookId(review.getBook_id());
 			reviewResponseDto = ReviewResponseDto.builder()
-					.bno(findReview.getBno())
+					.book_id(findReview.getBook_id())
 					.content(findReview.getContent())
 					.modifieddate(findReview.getModifieddate())
 					.build();
@@ -36,16 +36,16 @@ public class ReviewService{
 	
 	public ReviewResponseDto modify(ReviewRequestDto reviewRequestDto) {
 		ReviewVO review = ReviewVO.builder()
-				.bno(reviewRequestDto.getBno())
+				.book_id(reviewRequestDto.getBook_id())
 				.content(reviewRequestDto.getContent())
 				.rating(reviewRequestDto.getRating())
 				.build();
 		
 		ReviewResponseDto reviewResponseDto = null;
 		if(reviewMapper.update(review)){
-			ReviewVO findReview = reviewMapper.findByBookId(review.getBno());
+			ReviewVO findReview = reviewMapper.findByBookId(review.getBook_id());
 			reviewResponseDto = ReviewResponseDto.builder()
-					.bno(findReview.getBno())
+					.book_id(findReview.getBook_id())
 					.content(findReview.getContent())
 					.modifieddate(findReview.getModifieddate())
 					.build();
@@ -54,11 +54,11 @@ public class ReviewService{
 		return reviewResponseDto;
 	}
 
-	public ReviewVO getReview(Long bno) {
-		return reviewMapper.findByBookId(bno);
+	public ReviewVO getReview(Long book_id) {
+		return reviewMapper.findByBookId(book_id);
 	}
 
-	public int delete(Long bno) {
-		return reviewMapper.delete(bno);
+	public int delete(Long book_id) {
+		return reviewMapper.delete(book_id);
 	}
 }

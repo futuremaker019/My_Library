@@ -9,7 +9,7 @@ import com.demo.domain.Criteria;
 
 public interface BoardMapper {
 	
-	public int insert(Board board);
+	public boolean insert(Board board);
 	
 	public List<Board> getList();
 	
@@ -21,7 +21,7 @@ public interface BoardMapper {
 	
 	public int total();
 	
-	public int updatePost(Board board);
+	public boolean updatePost(Board board);
 	
 	public boolean removeSinglePost(Long board_id);
 	

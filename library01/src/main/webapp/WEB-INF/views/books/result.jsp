@@ -7,26 +7,29 @@
 <section>
 	<div class="row">
 		<div class="col-lg-12">
-			<div style="text-align: center">
-				<h2>Books in My Library</h2>
-			</div>
-			<div>
-				<h4>검색하세요.</h4>
-			</div>
-			<form id="searchForm" action="/book/result" method="get">
-				<select name="type">
-					<option value="">검색종류</option>
-					<option value="T">제목</option>
-					<option value="I">ISBN</option>
-					<option value="A">작가</option>
-					<option value="TI">제목 or ISBN</option>
-					<option value="TA">제목 or 작가</option>
-					<option value="TIA">제목 or ISBN or 작가</option>
-				</select>
-				<input type="text" name="keyword" placeholder="검색 키워드 입력"/>
-				<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
-				<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
-				<button class="btn btn-default">Search</button>
+			<form id="searchForm" action="/books/result" method="get">
+				<div class="form-row">
+					<div class="col-md-4">
+						<select name="type" class="custom-select">
+							<option value="">검색종류</option>
+							<option value="T">제목</option>
+							<option value="I">ISBN</option>
+							<option value="A">작가</option>
+							<option value="TI">제목 or ISBN</option>
+							<option value="TA">제목 or 작가</option>
+							<option value="TIA">제목 or ISBN or 작가</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="keyword" placeholder="검색 키워드 입력"/>
+					</div>
+					<div class="col-md-4">
+						<button class="btn btn-default">Search</button>
+						<span class="float-right mr-4"><a href="/books" class="btn btn-primary">내 서재</a></span>
+					</div>
+					<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
+					<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
+				</div>
 			</form>
 		</div>
 	</div>
@@ -36,7 +39,7 @@
 	<div class="row">
 		<c:forEach items="${searchBookList}" var="list">
 			<div class="book-column col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
-				<a class="thumbnail" href='/book/one?bno=<c:out value="${list.bno }"/>' >
+				<a class="thumbnail" href='/books/<c:out value="${list.book_id }"/>' >
 					<img src="<c:out value='${list.thumbnail }'/>" id="collections" class="card img-thumbnail" style="" >
 				</a>
 			</div>
@@ -72,7 +75,7 @@
 </section>
 <!-- end-pagination -->
 
-<form id='pagingForm' action="/book/result" method="get">
+<form id='pagingForm' action="/books/result" method="get">
 	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
 	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
 	<input type="hidden" name="type" value="${pageMaker.criteria.type }">

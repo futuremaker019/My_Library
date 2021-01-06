@@ -33,7 +33,7 @@ public class BoardController {
 	@Autowired
 	private AttachmentService attachmentService; 
 	
-	@GetMapping("/list")
+	@GetMapping("")
 	public String getList(Model model, Criteria criteria) {
 		model.addAttribute("boardList", boardService.getPostListWithPaging(criteria));
 		
@@ -43,7 +43,7 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-	@GetMapping("/post/{id}")
+	@GetMapping("/{id}")
 	public String getPage(@PathVariable("id") Long id, Model model, 
 							@ModelAttribute("criteria") Criteria criteria, Authentication authentication) {
 		model.addAttribute("post",boardService.getPostPage(id));
@@ -60,12 +60,12 @@ public class BoardController {
 		return "/board/create";
 	}
 	
-	@PostMapping("/posting") 
+	@PostMapping("/post")
 	public String create(BoardDto boardDto, Authentication authentication) {
 		List<AttachmentDto> attechmentDtos = boardDto.getAttachments();
 		boardService.addPost(boardDto, attechmentDtos, authentication);
 	  
-	return "redirect:/board/list"; 
+	return "redirect:/board"; 
 	}
 	
 	@GetMapping("/modify/{board_id}")
@@ -84,13 +84,13 @@ public class BoardController {
 		List<AttachmentDto> attachmentDtos = boardDto.getAttachments();
 		boardService.modifyPost(board_id, boardDto, attachmentDtos);
 		
-		return "redirect:/board/post/"+ board_id + criteria.getListLink();
+		return "redirect:/board/"+ board_id + criteria.getListLink();
 	}
 	
 	@PostMapping("/delete/{board_id}")
 	public String deletePost(@PathVariable("board_id") Long board_id, @ModelAttribute("criteria") Criteria criteria) {
 		boardService.removePostAndFiles(board_id);
 		
-		return "redirect:/board/list" + criteria.getListLink();
+		return "redirect:/board" + criteria.getListLink();
 	}
 }

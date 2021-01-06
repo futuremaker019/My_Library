@@ -24,8 +24,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ApiServiceTest {
 
-	@Setter(onMethod_ = @Autowired)
-	private ApiService apiService;
+	@Autowired
+	private BookService bookService;
 	
 	@Test
 	public void testApiService() {

@@ -36,6 +36,13 @@ public class ReplyController {
 		return ResponseEntity.ok().body(replyResponseDtos);
 	}
 	
+	@GetMapping(value = "/reply/{reply_id}",
+			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ReplyResponseDto> getReply(@PathVariable("reply_id") Long reply_id){
+		ReplyResponseDto replyResponseDto = replyService.getReply(reply_id);
+		return ResponseEntity.ok().body(replyResponseDto);
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/reply/creation", 
 			consumes = "application/json",

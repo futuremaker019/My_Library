@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.demo.mapper.CollectionMapper">
+	<insert id="save">
+		<selectKey keyProperty="collection_id" order="BEFORE" resultType="long">
+			select seq_collection.nextval from dual
+		</selectKey>
+		insert into tbl_collection(collection_id, book_id, content)
+		values(#{collection_id}, #{book_id}, #{content})
+	</insert>
+	
+	<select id="findById" resultType="com.demo.domain.Collection">
+		select * from tbl_collection where collection_id = #{collection_id}
+	</select>
+	<select id="findAllByBookId" resultType="com.demo.domain.Collection">
+		select * from tbl_collection
+		where book_id = #{book_id}
+		order by collection_id asc
+	</select>
+	
+	<delete id="deleteById">
+		delete from tbl_collection where collection_id = #{collection_id}
+	</delete>
+	<update id="update">
+		update tbl_collection set
+		content = #{content},
+		modifieddate = sysdate
+		where collection_id = #{collection_id}
+	</update>
+</mapper>
