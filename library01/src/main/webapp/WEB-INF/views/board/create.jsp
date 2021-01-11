@@ -40,11 +40,12 @@ var form = $("#form");
 
 var filesTempArr = [];
 
-function deleteFile(eventParam, orderParam) {
-    eventParam.preventDefault();
-    filesTempArr.splice(orderParam, 1);
+function deleteFile(event, index) {
+    event.preventDefault();
+    filesTempArr.splice(index, 1);
     var innerHtmlTemp = "";
     var filesTempArrLen = filesTempArr.length;
+    
     for (var i = 0; i < filesTempArrLen; i++) {
         innerHtmlTemp += "<div>" + filesTempArr[i].name + "<a href='#' onclick=\"deleteFile(event, " + i + ");\">[삭제]</a></div>"
     }
@@ -57,11 +58,10 @@ function addFiles(e) {
     var filesArr = Array.prototype.slice.call(files);
     
     var filesArrLen = filesArr.length;
-    var filesTempArrLen = filesTempArr.length;
 
     for (var i = 0; i < filesArrLen; i++) {
         filesTempArr.push(filesArr[i]);
-        $("#fileList").append("<div>" + filesArr[i].name + "<a href='#' onclick=\"deleteFile(event, " + (filesTempArrLen + i) + ");\">[삭제]</a></div>");
+        $("#fileList").append("<div>" + filesArr[i].name + "<a href='#' onclick=\"deleteFile(event, " + i + ");\">[삭제]</a></div>");
     }
     $(this).val('');
 }
@@ -81,7 +81,7 @@ function submitWithUploadFiles() {
 
     $.ajax({
         type: "POST",
-        url: "/upload",
+        url: "/files/upload",
         data: formData,
         processData: false,
         contentType: false,

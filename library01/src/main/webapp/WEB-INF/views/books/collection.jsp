@@ -28,7 +28,7 @@
 					</div>
 					<div class="col-md-4">
 						<button class="btn btn-default">Search</button>
-						<span class="float-right mr-4"><a href="/books/editing" class="btn btn-warning">책 삭제하기</a></span>
+						<span class="float-right mr-4"><a href="/books/edit" class="btn btn-warning">책 삭제하기</a></span>
 					</div>
 					<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
 					<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">

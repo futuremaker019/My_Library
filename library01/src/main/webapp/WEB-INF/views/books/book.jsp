@@ -137,9 +137,9 @@
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 </form>
 
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/review.js"></script>
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/collection.js"></script>
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
+<script type="text/javascript" src="/resources/js/review.js"></script>
+<script type="text/javascript" src="/resources/js/collection.js"></script>
+<script type="text/javascript" src="/resources/js/util.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	var csrfHeaderName = "${_csrf.headerName}";
@@ -169,7 +169,7 @@ $(document).ready(function(){
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	});
 	
-	// 서평 작성 모달 활성화 클릭 이벤트 - 모달 호출
+	// 리뷰 작성 모달 활성화 클릭 이벤트 - 모달 호출
 	$("#add-review-modal-active-btn").on("click", function(e){
 		modalTextArea.summernote('code', "");
 		$(".modal-title").text("서평");
@@ -180,7 +180,7 @@ $(document).ready(function(){
 		modal.modal('show');
 	});
 	
-	// 서평 수정 모달 호출 클릭 이벤트
+	// 리뷰 수정 모달 호출 클릭 이벤트
 	reviewGroup.on("click", "#modify-review-modal-active-btn", function(){
 		reviewService.getReview(book_id, function(review){
 			modalTextArea.summernote('code', review.content);
@@ -193,7 +193,7 @@ $(document).ready(function(){
 		modal.modal('show');
 	});
 	
-	//서평 등록 버튼 클릭 이벤트
+	//리뷰 등록 버튼 클릭 이벤트
 	modalRegisterBtn.on("click", function(e) {
 		let review = {
 			book_id : book_id,
@@ -218,7 +218,7 @@ $(document).ready(function(){
 		modal.modal('hide');
 	});
 	
-	// 서평 수정 버튼 클릭 이벤트
+	// 리뷰 수정 버튼 클릭 이벤트
 	modalModifyBtn.on("click", function(e){
 		let review = {
 				book_id : book_id,

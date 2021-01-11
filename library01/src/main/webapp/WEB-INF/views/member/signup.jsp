@@ -52,13 +52,14 @@
 	            	</div>
 	                <button class="btn btn-success col-lg-12" id="signupBtn">회원가입</button>
 	            </div>
+	            <input type="hidden" name="type" value='<c:out value="${type }"/>'>
 	            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	         </form>
          </div>
     </div>
 </section>
 
-<script src="/resources/bootstrap-4.0.0-dist/js/member.js"></script>
+<script src="/resources/member.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var header = "${_csrf.headerName}";

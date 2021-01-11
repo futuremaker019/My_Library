@@ -83,7 +83,7 @@
   	</div>
 </div>
 
-<script src="/resources/bootstrap-4.0.0-dist/js/member.js"></script>
+<script src="/resources/js/member.js"></script>
 <script>
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";

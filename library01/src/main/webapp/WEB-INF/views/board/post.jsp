@@ -99,8 +99,8 @@
 	<input type="hidden" name="amount" value="${criteria.amount }">	
 </form>
 
-<script src="/resources/bootstrap-4.0.0-dist/js/reply.js"></script>
-<script src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
+<script src="/resources/js/reply.js"></script>
+<script src="/resources/js/util.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";

@@ -41,8 +41,8 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/search.js"></script>
-<script type="text/javascript" src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
+<script type="text/javascript" src="/resources/js/search.js"></script>
+<script type="text/javascript" src="/resources/js/util.js"></script>
 <script>
 $(document).ready(function () {
 	var csrfHeaderName = "${_csrf.headerName}";

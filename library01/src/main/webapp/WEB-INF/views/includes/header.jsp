@@ -20,7 +20,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400|Ubuntu&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/resources/bootstrap-4.0.0-dist/css/styles.css">
+  <link rel="stylesheet" href="/resources/css/styles.css">
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/c0be56fbbf.js" crossorigin="anonymous"></script>

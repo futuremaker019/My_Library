@@ -41,7 +41,7 @@ var searchService = (function () {
    function addBook(item, csrfHeaderName, csrfTokenValue, callback, error) { 
       $.ajax({
          type: 'post',
-         url: '/books/addbook',
+         url: '/books/',
          beforeSend : function(xhr) {
          	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
          },

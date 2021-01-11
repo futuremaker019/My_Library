@@ -101,7 +101,7 @@ function submitWithUploadFiles() {
 
     $.ajax({
         type: "POST",
-        url: "/upload",
+        url: "/files/upload",
         data: formData,
         processData: false,
         contentType: false,

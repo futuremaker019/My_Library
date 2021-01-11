@@ -3,7 +3,7 @@ var reviewService = (function() {
 	function addReview(review, callback, error) {
 	  $.ajax({
 	     method : "POST",
-	     url : "/review/new",            
+	     url : "/review/",            
 	     data: JSON.stringify(review),
 	     contentType : "application/json; charset=utf-8"
 	  })

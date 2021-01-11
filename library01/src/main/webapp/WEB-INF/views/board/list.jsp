@@ -80,13 +80,13 @@
 	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">	
 </form>
 
-<script src="/resources/bootstrap-4.0.0-dist/js/util.js"></script>
+<script src="/resources/js/util.js"></script>
 <script>
 $(document).ready(function(){
 	var pageForm = $("#page-form");
 	
 	$("#createPostBtn").click(function(){
-		location.href = "/board/create";
+		location.href = "/board/post";
 	});
 	
 	$(".page-item a").on("click", function(e){

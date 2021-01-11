@@ -15,7 +15,7 @@ const replyService = (function() {
     }
     
     function getReply(reply_id, callback, error) {
-        $.getJSON("/reply/" + reply_id,
+        $.getJSON("/replies/" + reply_id,
             function (data) {
                 if(callback){
                     callback(data)
@@ -36,7 +36,7 @@ const replyService = (function() {
 
         $.ajax({
             type: "POST",
-            url: "/reply/creation",
+            url: "/reply",
             data: JSON.stringify(param),
             contentType: "application/json; charset=utf-8",
             beforeSend : function(xhr) {
