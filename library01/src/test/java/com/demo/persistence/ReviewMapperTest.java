@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.config.RootConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.ReviewVO;
+import com.demo.domain.Review;
 import com.demo.mapper.ReviewMapper;
 
 import lombok.Setter;
@@ -42,7 +42,7 @@ public class ReviewMapperTest {
 
 	@Test
 	public void testReadOne() {
-		ReviewVO vo = reviewMapper.findByBookId(2L);
+		Review vo = reviewMapper.findByBookId(2L);
 		log.info(vo);
 	}
 

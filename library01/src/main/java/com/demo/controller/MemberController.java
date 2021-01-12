@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.demo.domain.MemberVO;
-import com.demo.dto.MemberDto;
+import com.demo.domain.Member;
+import com.demo.dto.MemberRequestDto;
 import com.demo.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -37,27 +38,23 @@ public class MemberController {
 		model.addAttribute("msg", "Access Denied");
 	}
 	
-	@GetMapping("/member/logout")
-	public void logout() {
-		log.info("custom logout");
-	}
-	
 	@GetMapping("/member/signup")
-	public String getSignupPage() {
+	public String getSignupPage(@RequestParam(required=false) String type, Model model) {
+		model.addAttribute("type", type);
 		return "/member/signup";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/member/info")
 	public String getMyInfoPage(Model model, Authentication authentication) {
-		MemberVO member = memberService.getMember(authentication);
+		Member member = memberService.getMember(authentication);
 		model.addAttribute("member", member);
 		
 		return "/member/myinfo";
 	}
 	
 	@PostMapping("/member/signup")
-	public String signup(MemberDto memberDto) {
+	public String signup(MemberRequestDto memberDto) {
 		memberService.saveMemberInfo(memberDto);
 		return "redirect:/member/login";
 	}

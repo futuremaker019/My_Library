@@ -2,11 +2,11 @@ package com.demo.mapper;
 
 import java.util.List;
 
-import com.demo.domain.AuthorVO;
+import com.demo.domain.Author;
 
 public interface AuthorMapper {
 	
-	public List<AuthorVO> getAuthorList();
+	public List<Author> getAuthorList();
 
-	public void insert(AuthorVO authorVO);
+	public void insert(Author authorVO);
 }

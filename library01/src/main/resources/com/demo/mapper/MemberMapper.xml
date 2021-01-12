@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.demo.mapper.MemberMapper">
-	<resultMap type="com.demo.domain.MemberVO" id="memberMap">
+	<resultMap type="com.demo.domain.Member" id="memberMap">
 		<id property="member_id" column="member_id"/>
 		<result property="member_id" column="member_id"/>
 		<result property="userId" column="userid"/>
@@ -14,7 +14,7 @@
 		<result property="updatedDate" column="updateddate"/>
 		<collection property="roles" resultMap="authMap"></collection>
 	</resultMap>
-	<resultMap type="com.demo.domain.AuthVO" id="authMap">
+	<resultMap type="com.demo.domain.Auth" id="authMap">
 		<result property="member_id" column="member_id"/>
 		<result property="role" column="role"/>
 	</resultMap>
@@ -25,10 +25,10 @@
 		on member.member_id = auth.member_id
 		where userid = #{userId}
 	</select>
-	<select id="findByUserId" resultType="com.demo.domain.MemberVO">
+	<select id="findByUserId" resultType="com.demo.domain.Member">
 		select * from tbl_member where userid = #{userId}
 	</select>
-	<select id="findByEmail" resultType="com.demo.domain.MemberVO">
+	<select id="findByEmail" resultType="com.demo.domain.Member">
 		select email from tbl_member where email = #{email}
 	</select>
 	

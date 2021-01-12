@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.demo.domain.AuthorVO;
-import com.demo.domain.BookVO;
+import com.demo.domain.Author;
+import com.demo.domain.Book;
 import com.demo.domain.Criteria;
-import com.demo.domain.ReviewVO;
+import com.demo.domain.Review;
 import com.demo.dto.BookRequestDto;
 import com.demo.dto.PageDTO;
 import com.demo.service.BookService;
@@ -45,7 +45,7 @@ public class BookController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("")
 	public String collections(Model model, Criteria criteria, Authentication authentication) {
-		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
+		List<Book> bookList = bookService.getListWithPaging(criteria, authentication);
 		
 		int total = bookService.getTotal(criteria, authentication);
 		
@@ -57,7 +57,7 @@ public class BookController {
 	
 	@GetMapping("/result")
 	public String result(Model model, Criteria criteria) {
-		List<BookVO> searchBookList = bookService.getSearchListWithPaging(criteria);
+		List<Book> searchBookList = bookService.getSearchListWithPaging(criteria);
 		
 		int searchTotal = bookService.getTotalSearchItem(criteria);
 		
@@ -75,23 +75,25 @@ public class BookController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/editing")
-	public void editing(Model model, Criteria criteria, Authentication authentication) {
-		List<BookVO> bookList = bookService.getListWithPaging(criteria, authentication);
+	@GetMapping("/edit")
+	public String editing(Model model, Criteria criteria, Authentication authentication) {
+		List<Book> bookList = bookService.getListWithPaging(criteria, authentication);
 		
 		int total = bookService.getTotal(criteria, authentication);
 		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("pageMaker", new PageDTO(criteria, total));
+		
+		return "/books/editing";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/{book_id}")
 	public String bookDetails(Model model, @PathVariable("book_id") Long book_id, Authentication authentication) {
-		BookVO book = bookService.getBook(book_id);
-		List<AuthorVO> authors = book.getAuthors();
+		Book book = bookService.getBook(book_id);
+		List<Author> authors = book.getAuthors();
 		
-		ReviewVO review = reviewService.getReview(book_id);
+		Review review = reviewService.getReview(book_id);
 		
 		model.addAttribute("authentication", authentication);
 		model.addAttribute("book", book);
@@ -104,8 +106,8 @@ public class BookController {
 	@ResponseBody
 	@PostMapping(value="/verification",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<Boolean> getBook(@RequestBody BookRequestDto bookRequestDto, Authentication authentication) {
-		Boolean hasBook = bookService.verifyExistedBook(bookRequestDto, authentication);
+	public ResponseEntity<Boolean> getBook(@RequestBody BookRequestDto bookRequestDto) {
+		Boolean hasBook = bookService.verifyExistedBook(bookRequestDto);
 		if(hasBook) {
 			return ResponseEntity.ok().body(true); 
 		}
@@ -115,12 +117,12 @@ public class BookController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
-	@PostMapping(value="/addbook", 
+	@PostMapping(value="", 
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> addBook(@RequestBody BookRequestDto bookDto, Authentication authentication) {
-		List<AuthorVO> authors = bookDto.getAuthors();
-		bookService.register(bookDto, authors, authentication);
+	public ResponseEntity<String> addBook(@RequestBody BookRequestDto bookRequestDto, Authentication authentication) {
+		List<Author> authors = bookRequestDto.getAuthors();
+		bookService.register(bookRequestDto, authors, authentication);
 		
 		try {
 			return new ResponseEntity<>("Book added in your library.", HttpStatus.OK);
@@ -136,6 +138,7 @@ public class BookController {
 		
 		bookService.remove(book_id);
 		rttr.addFlashAttribute("result", "Book remove successfully");
+		
 		return "redirect:/books";
 	}
 	

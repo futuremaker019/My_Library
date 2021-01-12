@@ -37,7 +37,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
 		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 		
-		MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/usr/local/tomcat/upload/temp", 20971520, 41943040, 20971520);
+		MultipartConfigElement multipartConfigElement = new MultipartConfigElement("c:\\upload\\temp", 20971520, 41943040, 20971520);
 		registration.setMultipartConfig(multipartConfigElement);
 	}
 }

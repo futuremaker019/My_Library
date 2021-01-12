@@ -9,7 +9,7 @@
 		values (seq_review.nextval, #{book_id}, #{content}, #{rating})
 	</insert>
 	
-	<select id="findByBookId" resultType="com.demo.domain.ReviewVO">
+	<select id="findByBookId" resultType="com.demo.domain.Review">
 		select *
 		from tbl_review 
 		where book_id = #{book_id}

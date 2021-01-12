@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewVO {
+public class Review {
 
 	private Long review_id;
 	private Long book_id;

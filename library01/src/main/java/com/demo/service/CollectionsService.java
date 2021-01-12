@@ -12,12 +12,14 @@ import com.demo.dto.CollectionRequestDto;
 import com.demo.dto.CollectionResponseDto;
 import com.demo.mapper.CollectionMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CollectionsService{
 	
-	@Autowired
-	private CollectionMapper collectionMapper;
+	private final CollectionMapper collectionMapper;
 	
 	public List<CollectionResponseDto> getCollections(Long book_id) {
 		return collectionMapper.findAllByBookId(book_id).stream()

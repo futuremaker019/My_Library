@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.demo.domain.MemberVO;
+import com.demo.domain.Member;
 import com.demo.mapper.MemberMapper;
 import com.demo.security.domain.CustomUser;
 
@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		MemberVO member = memberMapper.read(username);
+		Member member = memberMapper.read(username);
 		
 		return member == null ? null : new CustomUser(member);
 	}

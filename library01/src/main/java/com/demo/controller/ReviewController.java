@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.domain.ReviewVO;
+import com.demo.domain.Review;
 import com.demo.dto.ReviewRequestDto;
 import com.demo.dto.ReviewResponseDto;
 import com.demo.service.ReviewService;
@@ -32,13 +32,13 @@ public class ReviewController {
 	@Setter(onMethod_ = @Autowired)
 	private ReviewService reviewService;
 	
-	@GetMapping(value="/{bno}")
-	public ResponseEntity<ReviewVO> get(@PathVariable("bno") Long bno) {
-		return new ResponseEntity<>(reviewService.getReview(bno), HttpStatus.OK);
+	@GetMapping(value="/{book_id}")
+	public ResponseEntity<Review> get(@PathVariable("book_id") Long book_id) {
+		return new ResponseEntity<>(reviewService.getReview(book_id), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping(value="/new",
+	@PostMapping(value="",
 			consumes = "application/json",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReviewResponseDto> create(@RequestBody ReviewRequestDto reviewVO) {
@@ -48,11 +48,11 @@ public class ReviewController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@PutMapping(value="/{bno}", 
+	@PutMapping(value="/{book_id}", 
 			consumes = "application/json; charset=utf-8",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReviewResponseDto> modify(@RequestBody ReviewRequestDto reviewRequestDto, 
-										 @PathVariable("bno") Long bno) {
+										 @PathVariable("book_id") Long book_id) {
 		
 		ReviewResponseDto reviewResponseDto = reviewService.modify(reviewRequestDto);
 		try {
@@ -63,9 +63,9 @@ public class ReviewController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(value="/{bno}")
-	public ResponseEntity<String> remove(@PathVariable("bno") Long bno) {
-		return reviewService.delete(bno) == 1 
+	@DeleteMapping(value="/{book_id}")
+	public ResponseEntity<String> remove(@PathVariable("book_id") Long book_id) {
+		return reviewService.delete(book_id) == 1 
 				? new ResponseEntity<>("Deleted successfully", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

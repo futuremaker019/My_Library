@@ -20,7 +20,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookVO {
+public class Book {
 	
 	private Long book_id;
 	private Long member_id;
@@ -35,7 +35,7 @@ public class BookVO {
 	private Date datetime;
 	private Date createdate;
 	
-	private List<AuthorVO> authors;
+	private List<Author> authors;
 	
 	public void saveMemberInfo(Long member_id, String userId) {
 		this.member_id = member_id;

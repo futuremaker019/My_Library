@@ -7,8 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorVO {
+public class Author {
 
 	private Long book_id;
 	private String author;
+	
+	public void saveBookId(Long book_id) {
+		this.book_id = book_id;
+	}
 }

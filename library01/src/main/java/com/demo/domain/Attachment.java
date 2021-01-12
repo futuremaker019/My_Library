@@ -25,7 +25,7 @@ public class Attachment {
 		this.uuid = uuid;
 	}
 	
-	public void setBoard_id(Long board_id) {
+	public void saveBoard_id(Long board_id) {
 		this.board_id = board_id;
 	}
 }

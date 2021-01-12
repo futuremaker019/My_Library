@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.demo.mapper.AuthorMapper">
-	<select id="getAuthorList" resultType="com.demo.domain.AuthorVO">
+	<select id="getAuthorList" resultType="com.demo.domain.Author">
 		select * from tbl_book_author
 	</select>
 

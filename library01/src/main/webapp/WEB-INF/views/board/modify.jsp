@@ -128,7 +128,6 @@ $(document).ready(function(){
 		
 		var targetDiv = $(this).closest("div");
 		
-		
 		var fileId = $(this).data("fileid");
 		var fileName = $(this).data("filename");
 		var uploadPath = $(this).data("uploadpath");

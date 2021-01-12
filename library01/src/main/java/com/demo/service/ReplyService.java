@@ -15,18 +15,17 @@ import com.demo.dto.ReplyResponseDto;
 import com.demo.mapper.BoardMapper;
 import com.demo.mapper.ReplyMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ReplyService {
 
-	@Autowired
-	private ReplyMapper replyMapper;
-	
-	@Autowired
-	private BoardMapper boardMapper;
+	private final ReplyMapper replyMapper;
+	private final BoardMapper boardMapper;
 	
 	public List<ReplyResponseDto> getReplies(Long board_id) {
 		return replyMapper.findAllByBoardId(board_id).stream()

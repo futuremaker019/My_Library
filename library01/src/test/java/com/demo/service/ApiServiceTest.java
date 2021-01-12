@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.config.RootConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.AuthorVO;
-import com.demo.domain.BookVO;
+import com.demo.domain.Author;
+import com.demo.domain.Book;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -38,11 +38,11 @@ public class ApiServiceTest {
 		
 		Date datetime = new Date(2020, 5, 11);
 		
-		List<AuthorVO> authors = new ArrayList<>();
+		List<Author> authors = new ArrayList<>();
 //		authors.add(new AuthorVO("897914914X", "�넱 �겕猷⑥쫰"));
 //		authors.add(new AuthorVO("897914914X", "�뜑�뒪�떞 �샇�봽留�"));
 		
-		BookVO bookVO = new BookVO();
+		Book bookVO = new Book();
 		bookVO.setTitle(title);
 		bookVO.setIsbn(isbn);
 		bookVO.setPublisher(publisher);

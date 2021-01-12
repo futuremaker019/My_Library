@@ -1,8 +1,8 @@
 package com.demo.mapper;
 
-import com.demo.domain.AuthVO;
+import com.demo.domain.Auth;
 
 public interface AuthMapper {
 
-	public void insert(AuthVO auth);
+	public void insert(Auth auth);
 }

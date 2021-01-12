@@ -8,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.domain.AuthorVO;
-import com.demo.domain.BookVO;
+import com.demo.domain.Author;
+import com.demo.domain.Book;
 import com.demo.domain.Criteria;
-import com.demo.domain.MemberVO;
+import com.demo.domain.Member;
 import com.demo.dto.BookRequestDto;
 import com.demo.mapper.AuthorMapper;
 import com.demo.mapper.BookMapper;
@@ -33,21 +33,19 @@ public class BookService{
 	@Autowired
 	private MemberMapper memberMapper;
 	
-	public List<BookVO> getListWithPaging(Criteria cri, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = (String) userDetails.getUsername();
+	public List<Book> getListWithPaging(Criteria cri, Authentication authentication) {
+		String userId = getUserId(authentication);
 		
 		return bookMapper.getListWithPaging(cri, userId);
 	}
 
 	public int getTotal(Criteria criteria, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = (String) userDetails.getUsername();
+		String userId = getUserId(authentication);
 		
 		return bookMapper.getTotalCount(criteria, userId);
 	}
 
-	public List<BookVO> getSearchListWithPaging(Criteria criteria) {
+	public List<Book> getSearchListWithPaging(Criteria criteria) {
 		return bookMapper.getSearchListWithPaging(criteria);
 	}
 
@@ -55,16 +53,15 @@ public class BookService{
 		return bookMapper.getTotalSearchCount(criteria);
 	}
 
-	public BookVO getBook(Long book_id) {
-		return bookMapper.getOne(book_id);
+	public Book getBook(Long book_id) {
+		return bookMapper.findById(book_id);
 	}
 	
-	public List<BookVO> getBooksImage(Authentication authentication){
-		List<BookVO> books = null;
+	public List<Book> getBooksImage(Authentication authentication){
+		List<Book> books = null;
 		
 		if(authentication != null) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			String userId = (String) userDetails.getUsername();
+			String userId = getUserId(authentication);
 			
 			books = bookMapper.getThumbnails(userId);
 			return books;
@@ -80,25 +77,25 @@ public class BookService{
 		book_ids.forEach(book_id -> bookMapper.delete(book_id));
 	}
 	
-	public void register(BookRequestDto bookRequestDto, List<AuthorVO> authors, Authentication authentication) {
+	public void register(BookRequestDto bookRequestDto, List<Author> authors, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = (String) userDetails.getUsername();
 		
-		MemberVO member = memberMapper.findByUserId(userId); 
+		Member member = memberMapper.findByUserId(userId); 
 		
-		BookVO bookVO = bookRequestDto.toEntity();
+		Book bookVO = bookRequestDto.toEntity();
 		bookVO.saveMemberInfo(member.getMember_id(), member.getUserId());
 		
 		if (bookMapper.insert(bookVO)) {
-			for (AuthorVO author : authors) {
-				author.setBook_id(bookVO.getBook_id());
+			authors.forEach(author -> {
+				author.saveBookId(bookVO.getBook_id());
 				authorMapper.insert(author);
-			}
+			});
 		}
 	}
 	
-	public Boolean verifyExistedBook(BookRequestDto bookRequestDto, Authentication authentication) {
-		List<BookVO> findBookList = bookMapper.getBookByIsbnUsingLike(bookRequestDto.getIsbn());
+	public Boolean verifyExistedBook(BookRequestDto bookRequestDto) {
+		List<Book> findBookList = bookMapper.getBookByIsbnUsingLike(bookRequestDto.getIsbn());
 		
 		if(findBookList != null && findBookList.size() != 0) {
 			Boolean hasBook = findBookList.stream()
@@ -110,7 +107,12 @@ public class BookService{
 		return false;
 	}
 	
-	private BookVO findBookByIsbn(String isbn) {
+	private String getUserId(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return (String) userDetails.getUsername();
+	}
+	
+	private Book findBookByIsbn(String isbn) {
 		return bookMapper.getBookByIsbn(isbn);
 	}
 }

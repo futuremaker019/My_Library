@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentDto {
+public class AttachmentResponseDto {
 	private Long id;
 	private String fileName;
 	private String uploadPath;
 	private String uuid;
+	
+	public void saveUuid(String uuid) {
+		this.uuid = uuid;
+	}
 }

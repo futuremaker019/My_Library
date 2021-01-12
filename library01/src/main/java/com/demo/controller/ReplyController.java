@@ -19,14 +19,14 @@ import com.demo.dto.ReplyRequestDto;
 import com.demo.dto.ReplyResponseDto;
 import com.demo.service.ReplyService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @RestController
+@RequiredArgsConstructor
 public class ReplyController {
-	
-	@Autowired
-	private ReplyService replyService;
+	private final ReplyService replyService;
 
 	@GetMapping(value = "/board/{board_id}/replies/page/{page}",
 			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
@@ -36,7 +36,7 @@ public class ReplyController {
 		return ResponseEntity.ok().body(replyResponseDtos);
 	}
 	
-	@GetMapping(value = "/reply/{reply_id}",
+	@GetMapping(value = "/replies/{reply_id}",
 			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ReplyResponseDto> getReply(@PathVariable("reply_id") Long reply_id){
 		ReplyResponseDto replyResponseDto = replyService.getReply(reply_id);
@@ -44,12 +44,11 @@ public class ReplyController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping(value = "/reply/creation", 
+	@PostMapping(value = "/reply", 
 			consumes = "application/json",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto,
 									Authentication authentication) {
-		log.info("replyRequestDto : " + replyRequestDto);
 		ReplyResponseDto replyResponseDto = replyService.addReply(replyRequestDto, authentication);
 		
 		return ResponseEntity.ok().body(replyResponseDto);

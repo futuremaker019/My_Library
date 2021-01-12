@@ -17,7 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class MemberVO {
+public class Member {
 
 	private Long member_id;
 	
@@ -29,7 +29,7 @@ public class MemberVO {
 	private Date createdDate;
 	private Date updatedDate;
 	
-	private List<AuthVO> roles;
+	private List<Auth> roles;
 	
 	public void changePassword(String password) {
 		this.password = password;

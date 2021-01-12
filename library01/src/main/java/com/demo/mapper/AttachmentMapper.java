@@ -12,5 +12,5 @@ public interface AttachmentMapper {
 	
 	public List<Attachment> getAttachmentList(Long board_id);
 	
-	public void deleteById(Long id);
+	public Boolean deleteById(Long id);
 }

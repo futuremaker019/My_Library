@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.demo.domain.AuthorVO;
-import com.demo.domain.BookVO;
+import com.demo.domain.Author;
+import com.demo.domain.Book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,12 +27,12 @@ public class BookRequestDto {
 	
 	private Date datetime;
 	
-	private List<AuthorVO> authors;
+	private List<Author> authors;
 	
 	private List<Long> book_ids;
 	
-	public BookVO toEntity() {
-		return BookVO.builder()
+	public Book toEntity() {
+		return Book.builder()
 				.isbn(uuidAddedToIsbn(isbn))
 				.title(title)
 				.thumbnail(thumbnail)

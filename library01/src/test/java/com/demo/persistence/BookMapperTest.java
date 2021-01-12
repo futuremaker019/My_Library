@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.config.RootConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.BookVO;
+import com.demo.domain.Book;
 import com.demo.domain.Criteria;
 import com.demo.mapper.BookMapper;
 

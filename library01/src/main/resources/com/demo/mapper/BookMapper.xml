@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.demo.mapper.BookMapper">
-	<resultMap type="com.demo.domain.BookVO" id="bookMap">
+	<resultMap type="com.demo.domain.Book" id="bookMap">
 		<id property="book_id" column="book_id"/>
 		<result property="book_id" column="book_id" />
 		<result property="isbn" column="isbn" />
@@ -18,7 +18,7 @@
 		<result property="createdate" column="createdate" />
 		<collection property="authors" resultMap="authorMap"></collection>
 	</resultMap>
-	<resultMap type="com.demo.domain.AuthorVO" id="authorMap">
+	<resultMap type="com.demo.domain.Author" id="authorMap">
 		<result property="book_id" column="book_id"/>
 		<result property="author" column="author"/>
 	</resultMap>
@@ -45,11 +45,11 @@
 	</sql>
 	
 	<!-- select -->
-	<select id="getThumbnails" resultType="com.demo.domain.BookVO">
+	<select id="getThumbnails" resultType="com.demo.domain.Book">
 		select thumbnail from tbl_book where userId = #{userId}
 	</select>
 	
-	<select id="getListWithPaging" resultType="com.demo.domain.BookVO">
+	<select id="getListWithPaging" resultType="com.demo.domain.Book">
 		<![CDATA[
 			select
 				book_id, isbn, title, publisher, thumbnail, url, datetime, createdate, userid
@@ -101,19 +101,19 @@
 		book.book_id > 0
 	</select>
 	
-	<select id="getOne" resultMap="bookMap">
+	<select id="findById" resultMap="bookMap">
 		select book.book_id, book.isbn, title,  publisher, thumbnail, url, datetime, createdate, author  
 		from tbl_book book inner join tbl_book_author author on book.book_id = author.book_id
 		where book.book_id = #{book_id}
 	</select>
 	
-	<select id="getBookByIsbn" resultType="com.demo.domain.BookVO">
+	<select id="getBookByIsbn" resultType="com.demo.domain.Book">
 		select book_id, isbn, title, publisher, thumbnail, url, datetime, createdate  
 		from tbl_book
 		where isbn = #{isbn}
 	</select>
 	
-	<select id="getBookByIsbnUsingLike" resultType="com.demo.domain.BookVO">
+	<select id="getBookByIsbnUsingLike" resultType="com.demo.domain.Book">
 		select book_id, isbn, userid
 		from tbl_book 
 		where isbn like #{isbn}||'%'

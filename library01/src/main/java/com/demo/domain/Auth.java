@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AuthVO {
+public class Auth {
 
 	private Long member_id;
 	private String role;

@@ -26,6 +26,7 @@ public class Board {
 	private LocalDate createdDate;
 	private LocalDate updatedDate;
 	
+	private int viewCount;
 	private int replyCount;
 	
 	List<Attachment> files;

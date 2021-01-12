@@ -22,8 +22,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.demo.config.RootConfig;
 import com.demo.config.SecurityConfig;
 import com.demo.config.ServletConfig;
-import com.demo.domain.AuthorVO;
-import com.demo.domain.BookVO;
+import com.demo.domain.Author;
+import com.demo.domain.Book;
 import com.demo.domain.Criteria;
 import com.demo.dto.BookRequestDto;
 import com.demo.mapper.BookMapper;
@@ -111,8 +111,8 @@ public class BookServiceTest {
 	  
 	  @Test
 	  public void hasBook_checkIfBookExists_true() {
-		  List<AuthorVO> authors = new ArrayList<AuthorVO>();
-		  AuthorVO author = new AuthorVO(null, "테스트작가");
+		  List<Author> authors = new ArrayList<Author>();
+		  Author author = new Author(null, "테스트작가");
 		  authors.add(author);
 		  
 		  String isbn = "8968480672";

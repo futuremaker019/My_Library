@@ -1,17 +1,17 @@
 package com.demo.mapper;
 
-import com.demo.domain.MemberVO;
+import com.demo.domain.Member;
 
 public interface MemberMapper {
-	public MemberVO read(String userId);
+	public Member read(String userId);
 	
-	public boolean insert(MemberVO member);
+	public boolean insert(Member member);
 	
-	public MemberVO findByUserId(String userId);
+	public Member findByUserId(String userId);
 	
-	public MemberVO findByEmail(String email);
+	public Member findByEmail(String email);
 	
-	public boolean modifyPassword(MemberVO member);
+	public boolean modifyPassword(Member member);
 	
-	public boolean modifyEmail(MemberVO member);
+	public boolean modifyEmail(Member member);
 }

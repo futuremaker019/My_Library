@@ -18,8 +18,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class AuthorServiceTest {
 
-	@Setter(onMethod_ = @Autowired)
-	private AuthorService authorService;
+	/*
+	 * @Setter(onMethod_ = @Autowired) private AuthorService authorService;
+	 */
 	
 //	@Test
 //	public void testGetAuhorsList() {

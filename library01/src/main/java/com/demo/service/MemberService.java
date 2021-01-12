@@ -10,10 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.domain.AuthVO;
-import com.demo.domain.MemberVO;
+import com.demo.domain.Auth;
+import com.demo.domain.Member;
 import com.demo.domain.Role;
-import com.demo.dto.MemberDto;
+import com.demo.dto.MemberRequestDto;
 import com.demo.mapper.AuthMapper;
 import com.demo.mapper.MemberMapper;
 
@@ -32,25 +32,29 @@ public class MemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public void saveMemberInfo(MemberDto memberDto) {
-		List<AuthVO> authList = new ArrayList<>();
+	public void saveMemberInfo(MemberRequestDto memberRequestDto) {
+		List<Auth> authList = new ArrayList<>();
 		
-		MemberVO member = MemberVO.builder()
-				.userId(memberDto.getUserId())
-				.password(passwordEncoder.encode(memberDto.getPassword()))
-				.email(memberDto.getEmail())
+		Member member = Member.builder()
+				.userId(memberRequestDto.getUserId())
+				.password(passwordEncoder.encode(memberRequestDto.getPassword()))
+				.email(memberRequestDto.getEmail())
 				.build();
 		
 		if(memberMapper.insert(member)) {
-			authList.add(new AuthVO(member.getMember_id(), Role.MEMBER.getValue()));
-			for (AuthVO authVO : authList) {
+			if(memberRequestDto.getType().equals("1")) {
+				authList.add(new Auth(member.getMember_id(), Role.ADMIN.getValue()));
+			}
+			
+			authList.add(new Auth(member.getMember_id(), Role.MEMBER.getValue()));
+			for (Auth authVO : authList) {
 				authMapper.insert(authVO);
 			}
 		}
 	}
 	
 	public Boolean verifyUserId(String userId) {
-		MemberVO member = memberMapper.findByUserId(userId);
+		Member member = memberMapper.findByUserId(userId);
 		
 		if(member != null) {
 			if (member.getUserId().equals(userId)) {
@@ -61,7 +65,7 @@ public class MemberService {
 	}
 	
 	public Boolean verifyEmail(String email) {
-		MemberVO member = memberMapper.findByEmail(email);
+		Member member = memberMapper.findByEmail(email);
 		if(member != null) {
 			if (member.getEmail().equals(email)) {
 				return true;
@@ -71,10 +75,9 @@ public class MemberService {
 	}
 	
 	public Boolean verifyPassword(String password, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
+		String userId = getUserId(authentication);
 		
-		MemberVO member = memberMapper.findByUserId(userId);
+		Member member = memberMapper.findByUserId(userId);
 		if(passwordEncoder.matches(password, member.getPassword())) {
 			return true;
 		}
@@ -82,10 +85,9 @@ public class MemberService {
 	}
 	
 	public Boolean changePassword(String password, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
+		String userId = getUserId(authentication);
 		
-		MemberVO member = memberMapper.findByUserId(userId);
+		Member member = memberMapper.findByUserId(userId);
 		member.changePassword(passwordEncoder.encode(password));
 		
 		if(memberMapper.modifyPassword(member)) {
@@ -95,10 +97,9 @@ public class MemberService {
 	}
 	
 	public Boolean changeEmail(String email, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
+		String userId = getUserId(authentication);
 		
-		MemberVO member = memberMapper.findByUserId(userId);
+		Member member = memberMapper.findByUserId(userId);
 		member.changeEmail(email);
 		
 		if(memberMapper.modifyEmail(member)) {
@@ -107,10 +108,15 @@ public class MemberService {
 		return false;
 	}
 	
-	public MemberVO getMember(Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
+	public Member getMember(Authentication authentication) {
+		String userId = getUserId(authentication);
 		
 		return memberMapper.findByUserId(userId);
+	}
+
+	private String getUserId(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return userDetails.getUsername();
+		 
 	}
 }

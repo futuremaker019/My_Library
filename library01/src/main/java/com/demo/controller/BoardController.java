@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.domain.Criteria;
-import com.demo.dto.AttachmentDto;
+import com.demo.dto.AttachmentResponseDto;
 import com.demo.dto.BoardDto;
 import com.demo.dto.PageDTO;
 import com.demo.service.AttachmentService;
@@ -43,18 +43,18 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-	@GetMapping("/{id}")
-	public String getPage(@PathVariable("id") Long id, Model model, 
+	@GetMapping("/{board_id}")
+	public String getPage(@PathVariable("board_id") Long board_id, Model model, 
 							@ModelAttribute("criteria") Criteria criteria, Authentication authentication) {
-		model.addAttribute("post",boardService.getPostPage(id));
-		model.addAttribute("attachments", attachmentService.getAttachments(id));
+		model.addAttribute("post",boardService.getPostPage(board_id));
+		model.addAttribute("attachments", attachmentService.getAttachments(board_id));
 		model.addAttribute("authentication", authentication);
 		
 		return "/board/post";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/create")
+	@GetMapping("/post")
 	public String getCreatePage(Authentication authentication, Model model) {
 		
 		return "/board/create";
@@ -62,7 +62,7 @@ public class BoardController {
 	
 	@PostMapping("/post")
 	public String create(BoardDto boardDto, Authentication authentication) {
-		List<AttachmentDto> attechmentDtos = boardDto.getAttachments();
+		List<AttachmentResponseDto> attechmentDtos = boardDto.getAttachments();
 		boardService.addPost(boardDto, attechmentDtos, authentication);
 	  
 	return "redirect:/board"; 
@@ -81,7 +81,7 @@ public class BoardController {
 	@PostMapping("/modify/{board_id}")
 	public String modifyPost(@PathVariable("board_id") Long board_id, BoardDto boardDto, 
 							@ModelAttribute("criteria") Criteria criteria) {
-		List<AttachmentDto> attachmentDtos = boardDto.getAttachments();
+		List<AttachmentResponseDto> attachmentDtos = boardDto.getAttachments();
 		boardService.modifyPost(board_id, boardDto, attachmentDtos);
 		
 		return "redirect:/board/"+ board_id + criteria.getListLink();
