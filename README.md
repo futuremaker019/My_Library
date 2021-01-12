@@ -136,102 +136,102 @@ Oracle 12.1.0.2.v2
 
 ### HomeController
 
-| Task              | URL | Http 전송방식 | 비고 |
-| ----------------- | --- | ------------- | ---- |
-| 메인화면 화면이동 | /   | GET           | -    |
+| Task              | URI | Http method | 비고 |
+| ----------------- | --- | ----------- | ---- |
+| 메인화면 화면이동 | /   | GET         | -    |
 
 <br>
 
 ### BookController
 
-| Task                     | URL                 | Http method | Parameter      | URL 이동 |
-| ------------------------ | ------------------- | ----------- | -------------- | -------- |
-| 내 서재 책 목록          | /books/             | GET         | -              | -        |
-| 책 상세조회 화면 이동    | /books/:book_id     | GET         | book_id        | -        |
-| 책 삭제화면 이동         | /books/edit         | GET         | -              | -        |
-| 책 검색화면 이동         | /books/search       | GET         | -              | -        |
-| 서제 내 책검색 화면 이동 | /books/result       | GET         | -              | -        |
-| 책 저장                  | /books/             | POST        | bookRequestDto | -        |
-| 책 저장 시 중복 검사     | /books/verification | POST        | bookRequestDto | -        |
-| 책 삭제                  | /books/remove       | POST        | book_id        | 이동     |
-| 책 삭제                  | /books/:book_id     | DELETE      | book_id        | 이동     |
-| 책 일괄삭제              | /books/edit         | DELETE      | bookRequestDto | 이동     |
+| Task                     | URI                 | Http method | URL 이동 |
+| ------------------------ | ------------------- | ----------- | -------- |
+| 내 서재 책 목록          | /books/             | GET         | -        |
+| 책 상세조회 화면 이동    | /books/:book_id     | GET         | -        |
+| 책 삭제화면 이동         | /books/edit         | GET         | -        |
+| 책 검색화면 이동         | /books/search       | GET         | -        |
+| 서제 내 책검색 화면 이동 | /books/result       | GET         | -        |
+| 책 저장                  | /books/             | POST        | -        |
+| 책 저장 시 중복 검사     | /books/verification | POST        | -        |
+| 책 삭제                  | /books/remove       | POST        | 이동     |
+| 책 삭제                  | /books/:book_id     | DELETE      | 이동     |
+| 책 일괄삭제              | /books/edit         | DELETE      | 이동     |
 
 <br>
 
 ### ReviewController
 
-| Task      | URL              | Http method | Parameter                 | 비고 |
-| --------- | ---------------- | ----------- | ------------------------- | ---- |
-| 서평 조회 | /review/:book_id | GET         | book_id                   | -    |
-| 서평 등록 | /review          | POST        | reviewRequestDto          | -    |
-| 서평 수정 | /review/:book_id | PUT         | book_id, reviewRequestDto | -    |
-| 서평 삭제 | /review/:book_id | DELETE      | book_id                   | -    |
+| Task      | URI              | Http method | URI 이동 |
+| --------- | ---------------- | ----------- | -------- |
+| 서평 조회 | /review/:book_id | GET         | -        |
+| 서평 등록 | /review          | POST        | -        |
+| 서평 수정 | /review/:book_id | PUT         | -        |
+| 서평 삭제 | /review/:book_id | DELETE      | -        |
 
 <br>
 
 ### CollectionsController
 
-| Task           | URL                         | Http method | Parameter                           | 비고 |
-| -------------- | --------------------------- | ----------- | ----------------------------------- | ---- |
-| 문장 목록 조회 | /books/:book_id/collections | GET         | book_id                             | -    |
-| 문장 조회      | /collections/:collection_id | GET         | collection_id                       | -    |
-| 문장 등록      | /collection                 | POST        | collectionRequestDto                | -    |
-| 문장 수정      | /collections/:collection_id | PUT         | collection_id, collectionRequestDto | -    |
-| 문장 삭제      | /collections/:collection_id | DELETE      | collection_id                       | -    |
+| Task           | URI                         | Http method | URI 이동 |
+| -------------- | --------------------------- | ----------- | -------- |
+| 문장 목록 조회 | /books/:book_id/collections | GET         | -        |
+| 문장 조회      | /collections/:collection_id | GET         | -        |
+| 문장 등록      | /collection                 | POST        | -        |
+| 문장 수정      | /collections/:collection_id | PUT         | -        |
+| 문장 삭제      | /collections/:collection_id | DELETE      | -        |
 
 <br>
 
 ### MemberController
 
-| Task                      | URL                           | Http method | Parameter                | 비고 |
-| ------------------------- | ----------------------------- | ----------- | ------------------------ | ---- |
-| 로그인 화면이동           | /member/login                 | GET         | -                        | -    |
-| 회원가입 화면이동         | /member/signin                | GET         | (String) type (admin)    | -    |
-| 내 정보 화면이동          | /member/info                  | GET         | -                        | -    |
-| 회원가입                  | /member/signup                | POST        | memberRequestDto         | -    |
-| 사용자 패스워드 변경      | /member/password              | POST        | (String) changedPassword | -    |
-| 사용자 이메일 변경        | /member/email                 | POST        | (String) changedEmail    | -    |
-| 사용자 아이디 중복 검사   | /member/verification/userid   | POST        | (String) userId          | -    |
-| 사용자 이메일 중복 검사   | /member/verification/email    | POST        | (String) email           | -    |
-| 사용자 패스워드 일치 검사 | /member/verification/password | POST        | (String) password        | -    |
+| Task                      | URI                           | Http method | URI 이동 |
+| ------------------------- | ----------------------------- | ----------- | -------- |
+| 로그인 화면이동           | /member/login                 | GET         | -        |
+| 회원가입 화면이동         | /member/signin                | GET         | -        |
+| 내 정보 화면이동          | /member/info                  | GET         | -        |
+| 회원가입                  | /member/signup                | POST        | 이동     |
+| 사용자 패스워드 변경      | /member/password              | POST        | -        |
+| 사용자 이메일 변경        | /member/email                 | POST        | -        |
+| 사용자 아이디 중복 검사   | /member/verification/userid   | POST        | -        |
+| 사용자 이메일 중복 검사   | /member/verification/email    | POST        | -        |
+| 사용자 패스워드 일치 검사 | /member/verification/password | POST        | -        |
 
 <br>
 
 ### BoardController
 
-| Task               | URL                     | Http method | Parameter          | url 이동 |
-| ------------------ | ----------------------- | ----------- | ------------------ | -------- |
-| 게시판 화면이동    | /board                  | GET         |                    | -        |
-| 게시판 글 화면이동 | /board/:board_id        | GET         | board_id           | -        |
-| 글쓰기 화면이동    | /board/post             | GET         |                    | -        |
-| 글 수정            | /board/modify/:board_id | GET         | board_id           | -        |
-| 글 등록            | /board/post             | POST        | boardDto           | 이동     |
-| 수정된 글 등록     | /board/modify/:board_id | POST        | board_id, boardDto | 이동     |
-| 글 삭제            | /board/delete/:board_id | POST        | board_id           | 이동     |
+| Task               | URI                     | Http method | URI 이동 |
+| ------------------ | ----------------------- | ----------- | -------- |
+| 게시판 화면이동    | /board                  | GET         | -        |
+| 게시판 글 화면이동 | /board/:board_id        | GET         | -        |
+| 글쓰기 화면이동    | /board/post             | GET         | -        |
+| 글 수정            | /board/modify/:board_id | GET         | -        |
+| 글 등록            | /board/post             | POST        | 이동     |
+| 수정된 글 등록     | /board/modify/:board_id | POST        | 이동     |
+| 글 삭제            | /board/delete/:board_id | POST        | 이동     |
 
 <br>
 
 ### ReplyController
 
-| Task           | URL                                 | Http method | Parameter                 | url 이동 |
-| -------------- | ----------------------------------- | ----------- | ------------------------- | -------- |
-| 댓글 목록 조회 | /board/:board_id/replies/page/:page | GET         | board_id                  | -        |
-| 댓글 조회      | /replies/:reply_id                  | GET         | reply_id                  | -        |
-| 댓글 등록      | /reply                              | POST        | replyRequestDto           | -        |
-| 댓글 수정      | /replies/:reply_id                  | PUT         | reply_id, replyRequestDto | -        |
-| 댓글 삭제      | /replies/:reply_id                  | DELETE      | reply_id                  | -        |
+| Task           | URI                                 | Http method | URI 이동 |
+| -------------- | ----------------------------------- | ----------- | -------- |
+| 댓글 목록 조회 | /board/:board_id/replies/page/:page | GET         | -        |
+| 댓글 조회      | /replies/:reply_id                  | GET         | -        |
+| 댓글 등록      | /reply                              | POST        | -        |
+| 댓글 수정      | /replies/:reply_id                  | PUT         | -        |
+| 댓글 삭제      | /replies/:reply_id                  | DELETE      | -        |
 
 <br>
 
 ### AttachmentController
 
-| Task           | URL              | Http method | Parameter                           | url 이동 |
-| -------------- | ---------------- | ----------- | ----------------------------------- | -------- |
-| 파일 목록 조회 | /files/:board_id | GET         | board_id                            | -        |
-| 파일 다운로드  | /file/download   | GET         | (String) fileName                   | -        |
-| 파일 업로드    | /files/upload    | POST        | (MultipartFile) uploadFiles         | -        |
-| 파일 삭제      | /file/delete     | POST        | (String) fileName, (String) file_id | -        |
+| Task           | URI              | Http method | URI 이동 |
+| -------------- | ---------------- | ----------- | -------- |
+| 파일 목록 조회 | /files/:board_id | GET         | -        |
+| 파일 다운로드  | /file/download   | GET         | -        |
+| 파일 업로드    | /files/upload    | POST        | -        |
+| 파일 삭제      | /file/delete     | POST        | -        |
 
 <br>
 <br>
