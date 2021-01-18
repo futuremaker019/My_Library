@@ -255,10 +255,21 @@ Oracle 12.1.0.2.v2
 <br>
 <br>
 
+### 회원가입
+
+<img src="image/gif/signup.gif" width="700" height="100%">
+
+- 아이디, 비밀번호, 이메일은 작성 규칙에 맞춰야한다.
+- 아이디, 이메일은 중복확인
+- 비밀번호는 일치하는지 확인한다.
+
+<br>
+<br>
+
 ### 책 상세보기
 
 <img src="image/gif/bookdetail.gif" width="700" height="100%">
-
+- 저장한 책의 리뷰와 문장수집을 할 수 있다.
 <br>
 <br>
 <br>
@@ -267,6 +278,8 @@ Oracle 12.1.0.2.v2
 
 <img src="image/gif/bookdelete.gif" width="700" height="100%">
 
+- 단일 책 삭제 및 일괄 삭제
+
 <br>
 <br>
 
@@ -274,19 +287,7 @@ Oracle 12.1.0.2.v2
 
 <img src="image/gif/booksearch.gif" width="700" height="100%">
 
-<br>
-<br>
-
-### 로그인
-
-<img src="image/gif/login.gif" width="700" height="100%">
-
-<br>
-<br>
-
-### 회원가입
-
-<img src="image/gif/signup.gif" width="700" height="100%">
+- 책을 검색 후 저장 및 상세 보기
 
 <br>
 <br>
@@ -296,11 +297,21 @@ Oracle 12.1.0.2.v2
 <img src="image/gif/myinfo.gif" width="700" height="100%">
 
 <br>
+
+- 내 서재에 저장한 책 수
+- 내가 작성한 리뷰수, 문장수집 수
+- 즐겨찾기에 저장한 책 수
+
+- 비밀번호와 이메일은 변경가능
+
+<br>
 <br>
 
 ### 게시판 글작성
 
 <img src="image/gif/board.gif" width="700" height="100%">
+
+- 게시판 글 작성 및 파일 업로드
 
 <br>
 <br>
@@ -308,6 +319,10 @@ Oracle 12.1.0.2.v2
 ### 댓글 작성
 
 <img src="image/gif/reply.gif" width="700" height="100%">
+
+- 게시판 파일 다운로드
+- 댓글 작성, 수정, 삭제
+- 본인의 댓글만 수정, 삭제 가능함
 
 <br>
 <br>
