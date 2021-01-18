@@ -246,6 +246,71 @@ Oracle 12.1.0.2.v2
 ## UI
 
 <br>
+
+### 로그인
+
+<img src="image/gif/login.gif" width="700" height="100%">
+
+<br>
+<br>
+<br>
+
+### 책 상세보기
+
+<img src="image/gif/bookdetail.gif" width="700" height="100%">
+
+<br>
+<br>
+<br>
+
+### 책 삭제 & 일괄 삭제
+
+<img src="image/gif/bookdelete.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 책 검색
+
+<img src="image/gif/booksearch.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 로그인
+
+<img src="image/gif/login.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 회원가입
+
+<img src="image/gif/signup.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 내 정보
+
+<img src="image/gif/myinfo.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 게시판 글작성
+
+<img src="image/gif/board.gif" width="700" height="100%">
+
+<br>
+<br>
+
+### 댓글 작성
+
+<img src="image/gif/reply.gif" width="700" height="100%">
+
+<br>
+<br>
 <br>
 
 ## 사이트 링크
