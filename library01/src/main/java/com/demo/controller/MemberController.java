@@ -113,4 +113,10 @@ public class MemberController {
 		}
 		return ResponseEntity.ok().body(false);
 	}
+	
+	// 비밀번호 분실 시, 이메일로 임시 비밀번호를 보낸다.
+	@PostMapping("/member/password/email")
+	public ResponseEntity<String> sendEmail (String email) {
+		return null;
+	}
 }

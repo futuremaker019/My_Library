@@ -14,9 +14,16 @@
 				<h3><c:out value="${post.title}"/></h3>
 				<div class="mt-2">
 					<span><c:out value="${post.writer}"/></span>
-					<span class="float-right ml-5">조회수, 공감</span>
+					<span class="float-right ml-5">조회수</span>
 				</div>
-				<div class="mt-2"><c:out value="${post.createdDate }"/></div>
+				<div class="mt-2">
+					<c:out value="${post.createdDate }"/>
+					<span class="float-right">좋아요  
+						<span><a href='#' onclick='deleteLike(event);'><i class="fas fa-heart"></i></a></span>
+						<span><a href='#' onclick='addLike(event);'><i class="far fa-heart"></i></a></span>
+						<span><c:out value="${totalLikes}"/></span>
+					</span>
+				</div>
 			</div>
 			<!-- /.card-heading -->
 			<div class="card-body">
@@ -102,10 +109,45 @@
 <script src="/resources/js/reply.js"></script>
 <script src="/resources/js/util.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	var header = "${_csrf.headerName}";
-	var token = "${_csrf.token}";
+var board_id = '<c:out value="${post.board_id}"/>';
+var loginUserId = "${authentication.principal.member.userId}";
+
+var header = "${_csrf.headerName}";
+var token = "${_csrf.token}";
+
+function addLike(event) {
+	event.preventDefault();
 	
+	console.log("clicked.");
+	
+	$(document).ajaxSend(function (e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+	
+	let userId = {'userId' : loginUserId};
+	
+	$.ajax({
+        type: "POST",
+        url: "/board/" + board_id + "/like",
+        data: userId,
+        success: function (data) {
+        	str ='';
+        	
+            
+        },
+        err: function (err) {
+            alert(err.status);
+        }
+    });
+}
+
+function deleteLike(event) {
+	event.preventDefault();
+	
+	console.log("clicked.");
+}
+
+$(document).ready(function(){
 	var pageForm = $("#page-form");
 	var deleteBtn = $("#deleteBtn");
 	var modifyBtn = $("#modifyBtn");
@@ -115,9 +157,6 @@ $(document).ready(function(){
 	var replyInput = $("#reply-input");
 	var replyList = $("#reply-list");
 	var replyContent = $("#reply");
-	
-	var board_id = '<c:out value="${post.board_id}"/>';
-	var loginUserId = "${authentication.principal.member.userId}";
 	
 	// 페이지 로드시 댓글을 보여준다.
 	showReplies(1);
@@ -281,6 +320,8 @@ $(document).ready(function(){
 			replyList.html(str);
 		})
 	}
+	
+	
 });
 </script>
 <script>
@@ -302,4 +343,5 @@ $(document).ready(function(){
 	})();
 });
 </script>
+
 <%@ include file="../includes/footer.jsp"%>

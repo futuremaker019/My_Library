@@ -19,6 +19,9 @@
 	                    <label for="passwordInput">Password</label>
 	                    <input type="password" class="form-control" id="passwordInput" name="password" placeholder="패스워드">
 	                </div>
+	                <div class='mb-5'>
+	                	<a href='#' id='password-search' class='float-right'>비밀번호 분실</a>
+	                </div>
 	                <button type="button" class="btn btn-success col-lg-12" id="loginBtn">로그인</button>
 	                <button type="button" class="btn btn-info col-lg-12 mt-3" id="signupBtn">회원가입</button>
 	            </div>
@@ -38,6 +41,10 @@
 		
 		$("#signupBtn").on("click", function(){
 			window.location.href = "/member/signup";			
+		});
+		
+		$("#password-search").click(function(e){
+			
 		});
 	});
 </script>

@@ -18,20 +18,20 @@ import com.demo.dto.AttachmentResponseDto;
 import com.demo.dto.BoardDto;
 import com.demo.dto.PageDTO;
 import com.demo.service.AttachmentService;
+import com.demo.service.BoardLikeService;
 import com.demo.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
 @RequestMapping("/board")
+@RequiredArgsConstructor
 public class BoardController {
-	
-	@Autowired
-	private BoardService boardService; 
-	
-	@Autowired
-	private AttachmentService attachmentService; 
+	private final BoardService boardService;
+	private final BoardLikeService boardLikeService;
+	private final AttachmentService attachmentService; 
 	
 	@GetMapping("")
 	public String getList(Model model, Criteria criteria) {
@@ -47,7 +47,8 @@ public class BoardController {
 	public String getPage(@PathVariable("board_id") Long board_id, Model model, 
 							@ModelAttribute("criteria") Criteria criteria, Authentication authentication) {
 		model.addAttribute("post",boardService.getPostPage(board_id));
-		model.addAttribute("attachments", attachmentService.getAttachments(board_id));
+		model.addAttribute("totalLikes", boardLikeService.getTotalLike(board_id));
+		
 		model.addAttribute("authentication", authentication);
 		
 		return "/board/post";

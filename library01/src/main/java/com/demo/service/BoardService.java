@@ -20,6 +20,7 @@ import com.demo.dto.MemberRequestDto;
 import com.demo.mapper.BoardMapper;
 import com.demo.mapper.MemberMapper;
 import com.demo.mapper.AttachmentMapper;
+import com.demo.mapper.BoardLikeMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -33,6 +34,7 @@ public class BoardService {
 	private final FileService fileService;
 	private final AttachmentService attachmentService;
 	
+	private final BoardLikeMapper boardLikeMapper;
 	private final AttachmentMapper attachmentMapper;
 	private final BoardMapper boardMapper;
 	private final MemberMapper memberMapper;
@@ -119,3 +121,4 @@ public class BoardService {
 					.collect(Collectors.toList());
 	}
 }
+	
